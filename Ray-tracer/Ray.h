@@ -11,7 +11,7 @@ class Ray {
 private:
     Vertex startPoint;
     Vertex endPoint;
-    ColorDbi color;
+    ColorDbl color;
 
 public:
     Ray();

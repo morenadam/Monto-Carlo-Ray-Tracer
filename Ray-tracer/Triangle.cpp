@@ -13,7 +13,7 @@ Triangle::~Triangle(){
 
 }
 
-Triangle::rayIntersection(Ray ray){
-
-}
+//Triangle::rayIntersection(Ray ray){
+//
+//}
 
