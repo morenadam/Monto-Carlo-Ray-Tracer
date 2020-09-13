@@ -8,11 +8,12 @@
 #include "Vertex.h"
 #include "ColorDbl.h"
 #include "Direction.h"
+#include "Ray.h"
 
 //The triangle is defined by three objects of the classVertex. The Triangle has a color,
 //which we represent by an instance of ColorDbl. The triangle’s normal direction is stored
 //in an instance of Direction. It has a method rayIntersection(Ray arg)
-//that computes the intersection between a Ray and the Triangle with the Mö̈ller-Trumbore algorithm.
+//that computes the intersection between a Ray and the Triangle with the Möller-Trumbore algorithm.
 class Triangle {
 
 private:

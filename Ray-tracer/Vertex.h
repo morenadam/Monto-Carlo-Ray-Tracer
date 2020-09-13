@@ -5,6 +5,8 @@
 #ifndef UNTITLED_VERTEX_H
 #define UNTITLED_VERTEX_H
 
+//It has three spatial coordinates x, y, z and w
+//(for homogeneous coordinates).
 class Vertex {
 private:
     double x;
