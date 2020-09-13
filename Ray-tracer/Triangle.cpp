@@ -5,15 +5,7 @@
 #include "Ray.h"
 #include "Triangle.h"
 
-Triangle::Triangle(){
+void Triangle::rayIntersection(Ray ray){
 
 }
-
-Triangle::~Triangle(){
-
-}
-
-//Triangle::rayIntersection(Ray ray){
-//
-//}
 

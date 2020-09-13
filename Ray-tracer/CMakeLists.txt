@@ -16,4 +16,4 @@ add_executable(Ray_tracer
         Triangle.cpp
         Triangle.h
         Vertex.cpp
-        Vertex.h)
+        Vertex.h Scene.cpp Scene.h)

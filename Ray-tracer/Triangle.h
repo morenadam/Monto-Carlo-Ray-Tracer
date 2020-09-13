@@ -22,7 +22,7 @@ private:
 
 public:
 
-    Triangle();
+    Triangle() = default;
 
     Triangle(Vertex _v0, Vertex _v1, Vertex _v2, ColorDbl c, Direction n){
         v0 = _v0, v1 = _v1, v2 = _v2;
@@ -30,7 +30,22 @@ public:
         normal = n;
     }
 
-    ~Triangle();
+    void rayIntersection(Ray ray);
+
+    /*
+    void setVertices(Vertex _v0, Vertex _v1, Vertex _v2){
+        v0 = _v0, v1 = _v1, v2 = _v2;
+    }
+
+    void setColor(ColorDbl c){
+        color = c;
+    };
+
+    void setNormal(Direction n){
+        normal = n;
+    }*/
+
+    ~Triangle() = default;
 
 };
 
