@@ -4,4 +4,4 @@ project(Ray_tracer)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(Ray_tracer
-        main.cpp)
+        main.cpp Vertex.cpp Vertex.h Ray.cpp Ray.h)
