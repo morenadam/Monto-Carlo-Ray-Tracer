@@ -19,7 +19,11 @@ private:
     ColorDbl color;
 
 public:
+
     Ray();
+
+    ~Ray();
+
 
     //TODO: add reference to the triangle which the end point is located
 
@@ -27,7 +31,6 @@ public:
         startPoint = _startPoint;
         endPoint = _endPoint;
     }
-    ~Ray();
 };
 
 

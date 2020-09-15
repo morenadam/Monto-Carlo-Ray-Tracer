@@ -32,7 +32,7 @@ public:
         normal = n;
     }
 
-    void rayIntersection(Ray ray);
+//    void rayIntersection(Ray ray);
 
     /*
     void setVertices(Vertex _v0, Vertex _v1, Vertex _v2){

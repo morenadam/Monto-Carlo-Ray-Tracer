@@ -9,7 +9,7 @@ Triangle::Triangle() {}
 
 Triangle::~Triangle() {}
 
-void Triangle::rayIntersection(Ray ray){
-
-}
+//void Triangle::rayIntersection(Ray ray){
+//
+//}
 

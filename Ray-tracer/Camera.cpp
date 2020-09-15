@@ -10,10 +10,10 @@ Camera::~Camera() {
 
 }
 
-void Camera::render() {
-    //TODO: launch a ray through each pixel one at a time.
-}
-
-void Camera::createImage() {
-    //TODO: create image
-}
+//void Camera::render() {
+//    //TODO: launch a ray through each pixel one at a time.
+//}
+//
+//void Camera::createImage() {
+//    //TODO: create image
+//}

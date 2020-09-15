@@ -16,9 +16,10 @@ private:
     Ray ray;
 
 public:
-    Pixel() = default;
+    Pixel();
 
-    ~Pixel() = default;
+    ~Pixel();
+
 };
 
 
