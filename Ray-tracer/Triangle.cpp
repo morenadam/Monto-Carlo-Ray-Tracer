@@ -5,6 +5,10 @@
 #include "Ray.h"
 #include "Triangle.h"
 
+Triangle::Triangle() {}
+
+Triangle::~Triangle() {}
+
 void Triangle::rayIntersection(Ray ray){
 
 }

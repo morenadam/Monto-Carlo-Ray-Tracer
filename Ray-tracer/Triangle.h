@@ -23,7 +23,8 @@ private:
 
 public:
 
-    Triangle() = default;
+    Triangle();
+    ~Triangle();
 
     Triangle(Vertex _v0, Vertex _v1, Vertex _v2, ColorDbl c, Direction n){
         v0 = _v0, v1 = _v1, v2 = _v2;
@@ -45,8 +46,6 @@ public:
     void setNormal(Direction n){
         normal = n;
     }*/
-
-    ~Triangle() = default;
 
 };
 
