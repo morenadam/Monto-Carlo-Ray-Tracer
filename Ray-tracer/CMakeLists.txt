@@ -20,5 +20,7 @@ add_executable(Ray_tracer
         Pixel.cpp
         Pixel.h
         Scene.cpp
-        Scene.h Camera.cpp Camera.h)
+        Scene.h
+        Camera.cpp
+        Camera.h)
 

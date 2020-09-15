@@ -29,9 +29,9 @@ public:
 
     virtual ~Camera();
 
-//    void render();
-//
-//    void createImage();
+    void render();
+
+    void createImage();
 
 };
 
