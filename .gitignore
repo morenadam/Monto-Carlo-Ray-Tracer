@@ -11,6 +11,14 @@ Ray-tracer/.idea/**/shelf
 # Generated files
 Ray-tracer/.idea/**/contentModel.xml
 
+#DS_Store (Mac)
+
+.DS_Store
+Ray-tracer/.DS_Store
+
+#glm
+Ray-tracer/glm
+
 # Sensitive or high-churn files
 Ray-tracer/.idea/**/dataSources/
 Ray-tracer/.idea/**/dataSources.ids
