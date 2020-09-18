@@ -5,7 +5,7 @@
 #ifndef RAY_TRACER_CAMERA_H
 #define RAY_TRACER_CAMERA_H
 
-#include "Vertex.h"
+#include "Definitions.h"
 #include "Pixel.h"
 
 /*
@@ -27,7 +27,7 @@ private:
 public:
     Camera();
 
-    virtual ~Camera();
+    ~Camera();
 
     void render();
 

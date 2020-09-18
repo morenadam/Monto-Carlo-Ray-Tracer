@@ -4,7 +4,7 @@
 
 #ifndef RAY_TRACER_PIXEL_H
 #define RAY_TRACER_PIXEL_H
-#include "ColorDbl.h"
+#include "Definitions.h"
 #include "Ray.h"
 
 //Pixel contains one instance of ColorDbl that holds the color and

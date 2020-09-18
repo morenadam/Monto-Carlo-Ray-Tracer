@@ -4,8 +4,7 @@
 
 #ifndef UNTITLED_RAY_H
 #define UNTITLED_RAY_H
-#include "Vertex.h"
-#include "ColorDbl.h"
+#include "Definitions.h"
 
 
 //It has two instances of Vertex, which are the ray’s starting point and endpoint.

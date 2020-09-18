@@ -5,10 +5,9 @@
 #ifndef UNTITLED_TRIANGLE_H
 #define UNTITLED_TRIANGLE_H
 
-#include "Vertex.h"
-#include "ColorDbl.h"
-#include "Direction.h"
+#include "Definitions.h"
 #include "Ray.h"
+#include "glm/gtx/normal.hpp"
 
 //The triangle is defined by three objects of the classVertex. The Triangle has a color,
 //which we represent by an instance of ColorDbl. The triangle’s normal direction is stored
@@ -26,13 +25,9 @@ public:
     Triangle();
     ~Triangle();
 
-    Triangle(Vertex _v0, Vertex _v1, Vertex _v2, ColorDbl c, Direction n){
-        v0 = _v0, v1 = _v1, v2 = _v2;
-        color = c;
-        normal = n;
-    }
+    Triangle(Vertex v0, Vertex v1, Vertex v2, ColorDbl color);
 
-//    void rayIntersection(Ray ray);
+    void rayIntersection(Ray ray);
 
     /*
     void setVertices(Vertex _v0, Vertex _v1, Vertex _v2){
