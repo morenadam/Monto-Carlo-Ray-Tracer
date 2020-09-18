@@ -19,10 +19,12 @@
 class Camera {
 
 private:
-    Vertex eyePointOne;
-    Vertex eyePointTwo;
-    int currentEyePoint = 1;
-    Pixel image [800][800];
+    static const int imageHeight = 800;
+    static const int imageWidth = 800;
+    Vertex eyePointOne = Vertex(-2,0,0,1);
+    Vertex eyePointTwo = Vertex(-1,0,0,1);
+    bool isEyePointOne = true;
+    Pixel image [imageHeight][imageWidth];
 
 public:
     Camera();
@@ -32,6 +34,8 @@ public:
     void render();
 
     void createImage();
+
+    void switchEyePoint();
 
 };
 
