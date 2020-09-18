@@ -27,7 +27,7 @@ public:
 
     Triangle(Vertex v0, Vertex v1, Vertex v2, ColorDbl color);
 
-    void rayIntersection(Ray ray);
+    bool rayIntersection(Ray ray, Vertex intersection);
 
     /*
     void setVertices(Vertex _v0, Vertex _v1, Vertex _v2){

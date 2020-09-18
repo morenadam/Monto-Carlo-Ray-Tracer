@@ -9,3 +9,7 @@ Ray::Ray() {}
 Ray::~Ray() {
 
 }
+
+Direction Ray::getDir() {
+    return dir;
+}
