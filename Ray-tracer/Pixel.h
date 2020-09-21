@@ -20,6 +20,10 @@ public:
 
     ~Pixel();
 
+    const ColorDbl &getColor() const;
+
+    void setColor(const ColorDbl color);
+
 };
 
 
