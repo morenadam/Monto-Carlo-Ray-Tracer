@@ -18,8 +18,11 @@ void Camera::render() {
     std::cout << "Hello, from camera!" << std::endl;
 
 
-//    for (int j = 0; j < imageHeight; ++j) {
-//        for (int i = 0; i < imageWidth; ++i) {
+    for (int j = 0; j < imageHeight; ++j) {
+        for (int i = 0; i < imageWidth; ++i) {
+
+
+
 //            // compute ray direction
 //            //Ray primRay(eyepoint, pixelpoint);
 //            //Compute the direction from eyepoint to pixelpoint below
@@ -56,8 +59,8 @@ void Camera::render() {
 ////                pixels[i][j] = object->color * light.brightness;
 ////            else
 ////                pixels[i][j] = 0;
-//        }
-//    }
+        }
+    }
 }
 
 void Camera::createImage() {

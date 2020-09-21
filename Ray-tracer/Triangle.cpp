@@ -17,6 +17,8 @@ Triangle::Triangle(Vertex _v0, Vertex _v1, Vertex _v2,  ColorDbl color) : v0(_v0
 Triangle::~Triangle() {}
 
 bool Triangle::rayIntersection(Ray ray, Direction direction, Vertex &endPoint){
+    //https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/moller-trumbore-ray-triangle-intersection
+
     glm::dvec3 edge1  = v1 - v0;
     glm::dvec3 edge2 = v2 - v0;
     glm::dvec3 pvec = glm::cross(direction, edge2);
@@ -36,7 +38,6 @@ bool Triangle::rayIntersection(Ray ray, Direction direction, Vertex &endPoint){
 
     float invDet = 1 / det;
 
-    //https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/moller-trumbore-ray-triangle-intersection
     double u = glm::dot(tvec, pvec) * invDet;
     if (u < 0 || u > 1) return false;
 
