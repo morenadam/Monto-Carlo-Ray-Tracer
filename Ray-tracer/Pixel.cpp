@@ -9,3 +9,11 @@ Pixel::Pixel() {}
 Pixel::~Pixel() {
 
 }
+
+const ColorDbl &Pixel::getColor() const {
+    return color;
+}
+
+void Pixel::setColor(const ColorDbl color) {
+    Pixel::color = color;
+}

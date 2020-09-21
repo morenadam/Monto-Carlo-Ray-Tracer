@@ -7,6 +7,6 @@ int main() {
 
     Camera camera;
     camera.render();
-
+    camera.createImage();
     return 0;
 }
