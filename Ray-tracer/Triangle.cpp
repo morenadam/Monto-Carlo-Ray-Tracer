@@ -16,14 +16,14 @@ Triangle::Triangle(Vertex _v0, Vertex _v1, Vertex _v2,  ColorDbl color) : v0(_v0
 
 Triangle::~Triangle() {}
 
-bool Triangle::rayIntersection(Ray ray, glm::dvec3 &intersection){
+bool Triangle::rayIntersection(Ray ray, Direction direction, Vertex &endPoint){
     glm::dvec3 edge1  = v1 - v0;
     glm::dvec3 edge2 = v2 - v0;
-    glm::dvec3 pvec = glm::cross(ray.getDir(), edge2);
-    glm::dvec3 qvec = glm::cross((glm::dvec3)ray.getStart()-(glm::dvec3)v0, edge1);
-    glm::dvec3 tvec = (glm::dvec3)ray.getStart()-(glm::dvec3)v0;
+    glm::dvec3 pvec = glm::cross(direction, edge2);
+    glm::dvec3 qvec = glm::cross(ray.getStart()-v0, edge1);
+    glm::dvec3 tvec = ray.getStart()-v0;
 
-    const double kEpsilon = 0.0000001;
+    const double kEpsilon = 0.00001;
 
     double det = glm::dot(edge1, pvec);
 
@@ -40,12 +40,12 @@ bool Triangle::rayIntersection(Ray ray, glm::dvec3 &intersection){
     double u = glm::dot(tvec, pvec) * invDet;
     if (u < 0 || u > 1) return false;
 
-    double v = glm::dot(ray.getDir(), qvec) * invDet;
+    double v = glm::dot(direction, qvec) * invDet;
     if (v < 0 || u + v > 1) return false;
 
     double t = glm::dot(edge2, qvec) * invDet;
 
-    intersection = (glm::dvec3) ray.getStart() + ray.getDir()*t;
+    endPoint =  ray.getStart() + direction*t;
 
     return true;
 }

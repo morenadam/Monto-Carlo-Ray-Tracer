@@ -8,7 +8,7 @@
 
 #include "glm/glm.hpp"
 
-using Vertex = glm::dvec4;
+using Vertex = glm::dvec3;
 using Direction = glm::dvec3;
 using ColorDbl = glm::dvec3;
 
