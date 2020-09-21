@@ -16,7 +16,6 @@ private:
     Vertex startPoint;
     Vertex endPoint;
     ColorDbl color;
-    Direction dir;
 
 public:
 
@@ -30,10 +29,7 @@ public:
     Ray(Vertex _startPoint, Vertex _endPoint) {
         startPoint = _startPoint;
         endPoint = _endPoint;
-        dir = (glm::dvec3)endPoint - (glm::dvec3)startPoint;
     }
-
-    Direction getDir();
 
     Vertex getStart(){
         return startPoint;

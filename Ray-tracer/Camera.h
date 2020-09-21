@@ -23,8 +23,8 @@ class Camera {
 private:
     static const int imageHeight = 800;
     static const int imageWidth = 800;
-    Vertex eyePointOne = Vertex(-2,0,0,1);
-    Vertex eyePointTwo = Vertex(-1,0,0,1);
+    Vertex eyePointOne = Vertex(-2,0,0);
+    Vertex eyePointTwo = Vertex(-1,0,0);
     bool isEyePointOne = true;
     std::vector<std::vector<Pixel>> image;
 
