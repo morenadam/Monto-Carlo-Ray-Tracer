@@ -7,6 +7,8 @@
 
 #include "Definitions.h"
 #include "Pixel.h"
+#include "Ray.h"
+#include <vector>
 
 /*
  * - It contains two instances of Vertex(the eye points) and a variable that allows you to switch between both eye points.
@@ -24,10 +26,10 @@ private:
     Vertex eyePointOne = Vertex(-2,0,0,1);
     Vertex eyePointTwo = Vertex(-1,0,0,1);
     bool isEyePointOne = true;
-    Pixel image [imageHeight][imageWidth];
+    std::vector<std::vector<Pixel>> image;
 
 public:
-    Camera();
+    Camera() : image(imageHeight, std::vector<Pixel>(imageWidth)) {};
 
     ~Camera();
 
