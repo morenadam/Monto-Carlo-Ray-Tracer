@@ -16,16 +16,18 @@ Triangle::Triangle(Vertex _v0, Vertex _v1, Vertex _v2,  ColorDbl color) : v0(_v0
 
 Triangle::~Triangle() {}
 
-bool Triangle::rayIntersection(Ray ray, Vertex intersection){
-    Vertex v0v1 = v1 - v0;
-    Vertex v0v2 = v2 - v0;
+bool Triangle::rayIntersection(Ray ray, glm::dvec3 &intersection){
+    glm::dvec3 edge1  = v1 - v0;
+    glm::dvec3 edge2 = v2 - v0;
+    glm::dvec3 pvec = glm::cross(ray.getDir(), edge2);
+    glm::dvec3 qvec = glm::cross((glm::dvec3)ray.getStart()-(glm::dvec3)v0, edge1);
+    glm::dvec3 tvec = (glm::dvec3)ray.getStart()-(glm::dvec3)v0;
 
     const double kEpsilon = 0.0000001;
 
-    glm::dvec3 pvec = glm::cross(ray.getDir(),(glm::dvec3)v0v2);
-    float det = glm::dot((glm::dvec3)v0v1, pvec);
+    double det = glm::dot(edge1, pvec);
 
-    // if the determinant is negative the triangle is backfacing
+    // if the determinant is negative the triangle is back-facing
     // if the determinant is close to 0, the ray misses the triangle
     if (det < kEpsilon) return false;
 
@@ -34,20 +36,20 @@ bool Triangle::rayIntersection(Ray ray, Vertex intersection){
 
     float invDet = 1 / det;
 
-    //TODO: getStart()??? Finish rayIntersection
     //https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/moller-trumbore-ray-triangle-intersection
-    glm::dvec3 tvec = (glm::dvec3)ray.getStart() - (glm::dvec3)v0;
     double u = glm::dot(tvec, pvec) * invDet;
     if (u < 0 || u > 1) return false;
 
-    glm::dvec3 qvec = glm::dot(tvec, (glm::dvec3)v0v1);
-    v = dir.dotProduct(qvec) * invDet;
+    double v = glm::dot(ray.getDir(), qvec) * invDet;
     if (v < 0 || u + v > 1) return false;
 
-    t = v0v2.dotProduct(qvec) * invDet;
+    double t = glm::dot(edge2, qvec) * invDet;
 
-    }
+    intersection = (glm::dvec3) ray.getStart() + ray.getDir()*t;
+
+    return true;
 }
+
 
 
 
