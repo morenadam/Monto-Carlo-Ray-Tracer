@@ -26,10 +26,10 @@ void Camera::render(Scene scene) {
 
     const double delta = 0.0025; //side length of each pixel
 
-    for (int j = 0; j < imageHeight; ++j) {
-        for (int i = 0; i < imageWidth; ++i) {
-            double rand_y = (double)rand();
-            double rand_z = (double)rand();
+    for (int i = 0; i < imageHeight; ++i) {
+        for (int j = 0; j < imageWidth; ++j) {
+            double rand_y = 0.5;
+            double rand_z = 0.5;
 
             Vertex pixelPoint = Vertex(0.0, (i - 401 + rand_y) * delta, (j - 401 + rand_z) * delta);
 
