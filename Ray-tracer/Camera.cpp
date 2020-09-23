@@ -28,8 +28,8 @@ void Camera::render(Scene scene) {
 
     for (int i = 0; i < imageHeight; ++i) {
         for (int j = 0; j < imageWidth; ++j) {
-            double rand_y = 0.5;
-            double rand_z = 0.5;
+            double rand_y = (double) rand()/RAND_MAX;
+            double rand_z = (double) rand()/RAND_MAX;
 
             Vertex pixelPoint = Vertex(0.0, (i - 401 + rand_y) * delta, (j - 401 + rand_z) * delta);
 
