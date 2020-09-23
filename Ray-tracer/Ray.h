@@ -15,6 +15,7 @@ class Ray {
 private:
     Vertex startPoint;
     Vertex endPoint;
+    Direction dir;
     ColorDbl color;
 
 public:
@@ -26,13 +27,21 @@ public:
 
     //TODO: add reference to the triangle which the end point is located
 
-    Ray(Vertex _startPoint, Vertex _endPoint) {
+    Ray(Vertex _startPoint, Direction _dir) {
         startPoint = _startPoint;
-        endPoint = _endPoint;
+        dir = _dir
+    }
+
+    Vertex setEnd(Vertex _end){
+        endPoint = _end;
     }
 
     Vertex getStart(){
         return startPoint;
+    }
+
+    Direction getDirection(){
+        return dir;
     }
 };
 

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include "Camera.h"
+#include "Scene.h"
 
 Camera::~Camera() {
 
@@ -14,7 +15,7 @@ Camera::~Camera() {
 void Camera::switchEyePoint() {
     isEyePointOne = !isEyePointOne;
 }
-void Camera::render() {
+void Camera::render(Scene scene) {
 
     std::cout << "Hello, from camera!" << std::endl;
 
@@ -23,11 +24,28 @@ void Camera::render() {
     if (isEyePointOne) eyePoint = eyePointOne;
     else eyePoint = eyePointTwo;
 
+    const double delta = 0.0025; //side length of each pixel
+
     for (int j = 0; j < imageHeight; ++j) {
         for (int i = 0; i < imageWidth; ++i) {
+            double rand_y = (double)rand();
+            double rand_z = (double)rand();
 
-            if(j < 400) image[i][j].setColor(ColorDbl(0,1,0));
-            else image[i][j].setColor(ColorDbl(0,0,1));
+            Vertex pixelPoint = Vertex(0.0, (i - 401 + rand_y) * delta, (j - 401 + rand_z) * delta);
+
+            Direction ray_dir = pixelPoint - eyePoint;
+            ray_dir = glm::normalize(ray_dir);
+
+            Ray ray(eyePoint, ray_dir);
+
+            scene.FindRayIntersection(ray);
+
+
+
+
+
+//            if(j < 400) image[i][j].setColor(ColorDbl(0,1,0));
+//            else image[i][j].setColor(ColorDbl(0,0,1));
 
 //            // compute ray direction
 //            //Ray primRay(eyepoint, pixelpoint);
@@ -76,9 +94,9 @@ void Camera::createImage() {
     ofs << "P6\n" << imageWidth << " " << imageHeight << "\n255\n";
     for (int j = 0; j < imageHeight; ++j) {
         for (int i = 0; i < imageWidth; ++i) {
-        ofs << (unsigned char)((image[i][j].getColor().x) * (double)255) <<
-            (unsigned char)((image[i][j].getColor().y) * (double)255) <<
-            (unsigned char)((image[i][j].getColor().z) * (double)255);
+        ofs << (unsigned char)((image[i][j].getColor().x) * (double)255.99) <<
+            (unsigned char)((image[i][j].getColor().y) * (double)255.99) <<
+            (unsigned char)((image[i][j].getColor().z) * (double)255.99);
     }}
     ofs.close();
     //delete[] image;

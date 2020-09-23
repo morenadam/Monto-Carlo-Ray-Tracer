@@ -9,6 +9,7 @@
 #include "Pixel.h"
 #include "Ray.h"
 #include <vector>
+#include "Scene.h"
 
 /*
  * - It contains two instances of Vertex(the eye points) and a variable that allows you to switch between both eye points.
@@ -33,7 +34,7 @@ public:
 
     ~Camera();
 
-    void render();
+    void render(Scene scene);
 
     void createImage();
 

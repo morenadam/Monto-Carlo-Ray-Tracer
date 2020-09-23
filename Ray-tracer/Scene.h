@@ -26,7 +26,13 @@ public:
 
     Scene();
 
+    Triangle FindRayIntersection(Ray ray);
+
     ~Scene();
+
+    Triangle getTriangles(){
+        return triangleList;
+    }
 
 };
 

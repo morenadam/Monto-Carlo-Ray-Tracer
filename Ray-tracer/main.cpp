@@ -6,7 +6,8 @@ int main() {
     std::cout << "Hello, World Test!" << std::endl;
 
     Camera camera;
-    camera.render();
+    Scene scene;
+    camera.render(scene);
     camera.createImage();
     return 0;
 }

@@ -4,6 +4,7 @@
 
 #include "Scene.h"
 #include "Definitions.h"
+#include "Triangle.h"
 
 Scene::Scene() {
 
@@ -140,6 +141,13 @@ Scene::Scene() {
                                 Vertex(0, 6, 5),
                                 Vertex(-3, 0, 5),
                                 ColorDbl(1, 0, 1));
+}
+
+Triangle Scene::FindRayIntersection(Ray ray){
+    //borders
+    for(Triangle triangle : triangleList){
+        triangle.rayIntersection()
+    }
 }
 
 Scene::~Scene() {
