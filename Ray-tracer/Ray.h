@@ -29,11 +29,19 @@ public:
 
     Ray(Vertex _startPoint, Direction _dir) {
         startPoint = _startPoint;
-        dir = _dir
+        dir = _dir;
     }
 
-    Vertex setEnd(Vertex _end){
+    void setEnd(Vertex _end){
         endPoint = _end;
+    }
+
+    void setColor(ColorDbl _color){
+        color = _color;
+    }
+
+    ColorDbl getColor(){
+        return color;
     }
 
     Vertex getStart(){

@@ -36,13 +36,11 @@ void Camera::render(Scene scene) {
             Direction ray_dir = pixelPoint - eyePoint;
             ray_dir = glm::normalize(ray_dir);
 
+            //create new ray (has no endpoint yet)
             Ray ray(eyePoint, ray_dir);
 
             scene.FindRayIntersection(ray);
-
-
-
-
+            image[i][j].setColor(ray.getColor());
 
 //            if(j < 400) image[i][j].setColor(ColorDbl(0,1,0));
 //            else image[i][j].setColor(ColorDbl(0,0,1));

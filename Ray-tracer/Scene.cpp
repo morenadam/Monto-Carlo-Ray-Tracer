@@ -143,10 +143,13 @@ Scene::Scene() {
                                 ColorDbl(1, 0, 1));
 }
 
-Triangle Scene::FindRayIntersection(Ray ray){
+void Scene::FindRayIntersection(Ray &ray){
     //borders
-    for(Triangle triangle : triangleList){
-        triangle.rayIntersection()
+    for(Triangle triangle : triangleList) {
+        if (triangle.rayIntersection(ray)) {
+            ray.setColor(triangle.getColor());
+            break;
+        }
     }
 }
 

@@ -29,6 +29,10 @@ public:
 
     bool rayIntersection(Ray &ray);
 
+    ColorDbl getColor(){
+        return color;
+    }
+
     /*
     void setVertices(Vertex _v0, Vertex _v1, Vertex _v2){
         v0 = _v0, v1 = _v1, v2 = _v2;
