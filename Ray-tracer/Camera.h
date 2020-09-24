@@ -28,6 +28,7 @@ private:
     Vertex eyePointTwo = Vertex(-1,0,0);
     bool isEyePointOne = false;
     std::vector<std::vector<Pixel>> image;
+    double iMax;
 
 public:
     Camera() : image(imageHeight, std::vector<Pixel>(imageWidth)) {};
