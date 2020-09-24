@@ -12,7 +12,7 @@
 //Pixel has references to the rays that go through it.  We use for now one.
 class Pixel {
 private:
-    ColorDbl color;
+    ColorDbl color = ColorDbl(0,0,0);
     Ray ray;
 
 public:

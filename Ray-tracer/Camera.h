@@ -26,7 +26,7 @@ private:
     const int imageWidth = 800;
     Vertex eyePointOne = Vertex(-2,0,0);
     Vertex eyePointTwo = Vertex(-1,0,0);
-    bool isEyePointOne = true;
+    bool isEyePointOne = false;
     std::vector<std::vector<Pixel>> image;
 
 public:

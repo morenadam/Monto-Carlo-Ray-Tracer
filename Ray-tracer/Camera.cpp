@@ -31,7 +31,7 @@ void Camera::render(Scene scene) {
             double rand_y = (double) rand()/RAND_MAX;
             double rand_z = (double) rand()/RAND_MAX;
 
-            Vertex pixelPoint = Vertex(0.0, (i - 401 + rand_y) * delta, (j - 401 + rand_z) * delta);
+            Vertex pixelPoint = Vertex(0.0, (401 - i + rand_y) * delta, (401 - j + rand_z) * delta);
 
             Direction ray_dir = pixelPoint - eyePoint;
             ray_dir = glm::normalize(ray_dir);

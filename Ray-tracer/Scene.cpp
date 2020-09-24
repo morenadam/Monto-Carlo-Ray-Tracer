@@ -115,9 +115,9 @@ Scene::Scene() {
                                 Vertex(13, 0, -5),
                                 ColorDbl(1, 1, 0));
 
-    triangleList[19] = Triangle(Vertex(10, 6, -5),
+    triangleList[19] = Triangle(Vertex(13, 0, -5),
+                                Vertex(10, -6, 5),
                                 Vertex(13, 0, 5),
-                                Vertex(10, 6, 5),
                                 ColorDbl(1, 1, 0));
 
     //__________________SOUTH-WEST___________________
