@@ -10,4 +10,8 @@ Ray::~Ray() {
 
 }
 
+const Vertex &Ray::getEndPoint() const {
+    return endPoint;
+}
+
 
