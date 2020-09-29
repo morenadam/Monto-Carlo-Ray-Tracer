@@ -27,7 +27,7 @@ public:
 
     Triangle(Vertex _v0, Vertex _v1, Vertex _v2, ColorDbl _color);
 
-    bool rayIntersection(Ray &ray);
+    bool rayIntersection(Ray &ray, Vertex &intersection);
 
     ColorDbl getColor(){
         return color;

@@ -44,6 +44,8 @@ public:
         return color;
     }
 
+    const Vertex &getEndPoint() const;
+
     Vertex getStart(){
         return startPoint;
     }

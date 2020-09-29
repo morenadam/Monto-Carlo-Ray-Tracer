@@ -9,6 +9,7 @@
 #include "Triangle.h"
 #include <math.h>
 #include "Definitions.h"
+#include "Tetrahedron.h"
 
 //Scene contains instances of Triangle.  We use one Scene object that consists of 24
 //instances of Triangle. Scene objects are closed. The triangles of the floor and the
@@ -21,6 +22,7 @@ class Scene {
 private:
 
     Triangle triangleList[24];
+    Tetrahedron tetrahedron;
 
 public:
 

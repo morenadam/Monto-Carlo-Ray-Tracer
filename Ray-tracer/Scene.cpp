@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "Definitions.h"
 #include "Triangle.h"
+//#include "Tetrahedron.h"
 
 Scene::Scene() {
 
@@ -141,16 +142,27 @@ Scene::Scene() {
                                 Vertex(0, 6, 5),
                                 Vertex(-3, 0, 5),
                                 ColorDbl(1, 0, 1));
+
+/*    tetrahedron = Tetrahedron(Vertex(),
+                              Vertex(),
+                              Vertex(),
+                              Vertex());*/
+
+
 }
 
 void Scene::FindRayIntersection(Ray &ray){
+    double minDistance = 1000;
+    Vertex intersection;
     //borders
     for(Triangle triangle : triangleList) {
-        if (triangle.rayIntersection(ray)) {
-            ray.setColor(triangle.getColor());
-            break;
+        if (triangle.rayIntersection(ray, intersection)) {
+            if(glm::length(intersection-ray.getStart()) < minDistance) {
+                ray.setColor(triangle.getColor());
+            }
         }
     }
+
 }
 
 Scene::~Scene() {
