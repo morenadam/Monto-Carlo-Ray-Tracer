@@ -10,11 +10,10 @@ Camera::~Camera() {
 
 }
 
-
-
 void Camera::switchEyePoint() {
     isEyePointOne = !isEyePointOne;
 }
+
 void Camera::render(Scene scene) {
 
     std::cout << "Hello, from camera!" << std::endl;
@@ -54,8 +53,6 @@ void Camera::render(Scene scene) {
 }
 
 void Camera::createImage() {
-    //TODO: create image
-    // Save result to a PPM image (keep these flags if you compile under Windows)
     std::ofstream ofs("./untitled.ppm", std::ios::out | std::ios::binary);
     ofs << "P6\n" << imageWidth << " " << imageHeight << "\n255\n";
     for (int j = 0; j < imageHeight; ++j) {

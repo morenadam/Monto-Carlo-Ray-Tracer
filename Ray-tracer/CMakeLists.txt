@@ -16,5 +16,5 @@ add_executable(Ray_tracer
         Scene.cpp
         Scene.h
         Camera.cpp
-        Camera.h Definitions.h)
+        Camera.h Definitions.h Sphere.cpp Sphere.h)
 

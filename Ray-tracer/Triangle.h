@@ -25,7 +25,7 @@ public:
     Triangle();
     ~Triangle();
 
-    Triangle(Vertex v0, Vertex v1, Vertex v2, ColorDbl color);
+    Triangle(Vertex _v0, Vertex _v1, Vertex _v2, ColorDbl _color);
 
     bool rayIntersection(Ray &ray);
 
