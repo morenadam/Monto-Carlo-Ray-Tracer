@@ -17,11 +17,9 @@ private:
 
 public:
     Pixel();
-
     ~Pixel();
 
-    const ColorDbl &getColor() const;
-
+    ColorDbl getColor();
     void setColor(const ColorDbl color);
 
 };

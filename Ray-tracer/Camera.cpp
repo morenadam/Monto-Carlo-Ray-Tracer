@@ -6,6 +6,8 @@
 #include "Camera.h"
 #include "Scene.h"
 
+Camera::Camera() : image(imageHeight, std::vector<Pixel>(imageWidth)) {}
+
 Camera::~Camera() {
 
 }
@@ -16,7 +18,7 @@ void Camera::switchEyePoint() {
 
 void Camera::render(Scene scene) {
 
-    std::cout << "Hello, from camera!" << std::endl;
+    std::cout << "Rendering Scene..." << std::endl;
 
     //set starting point of ray
     Vertex eyePoint;
@@ -53,7 +55,7 @@ void Camera::render(Scene scene) {
 }
 
 void Camera::createImage() {
-    std::ofstream ofs("./untitled.ppm", std::ios::out | std::ios::binary);
+    std::ofstream ofs("./scene.ppm", std::ios::out | std::ios::binary);
     ofs << "P6\n" << imageWidth << " " << imageHeight << "\n255\n";
     for (int j = 0; j < imageHeight; ++j) {
         for (int i = 0; i < imageWidth; ++i) {
@@ -63,4 +65,7 @@ void Camera::createImage() {
     }}
     ofs.close();
     //delete[] image;
+
+    std::cout << "Finished" << std::endl;
+
 }
