@@ -14,37 +14,18 @@
 //in an instance of Direction. It has a method rayIntersection(Ray arg)
 //that computes the intersection between a Ray and the Triangle with the Möller-Trumbore algorithm.
 class Triangle {
-
 private:
     Vertex v0, v1, v2;
     ColorDbl color;
     Direction normal;
 
 public:
-
     Triangle();
     ~Triangle();
-
     Triangle(Vertex _v0, Vertex _v1, Vertex _v2, ColorDbl _color);
 
     bool rayIntersection(Ray &ray, Vertex &intersection);
-
-    ColorDbl getColor(){
-        return color;
-    }
-
-    /*
-    void setVertices(Vertex _v0, Vertex _v1, Vertex _v2){
-        v0 = _v0, v1 = _v1, v2 = _v2;
-    }
-
-    void setColor(ColorDbl c){
-        color = c;
-    };
-
-    void setNormal(Direction n){
-        normal = n;
-    }*/
+    ColorDbl getColor();
 
 };
 

@@ -16,6 +16,10 @@ Triangle::Triangle(Vertex _v0, Vertex _v1, Vertex _v2,  ColorDbl color) : v0(_v0
 
 Triangle::~Triangle() {}
 
+ColorDbl Triangle::getColor(){
+    return color;
+}
+
 bool Triangle::rayIntersection(Ray &ray, Vertex &intersection){
     //https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/moller-trumbore-ray-triangle-intersection
 

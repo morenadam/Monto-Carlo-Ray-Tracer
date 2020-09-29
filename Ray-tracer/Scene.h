@@ -18,24 +18,16 @@
 //calling successively the rayIntersection(Ray arg) method of each Triangle.  It then passes references
 //to the triangle and the intersection point to theRay arg.
 class Scene {
-
 private:
-
     Triangle triangleList[24];
     Tetrahedron tetrahedron;
 
 public:
-
     Scene();
-
-    void FindRayIntersection(Ray &ray);
-
     ~Scene();
 
-//    Triangle getTriangles(){
-//        return triangleList;
-//    }
-
+    void FindRayIntersection(Ray &ray);
+    
 };
 
 #endif //UNTITLED_SCENE_H

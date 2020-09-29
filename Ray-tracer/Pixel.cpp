@@ -10,7 +10,7 @@ Pixel::~Pixel() {
 
 }
 
-const ColorDbl &Pixel::getColor() const {
+ColorDbl Pixel::getColor() {
     return color;
 }
 

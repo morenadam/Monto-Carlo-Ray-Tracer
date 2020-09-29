@@ -31,16 +31,13 @@ private:
     double iMax;
 
 public:
-    Camera() : image(imageHeight, std::vector<Pixel>(imageWidth)) {};
-
+    Camera();
     ~Camera();
 
     void render(Scene scene);
-
     void createImage();
-
     void switchEyePoint();
-
+    
 };
 
 
