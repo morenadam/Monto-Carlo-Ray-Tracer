@@ -11,20 +11,13 @@ Tetrahedron::~Tetrahedron(){
 
 }
 
-bool Tetrahedron::rayIntersection(Ray &ray){
-    bool firstIntersection = true;
-    Vertex intersection;
+bool Tetrahedron::rayIntersection(Ray &ray, Vertex &intersection, double &minDistance){
     for (Triangle triangle : triangles){
         if(triangle.rayIntersection(ray, intersection)){
-            if(firstIntersection){
-                intersection = ray.getEndPoint();
-                firstIntersection = false;
+            if(glm::length(intersection-ray.getStart()) < minDistance) {
+                ray.setColor(triangle.getColor());
+                minDistance = glm::length(intersection-ray.getStart());
             }
-            else{
-
-
-            }
-
         }
     }
 }

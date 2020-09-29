@@ -143,10 +143,10 @@ Scene::Scene() {
                                 Vertex(-3, 0, 5),
                                 ColorDbl(1, 0, 1));
 
-/*    tetrahedron = Tetrahedron(Vertex(),
-                              Vertex(),
-                              Vertex(),
-                              Vertex());*/
+    tetrahedron = Tetrahedron(Vertex(13, 0, -5),
+                              Vertex(13, 0, 5),
+                              Vertex(10, 6, -5),
+                              Vertex(10,0,-5));
 
 
 }
@@ -159,9 +159,13 @@ void Scene::FindRayIntersection(Ray &ray){
         if (triangle.rayIntersection(ray, intersection)) {
             if(glm::length(intersection-ray.getStart()) < minDistance) {
                 ray.setColor(triangle.getColor());
+                minDistance = glm::length(intersection-ray.getStart());
             }
         }
     }
+
+    //Tetrahedron
+    tetrahedron.rayIntersection(ray, intersection, minDistance);
 
 }
 
@@ -169,4 +173,3 @@ Scene::~Scene() {
 
 }
 
-//TODO: finish room triangles

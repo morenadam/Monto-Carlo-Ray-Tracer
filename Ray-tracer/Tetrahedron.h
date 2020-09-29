@@ -26,7 +26,7 @@ public:
         triangles[3] = Triangle(v1, v2, v3,ColorDbl(0.5, 0.5, 1));
     }
 
-    bool rayIntersection(Ray &ray);
+    bool rayIntersection(Ray &ray, Vertex &intersection, double &minDistance);
 
 
 };
