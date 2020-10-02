@@ -16,6 +16,7 @@ public:
     Tetrahedron();
     ~Tetrahedron();
     Tetrahedron(Vertex v0, Vertex v1, Vertex v2, Vertex v3);
+    Tetrahedron(Vertex v0);
 
     bool rayIntersection(Ray &ray, Vertex &intersection, double &minDistance);
 
