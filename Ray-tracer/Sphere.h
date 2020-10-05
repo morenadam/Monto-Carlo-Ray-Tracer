@@ -5,6 +5,8 @@
 #ifndef RAY_TRACER_SPHERE_H
 #define RAY_TRACER_SPHERE_H
 #include "Definitions.h"
+#include "Ray.h"
+#include <math.h>
 
 
 class Sphere {
@@ -18,6 +20,12 @@ public:
     ~Sphere();
 
     Sphere(double _radius, Vertex _center, ColorDbl _color);
+
+    bool rayIntersection(Ray &ray, Vertex &intersection, double &minDistance);
+
+    const ColorDbl &getColor() const;
+
+
 };
 
 

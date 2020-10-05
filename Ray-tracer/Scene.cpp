@@ -145,6 +145,7 @@ Scene::Scene() {
 
     tetrahedron = Tetrahedron(Vertex(0,-2,0));
 
+    sphere = Sphere(3, Vertex(10,2,0), ColorDbl(0.8,0.8,0));
 
 }
 
@@ -163,6 +164,9 @@ void Scene::FindRayIntersection(Ray &ray){
 
     //Tetrahedron
     tetrahedron.rayIntersection(ray, intersection, minDistance);
+
+    //Sphere
+    sphere.rayIntersection(ray, intersection, minDistance);
 
 }
 
