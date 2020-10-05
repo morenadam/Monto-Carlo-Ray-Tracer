@@ -143,8 +143,7 @@ Scene::Scene() {
                                 Vertex(-3, 0, 5),
                                 ColorDbl(1, 0, 1));
 
-    tetrahedron = Tetrahedron(Vertex(0,-2,0));
-
+    tetrahedron = Tetrahedron(Vertex(0,-2,0)); // (0,0,0) spawns the tip of the tetrahedron in (10,0,0)
 
 }
 
@@ -153,16 +152,11 @@ void Scene::FindRayIntersection(Ray &ray){
     Vertex intersection;
     //borders
     for(Triangle triangle : triangleList) {
-        if (triangle.rayIntersection(ray, intersection)) {
-            if(glm::length(intersection-ray.getStart()) < minDistance) {
-                ray.setColor(triangle.getColor());
-                minDistance = glm::length(intersection-ray.getStart());
-            }
-        }
+        triangle.rayIntersection(ray, minDistance);
     }
 
     //Tetrahedron
-    tetrahedron.rayIntersection(ray, intersection, minDistance);
+    tetrahedron.rayIntersection(ray, minDistance);
 
 }
 
