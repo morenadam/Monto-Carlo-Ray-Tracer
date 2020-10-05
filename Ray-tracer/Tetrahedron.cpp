@@ -30,13 +30,8 @@ Tetrahedron::Tetrahedron(Vertex _v0) {
     triangles[3] = Triangle(v1, v2, v3,ColorDbl(0.5, 0.5, 1));
 }
 
-bool Tetrahedron::rayIntersection(Ray &ray, Vertex &intersection, double &minDistance){
+void Tetrahedron::rayIntersection(Ray &ray, double &minDistance){
     for (Triangle triangle : triangles){
-        if(triangle.rayIntersection(ray, intersection)){
-            if(glm::length(intersection-ray.getStart()) < minDistance) {
-                ray.setColor(triangle.getColor());
-                minDistance = glm::length(intersection-ray.getStart());
-            }
-        }
+        triangle.rayIntersection(ray, minDistance);
     }
 }

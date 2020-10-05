@@ -20,7 +20,7 @@ ColorDbl Triangle::getColor(){
     return color;
 }
 
-bool Triangle::rayIntersection(Ray &ray, Vertex &intersection){
+bool Triangle::rayIntersection(Ray &ray, double &minDistance){
     //https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/moller-trumbore-ray-triangle-intersection
 
     glm::dvec3 edge1  = v1 - v0;
@@ -50,7 +50,11 @@ bool Triangle::rayIntersection(Ray &ray, Vertex &intersection){
 
     double t = glm::dot(edge2, qvec) * invDet;
 
-    intersection = ray.getStart() + ray.getDirection()*t;
+    if(glm::length(Vertex(ray.getStart() + ray.getDirection()*t)) < minDistance){
+        ray.setEnd(ray.getStart() + ray.getDirection()*t);
+        ray.setColor(this->getColor());
+        minDistance = glm::length(ray.getEndPoint()-ray.getStart());
+    }
 
     return true;
 }

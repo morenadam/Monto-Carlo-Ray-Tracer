@@ -11,7 +11,7 @@ Sphere::~Sphere() {}
 Sphere::Sphere(double _radius, Vertex _center, ColorDbl _color) : radius(_radius), center(_center),
                                                                              color(_color) {}
 
-bool Sphere::rayIntersection(Ray &ray, Vertex &intersection, double &minDistance){
+bool Sphere::rayIntersection(Ray &ray, double &minDistance){
 
     float a, b ;
     Vertex o, d;

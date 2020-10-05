@@ -154,19 +154,14 @@ void Scene::FindRayIntersection(Ray &ray){
     Vertex intersection;
     //borders
     for(Triangle triangle : triangleList) {
-        if (triangle.rayIntersection(ray, intersection)) {
-            if(glm::length(intersection-ray.getStart()) < minDistance) {
-                ray.setColor(triangle.getColor());
-                minDistance = glm::length(intersection-ray.getStart());
-            }
-        }
+        triangle.rayIntersection(ray, minDistance);
     }
 
     //Tetrahedron
-    tetrahedron.rayIntersection(ray, intersection, minDistance);
+    tetrahedron.rayIntersection(ray, minDistance);
 
     //Sphere
-    sphere.rayIntersection(ray, intersection, minDistance);
+    sphere.rayIntersection(ray, minDistance);
 
 }
 

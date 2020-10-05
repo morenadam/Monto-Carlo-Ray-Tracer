@@ -21,7 +21,7 @@ public:
 
     Sphere(double _radius, Vertex _center, ColorDbl _color);
 
-    bool rayIntersection(Ray &ray, Vertex &intersection, double &minDistance);
+    bool rayIntersection(Ray &ray, double &minDistance);
 
     const ColorDbl &getColor() const;
 
