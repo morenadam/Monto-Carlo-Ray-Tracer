@@ -23,13 +23,16 @@ private:
     Triangle triangleList[24];
     Tetrahedron tetrahedron;
     Sphere sphere;
+    Vertex lightPoint = Vertex(5,0,4.9);
 
 public:
     Scene();
     ~Scene();
 
     void FindRayIntersection(Ray &ray);
-    
+
+    const Vertex &getLightPoint() const;
+
 };
 
 #endif //UNTITLED_SCENE_H

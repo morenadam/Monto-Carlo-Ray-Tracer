@@ -10,9 +10,7 @@ Ray::~Ray() {
 
 }
 
-Ray::Ray(Vertex _startPoint, Direction _dir) : startPoint(_startPoint), dir(_dir){
-
-}
+Ray::Ray(Vertex _startPoint, Direction _dir) : startPoint(_startPoint), dir(_dir){}
 
 void Ray::setEnd(Vertex _end){
     endPoint = _end;
@@ -37,5 +35,16 @@ Vertex Ray::getStart(){
 Direction Ray::getDirection(){
     return dir;
 }
+
+void Ray::setTriangle(Triangle *triangle) {
+    Ray::triangle = triangle;
+}
+
+Triangle *Ray::getTriangle() const {
+    return triangle;
+}
+
+
+
 
 

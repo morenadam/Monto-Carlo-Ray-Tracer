@@ -6,6 +6,8 @@
 #define UNTITLED_RAY_H
 #include "Definitions.h"
 
+//forward declaration
+class Triangle;
 
 //It has two instances of Vertex, which are the ray’s starting point and endpoint.
 //You can put the vertices into a vertex list and use references to these points inRay.
@@ -17,6 +19,7 @@ private:
     Vertex endPoint;
     Direction dir;
     ColorDbl color;
+    Triangle *triangle;
 
 public:
     Ray();
@@ -32,6 +35,10 @@ public:
     Vertex getEndPoint();
     Vertex getStart();
     Direction getDirection();
+
+    void setTriangle(Triangle *triangle);
+
+    Triangle *getTriangle() const;
 
 };
 

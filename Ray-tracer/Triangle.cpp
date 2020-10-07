@@ -2,10 +2,10 @@
 // Created by Chris Paulusson on 2020-09-13.
 //
 
-#include "Ray.h"
 #include "Triangle.h"
 #include "Definitions.h"
 #include "glm/glm.hpp"
+#include "Ray.h"
 
 Triangle::Triangle() {}
 
@@ -51,12 +51,17 @@ bool Triangle::rayIntersection(Ray &ray, double &minDistance){
     double t = glm::dot(edge2, qvec) * invDet;
 
     if(glm::length(Vertex(ray.getStart() + ray.getDirection()*t)) < minDistance){
+        ray.setTriangle(this);
         ray.setEnd(ray.getStart() + ray.getDirection()*t);
         ray.setColor(this->getColor());
         minDistance = glm::length(ray.getEndPoint()-ray.getStart());
     }
 
     return true;
+}
+
+const Direction &Triangle::getNormal() const {
+    return normal;
 }
 
 

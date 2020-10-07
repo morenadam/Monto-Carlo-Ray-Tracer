@@ -24,6 +24,8 @@ public:
     ~Triangle();
     Triangle(Vertex _v0, Vertex _v1, Vertex _v2, ColorDbl _color);
 
+    const Direction &getNormal() const;
+
     bool rayIntersection(Ray &ray, double &minDistance);
     ColorDbl getColor();
 
