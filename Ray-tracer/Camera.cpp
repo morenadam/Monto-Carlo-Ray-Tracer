@@ -47,7 +47,7 @@ void Camera::render(Scene scene) {
 
             //shadow ray
             //add small bias to start point to make sure the shadow ray doesn't intersect the first ray's triangle
-            Vertex shadowStart = ray.getEndPoint() + ray.getTriangle()->getNormal()*0.0001;
+            Vertex shadowStart = ray.getEndPoint() + ray.getTriangle()->getNormal()*0.01;
             Direction shadowDir = glm::normalize(scene.getLightPoint()-shadowStart);
 
             Ray shadowRay = Ray(shadowStart, shadowDir);
@@ -58,8 +58,6 @@ void Camera::render(Scene scene) {
                 image[i][j].setColor(Vertex(0,0,0));
             }
             else image[i][j].setColor(ray.getColor());
-
-
 
 
             //Store the highest color value
