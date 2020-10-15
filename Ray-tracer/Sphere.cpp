@@ -13,39 +13,50 @@ Sphere::Sphere(double _radius, Vertex _center, ColorDbl _color) : radius(_radius
 
 bool Sphere::rayIntersection(Ray &ray, double &minDistance){
 
-    float a, b ;
-    Vertex o, d;
-    Direction l;
-    double c;
-    double r;
+    // Analytical solution
 
-    o = ray.getStart();
-    l = ray.getDirection();
-    a = 1;
-    b = glm::dot(2.0* l, (o - center));
-    c = glm::dot((o-center),(o-center)) - pow(radius,2);
+    double discriminant;
+    double d1, d2;
 
-    double d1 = -(b/2) + sqrt(pow((b/2),2) - a*c);
-    double d2 = -(b/2) - sqrt(pow((b/2),2) - a*c);
+    Vertex o = ray.getStart();
+    Direction l = ray.getDirection();
 
+    double a = 1; //Since the direction is normalized
+    double b = 2 * glm::dot(l, (o - center));
+    double c = glm::dot((o-center),(o-center)) - pow(radius,2);
+
+    discriminant = b * b - 4 * a * c;
     Vertex tempIntersection;
-    if(d1 < 0 && d2 <0) {
+
+    // No solutions
+    if(discriminant < 0) {
         return false;
     }
-    else if(d2 > 0) {
-        tempIntersection = o + d2*l;
+    //One solution
+    else if (discriminant < DBL_EPSILON ){
+        d1 = - (b / 2);
+        tempIntersection = o + d1 *l;
     }
+    //Two solutions
     else {
-        tempIntersection = o + d1*l;
+        d1 = -(b/2) + sqrt(pow((b/2),2) - a*c);
+        d2 = -(b/2) - sqrt(pow((b/2),2) - a*c);
+
+        if(d2 > 0) {
+            tempIntersection = o + d2*l;
+        }
+        else if (d1 > 0){
+            tempIntersection = o + d1*l;
+        }
+        else return false;
     }
 
     if(glm::length(tempIntersection - ray.getStart()) < minDistance) {
-        ray.setColor(this->getColor());
+        glm::vec3 normal = glm::normalize(tempIntersection - center);
+        //TODO: add normal to ray
+        ray.setColor(getColor());
         ray.setEnd(tempIntersection);
     }
-
-    // ||x−c||2= r^2
-
 
 }
 
