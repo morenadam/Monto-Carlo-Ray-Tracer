@@ -44,6 +44,14 @@ Triangle *Ray::getTriangle() const {
     return triangle;
 }
 
+void Ray::setObjectNormal(const Direction &objectNormal) {
+    Ray::objectNormal = objectNormal;
+}
+
+const Direction &Ray::getObjectNormal() const {
+    return objectNormal;
+}
+
 
 
 

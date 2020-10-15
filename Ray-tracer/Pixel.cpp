@@ -17,3 +17,11 @@ ColorDbl Pixel::getColor() {
 void Pixel::setColor(const ColorDbl color) {
     Pixel::color = color;
 }
+
+double Pixel::getBrightness() const {
+    return brightness;
+}
+
+void Pixel::setBrightness(double brightness) {
+    Pixel::brightness = brightness;
+}

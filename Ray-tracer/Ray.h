@@ -9,6 +9,7 @@
 //forward declaration
 class Triangle;
 
+
 //It has two instances of Vertex, which are the ray’s starting point and endpoint.
 //You can put the vertices into a vertex list and use references to these points inRay.
 //Ray contains a reference to the triangle on which the end point is located.
@@ -20,16 +21,18 @@ private:
     Direction dir;
     ColorDbl color;
     Triangle *triangle;
+    Direction objectNormal; //intersected point's objectNormal
 
 public:
     Ray();
     ~Ray();
     Ray(Vertex _startPoint, Direction _dir);
 
-    //TODO: add reference to the triangle which the end point is located
-
     void setEnd(Vertex _end);
     void setColor(ColorDbl _color);
+
+    const Direction &getObjectNormal() const;
+    void setObjectNormal(const Direction &objectNormal);
 
     ColorDbl getColor();
     Vertex getEndPoint();
@@ -37,7 +40,6 @@ public:
     Direction getDirection();
 
     void setTriangle(Triangle *triangle);
-
     Triangle *getTriangle() const;
 
 };

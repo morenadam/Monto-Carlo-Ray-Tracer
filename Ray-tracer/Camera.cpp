@@ -47,7 +47,7 @@ void Camera::render(Scene scene) {
 
             //shadow ray
             //add small bias to start point to make sure the shadow ray doesn't intersect the first ray's triangle
-            Vertex shadowStart = ray.getEndPoint() + ray.getTriangle()->getNormal()*0.01;
+            Vertex shadowStart = ray.getEndPoint() + ray.getObjectNormal()*0.001;
             Direction shadowDir = glm::normalize(scene.getLightPoint()-shadowStart);
 
             Ray shadowRay = Ray(shadowStart, shadowDir);
@@ -55,10 +55,11 @@ void Camera::render(Scene scene) {
             scene.FindRayIntersection(shadowRay);
 
             if((glm::length(shadowRay.getEndPoint() - shadowStart) - (glm::length(scene.getLightPoint() - shadowStart)) < DBL_EPSILON)){
-                image[i][j].setColor(Vertex(0,0,0));
+                image[i][j].setBrightness(0.0);
             }
-            else image[i][j].setColor(ray.getColor());
+            else image[i][j].setBrightness(1.0);
 
+            image[i][j].setColor(ray.getColor()*image[i][j].getBrightness());
 
             //Store the highest color value
             if (double newMax = glm::max(glm::max(ray.getColor().x, ray.getColor().y), ray.getColor().z) > iMax) {

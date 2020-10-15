@@ -14,6 +14,7 @@ class Pixel {
 private:
     ColorDbl color = ColorDbl(0,0,0);
     Ray ray;
+    double brightness;
 
 public:
     Pixel();
@@ -21,6 +22,10 @@ public:
 
     ColorDbl getColor();
     void setColor(const ColorDbl color);
+
+    double getBrightness() const;
+
+    void setBrightness(double brightness);
 
 };
 
