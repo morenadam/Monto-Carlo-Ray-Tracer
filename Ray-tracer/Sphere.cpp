@@ -53,7 +53,7 @@ bool Sphere::rayIntersection(Ray &ray, double &minDistance){
 
     if(glm::length(tempIntersection - ray.getStart()) < minDistance) {
         glm::vec3 normal = glm::normalize(tempIntersection - center);
-        //TODO: add normal to ray
+        ray.setObjectNormal(normal);
         ray.setColor(getColor());
         ray.setEnd(tempIntersection);
     }
