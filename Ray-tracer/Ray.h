@@ -5,6 +5,7 @@
 #ifndef UNTITLED_RAY_H
 #define UNTITLED_RAY_H
 #include "Definitions.h"
+#include <string>
 
 //forward declaration
 class Triangle;
@@ -22,6 +23,9 @@ private:
     ColorDbl color;
     Triangle *triangle;
     Direction objectNormal; //intersected point's objectNormal
+    std::string MaterialType;
+
+
 
 public:
     Ray();
@@ -41,6 +45,10 @@ public:
 
     void setTriangle(Triangle *triangle);
     Triangle *getTriangle() const;
+
+    const std::string &getMaterialType() const;
+
+    void setMaterialType(const std::string &MaterialType);
 
 };
 

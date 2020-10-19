@@ -5,8 +5,9 @@
 #include "Scene.h"
 #include "Definitions.h"
 #include "Triangle.h"
-//#include "Tetrahedron.h"
 
+#include <iostream>
+#include <string>
 Scene::Scene() {
 
     //__________________FLOOR____________________
@@ -81,12 +82,12 @@ Scene::Scene() {
     triangleList[12] = Triangle(Vertex(0, -6, -5),
                                 Vertex(0, -6, -5),
                                 Vertex(10, -6, 5),
-                                ColorDbl(0, 0, 1));
+                                ColorDbl(0, 0, 0.5));
 
     triangleList[13] = Triangle(Vertex(10, -6, -5),
                                 Vertex(0, -6, 5),
                                 Vertex(10, -6, 5),
-                                ColorDbl(0, 0, 1));
+                                ColorDbl(0, 0, 0.5));
 
     //__________________NORTH____________________
     triangleList[14] = Triangle(Vertex(10, 6, -5),
@@ -103,12 +104,12 @@ Scene::Scene() {
     triangleList[16] = Triangle(Vertex(13, 0, -5),
                                 Vertex(13, 0, 5),
                                 Vertex(10, 6, -5),
-                                ColorDbl(1, 0, 0));
+                                ColorDbl(0.5, 0, 0));
 
     triangleList[17] = Triangle(Vertex(10, 6, -5),
                                 Vertex(13, 0, 5),
                                 Vertex(10, 6, 5),
-                                ColorDbl(1, 0, 0));
+                                ColorDbl(0.5, 0, 0));
 
     //__________________SOUTH-EAST___________________
     triangleList[18] = Triangle(Vertex(10, -6, -5),
@@ -150,8 +151,9 @@ Scene::Scene() {
 }
 
 void Scene::FindRayIntersection(Ray &ray){
+
     double minDistance = 1000;
-    Vertex intersection;
+
     //borders
     for(Triangle triangle : triangleList) {
         triangle.rayIntersection(ray, minDistance);
@@ -163,14 +165,28 @@ void Scene::FindRayIntersection(Ray &ray){
     //Sphere
     sphere.rayIntersection(ray, minDistance);
 
+    //if the closest intersection is a sphere. Sphere = mirror
+    if(ray.getMaterialType() == "MIRROR"){
+        Ray reflectionRay(ray.getEndPoint(), glm::normalize(reflect(ray.getDirection(), ray.getObjectNormal())));
+        FindRayIntersection(reflectionRay);
+        ray.setColor(reflectionRay.getColor());
+    }
+
+    //compute diffuse reflection
+    //double diffuse = glm::max(0.0, glm::dot(ray.getObjectNormal(), (ray.getEndPoint()-getLightPoint())));
+
+    //ray.setColor(ray.getColor());
+
+    //compute diffuse reflection
 
 }
 
-Scene::~Scene() {
-
+Direction Scene::reflect(const Direction I, const Direction N){
+    return I - 2 * glm::dot(I, N) * N;
 }
+
+Scene::~Scene() {}
 
 const Vertex &Scene::getLightPoint() const {
     return lightPoint;
 }
-

@@ -14,7 +14,7 @@ class Pixel {
 private:
     ColorDbl color = ColorDbl(0,0,0);
     Ray ray;
-    double brightness;
+    double brightness = 1.0;
 
 public:
     Pixel();

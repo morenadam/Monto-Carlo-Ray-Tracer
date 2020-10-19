@@ -52,6 +52,14 @@ const Direction &Ray::getObjectNormal() const {
     return objectNormal;
 }
 
+const std::string &Ray::getMaterialType() const {
+    return MaterialType;
+}
+
+void Ray::setMaterialType(const std::string &MaterialType) {
+    Ray::MaterialType = MaterialType;
+}
+
 
 
 

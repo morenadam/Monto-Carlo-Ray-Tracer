@@ -36,33 +36,29 @@ void Camera::render(Scene scene) {
             //Calculate ray-pixel intersection point for pixel (i,j)
             Vertex pixelPoint = Vertex(0.0, (401 - i + rand_y) * delta, (401 - j + rand_z) * delta);
 
-            Direction ray_dir = pixelPoint - eyePoint;
-            ray_dir = glm::normalize(ray_dir);
-
             //create new ray
-            Ray ray(eyePoint, ray_dir);
+            Ray ray(eyePoint, glm::normalize(pixelPoint - eyePoint));
 
             //find ray-triangle intersection point
             scene.FindRayIntersection(ray);
 
-            //shadow ray
-            //add small bias to start point to make sure the shadow ray doesn't intersect the first ray's triangle
-            Vertex shadowStart = ray.getEndPoint() + ray.getObjectNormal()*0.001;
-            Direction shadowDir = glm::normalize(scene.getLightPoint()-shadowStart);
-
-            Ray shadowRay = Ray(shadowStart, shadowDir);
+            Direction shadowDir = glm::normalize(scene.getLightPoint()-ray.getEndPoint());
+            Ray shadowRay = Ray(ray.getEndPoint(), shadowDir);
 
             scene.FindRayIntersection(shadowRay);
 
-            if((glm::length(shadowRay.getEndPoint() - shadowStart) - (glm::length(scene.getLightPoint() - shadowStart)) < DBL_EPSILON)){
-                image[i][j].setBrightness(0.0);
+            if((glm::length(shadowRay.getEndPoint() - shadowRay.getStart()) - (glm::length(scene.getLightPoint() - shadowRay.getStart())) < DBL_EPSILON)){
+                if(ray.getMaterialType() != "MIRROR") image[i][j].setBrightness(0);
+
             }
-            else image[i][j].setBrightness(1.0);
 
             image[i][j].setColor(ray.getColor()*image[i][j].getBrightness());
 
+
+
             //Store the highest color value
-            if (double newMax = glm::max(glm::max(ray.getColor().x, ray.getColor().y), ray.getColor().z) > iMax) {
+            double newMax = glm::max(glm::max(ray.getColor().x, ray.getColor().y), ray.getColor().z);
+            if(newMax > iMax) {
                 iMax = newMax;
             }
         }

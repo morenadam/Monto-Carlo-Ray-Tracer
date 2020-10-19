@@ -7,6 +7,7 @@
 #include "Definitions.h"
 #include "Ray.h"
 #include <math.h>
+#include <string>
 
 
 class Sphere {

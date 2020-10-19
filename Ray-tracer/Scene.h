@@ -24,6 +24,7 @@ private:
     Tetrahedron tetrahedron;
     Sphere sphere;
     Vertex lightPoint = Vertex(5,0,4.9);
+    int rayDepth = 0;
 
 public:
     Scene();
@@ -33,6 +34,9 @@ public:
 
     const Vertex &getLightPoint() const;
 
+    Direction reflect(const Direction I, const Direction N);
+
+    void CastShadowRay(Ray &shadowRay);
 };
 
 #endif //UNTITLED_SCENE_H

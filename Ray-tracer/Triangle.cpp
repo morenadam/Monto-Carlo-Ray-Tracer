@@ -51,11 +51,12 @@ bool Triangle::rayIntersection(Ray &ray, double &minDistance){
     double t = glm::dot(edge2, qvec) * invDet;
 
     if(glm::length(Vertex(ray.getStart() + ray.getDirection()*t)) < minDistance){
-        //ray.setTriangle(this);
+        // ray.setTriangle(this);
         ray.setObjectNormal(this->getNormal());
-        ray.setEnd(ray.getStart() + ray.getDirection()*t);
+        ray.setEnd(ray.getStart() + ray.getDirection()*t + this->getNormal()*0.001); //add bias
         ray.setColor(this->getColor());
         minDistance = glm::length(ray.getEndPoint()-ray.getStart());
+        ray.setMaterialType("LAMBERTIAN");
     }
 
     return true;

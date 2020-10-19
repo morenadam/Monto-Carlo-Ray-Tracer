@@ -52,10 +52,11 @@ bool Sphere::rayIntersection(Ray &ray, double &minDistance){
     }
 
     if(glm::length(tempIntersection - ray.getStart()) < minDistance) {
-        glm::vec3 normal = glm::normalize(tempIntersection - center);
+        Direction normal = glm::normalize(tempIntersection - center);
         ray.setObjectNormal(normal);
         ray.setColor(getColor());
-        ray.setEnd(tempIntersection);
+        ray.setEnd(tempIntersection + normal*0.001);
+        ray.setMaterialType("MIRROR");
     }
 
 }
