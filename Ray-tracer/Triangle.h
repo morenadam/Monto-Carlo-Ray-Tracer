@@ -8,6 +8,7 @@
 #include "Definitions.h"
 #include "Ray.h"
 #include "glm/gtx/normal.hpp"
+#include "Material.h"
 
 //The triangle is defined by three objects of the classVertex. The Triangle has a color,
 //which we represent by an instance of ColorDbl. The triangle’s objectNormal direction is stored
@@ -18,16 +19,21 @@ private:
     Vertex v0, v1, v2;
     ColorDbl color;
     Direction normal;
+    Material material;
 
 public:
     Triangle();
     ~Triangle();
-    Triangle(Vertex _v0, Vertex _v1, Vertex _v2, ColorDbl _color);
+    Triangle(Vertex _v0, Vertex _v1, Vertex _v2, ColorDbl _color, Material _material);
 
     const Direction &getNormal() const;
 
     bool rayIntersection(Ray &ray, double &minDistance);
     ColorDbl getColor();
+
+    Material getMaterial() const;
+
+    void setMaterial(Material material);
 
 };
 

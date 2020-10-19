@@ -7,7 +7,7 @@
 #include "Definitions.h"
 #include "Ray.h"
 #include <math.h>
-#include <string>
+#include "Material.h"
 
 
 class Sphere {
@@ -15,16 +15,19 @@ private:
     double radius;
     Vertex center;
     ColorDbl color;
+    Material material;
 
 public:
     Sphere();
     ~Sphere();
 
-    Sphere(double _radius, Vertex _center, ColorDbl _color);
+    Sphere(double _radius, Vertex _center, ColorDbl _color, Material _material);
 
     bool rayIntersection(Ray &ray, double &minDistance);
 
     const ColorDbl &getColor() const;
+
+    Material getMaterial() const;
 
 
 };
