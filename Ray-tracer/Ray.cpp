@@ -52,12 +52,12 @@ const Direction &Ray::getObjectNormal() const {
     return objectNormal;
 }
 
-const std::string &Ray::getMaterialType() const {
-    return MaterialType;
+const Material &Ray::getMaterial() const {
+    return material;
 }
 
-void Ray::setMaterialType(const std::string &MaterialType) {
-    Ray::MaterialType = MaterialType;
+void Ray::setMaterial(const Material &_material) {
+    Ray::material = _material;
 }
 
 

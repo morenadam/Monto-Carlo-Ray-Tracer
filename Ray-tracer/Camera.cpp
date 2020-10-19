@@ -39,16 +39,18 @@ void Camera::render(Scene scene) {
             //create new ray
             Ray ray(eyePoint, glm::normalize(pixelPoint - eyePoint));
 
+
+            int rayDepth = 0;
             //find ray-triangle intersection point
-            scene.FindRayIntersection(ray);
+            scene.FindRayIntersection(ray, rayDepth);
 
             Direction shadowDir = glm::normalize(scene.getLightPoint()-ray.getEndPoint());
             Ray shadowRay = Ray(ray.getEndPoint(), shadowDir);
 
-            scene.FindRayIntersection(shadowRay);
+            scene.FindRayIntersection(shadowRay, 0);
 
             if((glm::length(shadowRay.getEndPoint() - shadowRay.getStart()) - (glm::length(scene.getLightPoint() - shadowRay.getStart())) < DBL_EPSILON)){
-                if(ray.getMaterialType() != "MIRROR") image[i][j].setBrightness(0);
+                if(ray.getMaterial() != MIRROR) image[i][j].setBrightness(0);
 
             }
 

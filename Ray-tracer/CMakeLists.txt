@@ -21,5 +21,5 @@ add_executable(Ray_tracer
         Sphere.cpp
         Sphere.h
         Tetrahedron.cpp
-        Tetrahedron.h)
+        Tetrahedron.h Material.h)
 

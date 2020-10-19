@@ -56,7 +56,7 @@ bool Triangle::rayIntersection(Ray &ray, double &minDistance){
         ray.setEnd(ray.getStart() + ray.getDirection()*t + this->getNormal()*0.001); //add bias
         ray.setColor(this->getColor());
         minDistance = glm::length(ray.getEndPoint()-ray.getStart());
-        ray.setMaterialType("LAMBERTIAN");
+        ray.setMaterial(LAMBERTIAN);
     }
 
     return true;

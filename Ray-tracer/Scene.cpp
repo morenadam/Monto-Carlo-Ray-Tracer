@@ -144,17 +144,21 @@ Scene::Scene() {
                                 Vertex(-3, 0, 5),
                                 ColorDbl(1, 0, 1));
 
-    tetrahedron = Tetrahedron(Vertex(0,-1,1));
+    tetrahedron = Tetrahedron(Vertex(-1,-1,1));
 
-    sphere = Sphere(1, Vertex(8,2,0), ColorDbl(0.8,0.8,0));
+    sphere = Sphere(1, Vertex(5,0,-1), ColorDbl(0.8,0.8,0));
+    sphere2 = Sphere(1, Vertex(7,-1,0), ColorDbl(0.8,0.8,0));
+
 
 }
 
-void Scene::FindRayIntersection(Ray &ray){
+void Scene::FindRayIntersection(Ray &ray, int rayDepth){
+
+    if(rayDepth > 5) return;
 
     double minDistance = 1000;
 
-    //borders
+    //Borders
     for(Triangle triangle : triangleList) {
         triangle.rayIntersection(ray, minDistance);
     }
@@ -164,21 +168,34 @@ void Scene::FindRayIntersection(Ray &ray){
 
     //Sphere
     sphere.rayIntersection(ray, minDistance);
+    sphere2.rayIntersection(ray, minDistance);
 
-    //if the closest intersection is a sphere. Sphere = mirror
-    if(ray.getMaterialType() == "MIRROR"){
-        Ray reflectionRay(ray.getEndPoint(), glm::normalize(reflect(ray.getDirection(), ray.getObjectNormal())));
-        FindRayIntersection(reflectionRay);
-        ray.setColor(reflectionRay.getColor());
+
+
+    switch (ray.getMaterial()){
+        case MIRROR:
+        {
+            double kr = 0.8; //amount of light reflected
+            Ray reflectionRay(ray.getEndPoint(), glm::normalize(reflect(ray.getDirection(), ray.getObjectNormal())));
+            FindRayIntersection(reflectionRay, rayDepth + 1);
+            ray.setColor(reflectionRay.getColor() * kr);
+            break;
+        }
+
+        case LIGHT:{
+
+        }
+
+        default:{
+
+        }
     }
+
+
+    //ray.setColor(ray.getColor()*glm::max(0.0, glm::dot(ray.getObjectNormal(), (getLightPoint() - ray.getEndPoint()))));
 
     //compute diffuse reflection
     //double diffuse = glm::max(0.0, glm::dot(ray.getObjectNormal(), (ray.getEndPoint()-getLightPoint())));
-
-    //ray.setColor(ray.getColor());
-
-    //compute diffuse reflection
-
 }
 
 Direction Scene::reflect(const Direction I, const Direction N){

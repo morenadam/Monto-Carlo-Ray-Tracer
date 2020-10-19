@@ -23,6 +23,7 @@ private:
     Triangle triangleList[24];
     Tetrahedron tetrahedron;
     Sphere sphere;
+    Sphere sphere2;
     Vertex lightPoint = Vertex(5,0,4.9);
     int rayDepth = 0;
 
@@ -30,13 +31,12 @@ public:
     Scene();
     ~Scene();
 
-    void FindRayIntersection(Ray &ray);
+    void FindRayIntersection(Ray &ray, int rayDepth);
 
     const Vertex &getLightPoint() const;
 
     Direction reflect(const Direction I, const Direction N);
 
-    void CastShadowRay(Ray &shadowRay);
 };
 
 #endif //UNTITLED_SCENE_H
