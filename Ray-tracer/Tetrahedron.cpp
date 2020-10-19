@@ -4,12 +4,8 @@
 
 #include "Tetrahedron.h"
 
-Tetrahedron::Tetrahedron(){
-
-}
-Tetrahedron::~Tetrahedron(){
-
-}
+Tetrahedron::Tetrahedron()= default;
+Tetrahedron::~Tetrahedron()= default;
 
 Tetrahedron::Tetrahedron(Vertex v0, Vertex v1, Vertex v2, Vertex v3) {
     triangles[0] = Triangle(v0, v3, v2,ColorDbl(0.5, 0.5, 1));

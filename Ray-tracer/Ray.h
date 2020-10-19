@@ -18,12 +18,12 @@ class Triangle;
 //The ray color is a ColorDbl.
 class Ray {
 private:
-    Vertex startPoint;
-    Vertex endPoint;
-    Direction dir;
-    ColorDbl color;
-    Triangle *triangle;
-    Direction objectNormal; //intersected point's objectNormal
+    Vertex startPoint{};
+    Vertex endPoint{};
+    Direction dir{};
+    ColorDbl color{};
+    Triangle *triangle{};
+    Direction objectNormal{}; //intersected point's objectNormal
     Material material;
 
 public:
@@ -35,19 +35,20 @@ public:
     void setColor(ColorDbl _color);
 
     const Direction &getObjectNormal() const;
-    void setObjectNormal(const Direction &objectNormal);
+    void setObjectNormal(const Direction &_objectNormal);
 
     ColorDbl getColor();
     Vertex getEndPoint();
     Vertex getStart();
     Direction getDirection();
 
-    void setTriangle(Triangle *triangle);
     Triangle *getTriangle() const;
 
     const Material &getMaterial() const;
 
     void setMaterial(const Material &_material);
+
+    Direction reflect();
 
 };
 

@@ -7,7 +7,7 @@
 
 #include <list>
 #include "Triangle.h"
-#include <math.h>
+#include <cmath>
 #include "Definitions.h"
 #include "Tetrahedron.h"
 #include "Sphere.h"
@@ -25,7 +25,6 @@ private:
     Sphere sphere;
     Sphere sphere2;
     Vertex lightPoint = Vertex(5,0,4.9);
-    int rayDepth = 0;
 
 public:
     Scene();
@@ -34,8 +33,6 @@ public:
     void FindRayIntersection(Ray &ray, int rayDepth);
 
     const Vertex &getLightPoint() const;
-
-    Direction reflect(const Direction I, const Direction N);
 
 };
 

@@ -6,15 +6,15 @@
 #define RAY_TRACER_SPHERE_H
 #include "Definitions.h"
 #include "Ray.h"
-#include <math.h>
+#include <cmath>
 #include <string>
 
 
 class Sphere {
 private:
-    double radius;
-    Vertex center;
-    ColorDbl color;
+    double radius{};
+    Vertex center{};
+    ColorDbl color{};
 
 public:
     Sphere();

@@ -79,9 +79,9 @@ Scene::Scene() {
                                ColorDbl(1, 1, 1));
 
     //__________________SOUTH____________________
-    triangleList[12] = Triangle(Vertex(0, -6, -5),
+    triangleList[12] = Triangle(Vertex(10, -6, -5),
                                 Vertex(0, -6, -5),
-                                Vertex(10, -6, 5),
+                                Vertex(0, -6, 5),
                                 ColorDbl(0, 0, 0.5));
 
     triangleList[13] = Triangle(Vertex(10, -6, -5),
@@ -152,6 +152,8 @@ Scene::Scene() {
 
 }
 
+Scene::~Scene() = default;
+
 void Scene::FindRayIntersection(Ray &ray, int rayDepth){
 
     if(rayDepth > 5) return;
@@ -183,7 +185,7 @@ void Scene::FindRayIntersection(Ray &ray, int rayDepth){
         }
 
         case LIGHT:{
-
+            break;
         }
 
         default:{
@@ -198,11 +200,6 @@ void Scene::FindRayIntersection(Ray &ray, int rayDepth){
     //double diffuse = glm::max(0.0, glm::dot(ray.getObjectNormal(), (ray.getEndPoint()-getLightPoint())));
 }
 
-Direction Scene::reflect(const Direction I, const Direction N){
-    return I - 2 * glm::dot(I, N) * N;
-}
-
-Scene::~Scene() {}
 
 const Vertex &Scene::getLightPoint() const {
     return lightPoint;

@@ -4,11 +4,9 @@
 
 #include "Ray.h"
 
-Ray::Ray() {}
+Ray::Ray() = default;
 
-Ray::~Ray() {
-
-}
+Ray::~Ray() = default;
 
 Ray::Ray(Vertex _startPoint, Direction _dir) : startPoint(_startPoint), dir(_dir){}
 
@@ -36,16 +34,13 @@ Direction Ray::getDirection(){
     return dir;
 }
 
-void Ray::setTriangle(Triangle *triangle) {
-    Ray::triangle = triangle;
-}
 
 Triangle *Ray::getTriangle() const {
     return triangle;
 }
 
-void Ray::setObjectNormal(const Direction &objectNormal) {
-    Ray::objectNormal = objectNormal;
+void Ray::setObjectNormal(const Direction &_objectNormal) {
+    Ray::objectNormal = _objectNormal;
 }
 
 const Direction &Ray::getObjectNormal() const {
@@ -58,6 +53,10 @@ const Material &Ray::getMaterial() const {
 
 void Ray::setMaterial(const Material &_material) {
     Ray::material = _material;
+}
+
+Direction Ray::reflect(){
+    return dir - 2 * glm::dot(dir, objectNormal) * objectNormal;
 }
 
 

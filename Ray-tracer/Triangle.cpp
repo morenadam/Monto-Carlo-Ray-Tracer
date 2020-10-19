@@ -7,14 +7,14 @@
 #include "glm/glm.hpp"
 #include "Ray.h"
 
-Triangle::Triangle() {}
+Triangle::Triangle() = default;
 
 
 Triangle::Triangle(Vertex _v0, Vertex _v1, Vertex _v2,  ColorDbl color) : v0(_v0), v1(_v1), v2(_v2), color(color) {
     normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
 }
 
-Triangle::~Triangle() {}
+Triangle::~Triangle() = default;
 
 ColorDbl Triangle::getColor(){
     return color;

@@ -15,9 +15,9 @@
 //that computes the intersection between a Ray and the Triangle with the Möller-Trumbore algorithm.
 class Triangle {
 private:
-    Vertex v0, v1, v2;
-    ColorDbl color;
-    Direction normal;
+    Vertex v0{}, v1{}, v2{};
+    ColorDbl color{};
+    Direction normal{};
 
 public:
     Triangle();

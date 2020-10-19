@@ -21,11 +21,11 @@ public:
     ~Pixel();
 
     ColorDbl getColor();
-    void setColor(const ColorDbl color);
+    void setColor(ColorDbl _color);
 
     double getBrightness() const;
 
-    void setBrightness(double brightness);
+    void setBrightness(double _brightness);
 
 };
 

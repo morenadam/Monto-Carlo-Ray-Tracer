@@ -4,13 +4,10 @@
 #include <iostream>
 #include <fstream>
 #include "Camera.h"
-#include "Scene.h"
 
 Camera::Camera() : image(imageHeight, std::vector<Pixel>(imageWidth)) {}
 
-Camera::~Camera() {
-
-}
+Camera::~Camera() = default;
 
 void Camera::switchEyePoint() {
     isEyePointOne = !isEyePointOne;
@@ -26,7 +23,6 @@ void Camera::render(Scene scene) {
     else eyePoint = eyePointTwo;
 
     const double delta = 0.0025; //side length of each pixel
-    iMax = 0; // max intensity value of all pixels
 
     for (int i = 0; i < imageHeight; ++i) {
         for (int j = 0; j < imageWidth; ++j) {
@@ -39,24 +35,22 @@ void Camera::render(Scene scene) {
             //create new ray
             Ray ray(eyePoint, glm::normalize(pixelPoint - eyePoint));
 
-
             int rayDepth = 0;
             //find ray-triangle intersection point
             scene.FindRayIntersection(ray, rayDepth);
 
-            Direction shadowDir = glm::normalize(scene.getLightPoint()-ray.getEndPoint());
-            Ray shadowRay = Ray(ray.getEndPoint(), shadowDir);
+            if(ray.getMaterial() != MIRROR) {
+                Direction shadowDir = glm::normalize(scene.getLightPoint()-ray.getEndPoint());
+                // TODO: move shadowRay to the recursive function
+                Ray shadowRay = Ray(ray.getEndPoint(), shadowDir);
+                scene.FindRayIntersection(shadowRay, 0);
 
-            scene.FindRayIntersection(shadowRay, 0);
-
-            if((glm::length(shadowRay.getEndPoint() - shadowRay.getStart()) - (glm::length(scene.getLightPoint() - shadowRay.getStart())) < DBL_EPSILON)){
-                if(ray.getMaterial() != MIRROR) image[i][j].setBrightness(0);
-
+                if((glm::length(shadowRay.getEndPoint() - shadowRay.getStart()) - (glm::length(scene.getLightPoint() - shadowRay.getStart())) < DBL_EPSILON)){
+                    image[i][j].setBrightness(0);
+                }
             }
 
             image[i][j].setColor(ray.getColor()*image[i][j].getBrightness());
-
-
 
             //Store the highest color value
             double newMax = glm::max(glm::max(ray.getColor().x, ray.getColor().y), ray.getColor().z);

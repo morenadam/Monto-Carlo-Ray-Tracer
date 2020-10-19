@@ -4,24 +4,22 @@
 
 #include "Pixel.h"
 
-Pixel::Pixel() {}
+Pixel::Pixel() = default;
 
-Pixel::~Pixel() {
-
-}
+Pixel::~Pixel() = default;
 
 ColorDbl Pixel::getColor() {
     return color;
 }
 
-void Pixel::setColor(const ColorDbl color) {
-    Pixel::color = color;
+void Pixel::setColor(const ColorDbl _color) {
+    Pixel::color = _color;
 }
 
 double Pixel::getBrightness() const {
     return brightness;
 }
 
-void Pixel::setBrightness(double brightness) {
-    Pixel::brightness = brightness;
+void Pixel::setBrightness(double _brightness) {
+    Pixel::brightness = _brightness;
 }

@@ -4,9 +4,9 @@
 
 #include "Sphere.h"
 
-Sphere::Sphere() {}
+Sphere::Sphere() = default;
 
-Sphere::~Sphere() {}
+Sphere::~Sphere() = default;
 
 Sphere::Sphere(double _radius, Vertex _center, ColorDbl _color) : radius(_radius), center(_center),
                                                                              color(_color) {}
