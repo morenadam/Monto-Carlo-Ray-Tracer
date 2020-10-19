@@ -8,8 +8,8 @@ Sphere::Sphere() = default;
 
 Sphere::~Sphere() = default;
 
-Sphere::Sphere(double _radius, Vertex _center, ColorDbl _color) : radius(_radius), center(_center),
-                                                                             color(_color) {}
+Sphere::Sphere(double _radius, Vertex _center, ColorDbl _color, Material _material) : radius(_radius), center(_center),
+                                                                             color(_color), material(_material) {}
 
 bool Sphere::rayIntersection(Ray &ray, double &minDistance){
 
@@ -54,13 +54,17 @@ bool Sphere::rayIntersection(Ray &ray, double &minDistance){
     if(glm::length(tempIntersection - ray.getStart()) < minDistance) {
         Direction normal = glm::normalize(tempIntersection - center);
         ray.setObjectNormal(normal);
-        //ray.setColor(getColor());
+        ray.setColor(getColor());
         ray.setEnd(tempIntersection + normal*0.001);
-        ray.setMaterial(MIRROR);
+        ray.setMaterial(getMaterial());
     }
 
 }
 
 const ColorDbl &Sphere::getColor() const {
     return color;
+}
+
+Material Sphere::getMaterial() const {
+    return material;
 }

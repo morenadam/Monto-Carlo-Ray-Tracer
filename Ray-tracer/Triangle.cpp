@@ -10,7 +10,7 @@
 Triangle::Triangle() = default;
 
 
-Triangle::Triangle(Vertex _v0, Vertex _v1, Vertex _v2,  ColorDbl color) : v0(_v0), v1(_v1), v2(_v2), color(color) {
+Triangle::Triangle(Vertex _v0, Vertex _v1, Vertex _v2,  ColorDbl _color, Material _material) : v0(_v0), v1(_v1), v2(_v2), color(_color), material(_material){
     normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
 }
 
@@ -51,12 +51,11 @@ bool Triangle::rayIntersection(Ray &ray, double &minDistance){
     double t = glm::dot(edge2, qvec) * invDet;
 
     if(glm::length(Vertex(ray.getStart() + ray.getDirection()*t)) < minDistance){
-        // ray.setTriangle(this);
         ray.setObjectNormal(this->getNormal());
         ray.setEnd(ray.getStart() + ray.getDirection()*t + this->getNormal()*0.001); //add bias
         ray.setColor(this->getColor());
         minDistance = glm::length(ray.getEndPoint()-ray.getStart());
-        ray.setMaterial(LAMBERTIAN);
+        ray.setMaterial(getMaterial());
     }
 
     return true;
@@ -64,6 +63,14 @@ bool Triangle::rayIntersection(Ray &ray, double &minDistance){
 
 const Direction &Triangle::getNormal() const {
     return normal;
+}
+
+Material Triangle::getMaterial() const {
+    return material;
+}
+
+void Triangle::setMaterial(Material material) {
+    Triangle::material = material;
 }
 
 
