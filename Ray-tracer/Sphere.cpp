@@ -9,7 +9,7 @@ Sphere::Sphere() = default;
 Sphere::~Sphere() = default;
 
 Sphere::Sphere(double _radius, Vertex _center, ColorDbl _color, Material _material) : radius(_radius), center(_center),
-                                                                             color(_color), material(_material) {}
+                                                                                   color(_color), material(_material) {}
 
 bool Sphere::rayIntersection(Ray &ray, double &minDistance){
 
@@ -56,7 +56,7 @@ bool Sphere::rayIntersection(Ray &ray, double &minDistance){
         ray.setObjectNormal(normal);
         ray.setColor(getColor());
         ray.setEnd(tempIntersection + normal*0.001);
-        ray.setMaterial(getMaterial());
+        if (ray.getRayType() != SHADOW) ray.setMaterial(getMaterial());
     }
 
 }

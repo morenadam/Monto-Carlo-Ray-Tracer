@@ -8,7 +8,7 @@ Ray::Ray() = default;
 
 Ray::~Ray() = default;
 
-Ray::Ray(Vertex _startPoint, Direction _dir) : startPoint(_startPoint), dir(_dir){}
+Ray::Ray(Vertex _startPoint, Direction _dir, RayType _rayType) : startPoint(_startPoint), dir(_dir), rayType(_rayType){}
 
 void Ray::setEnd(Vertex _end){
     endPoint = _end;
@@ -55,8 +55,8 @@ void Ray::setMaterial(const Material &_material) {
     Ray::material = _material;
 }
 
-Direction Ray::reflect(){
-    return dir - 2 * glm::dot(dir, objectNormal) * objectNormal;
+RayType Ray::getRayType() const {
+    return rayType;
 }
 
 

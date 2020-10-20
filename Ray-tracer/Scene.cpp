@@ -171,7 +171,7 @@ Scene::Scene() {
 
     tetrahedron = Tetrahedron(Vertex(-1,-1,1));
 
-    sphere = Sphere(1, Vertex(5,0,-1), ColorDbl(0.8,0.8,0), LAMBERTIAN);
+    sphere = Sphere(1, Vertex(5,0,-1), ColorDbl(0.8,0.8,0), MIRROR);
     //sphere2 = Sphere(1, Vertex(7,-1,0), ColorDbl(0.8,0.8,0));
 
 
@@ -179,10 +179,11 @@ Scene::Scene() {
 
 Scene::~Scene() = default;
 
-void Scene::FindRayIntersection(Ray &ray, int rayDepth){
+void Scene::CastRay(Ray &ray, int rayDepth){
 
     if(rayDepth > 5) return;
 
+    double intensity = 1;
     double minDistance = 1000;
 
     //Borders
@@ -197,24 +198,41 @@ void Scene::FindRayIntersection(Ray &ray, int rayDepth){
     sphere.rayIntersection(ray, minDistance);
     //sphere2.rayIntersection(ray, minDistance);
 
-    switch (ray.getMaterial()){
-        case MIRROR:
-        {
-            double kr = 0.8; //amount of light reflected
-            Ray reflectionRay(ray.getEndPoint(), glm::normalize(reflect(ray.getDirection(), ray.getObjectNormal())));
-            FindRayIntersection(reflectionRay, rayDepth + 1);
-            ray.setColor(reflectionRay.getColor() * kr);
-            break;
-        }
+    if(ray.getRayType() != SHADOW){
+        switch (ray.getMaterial()){
+            case MIRROR:
+            {
+                double kr = 0.9; //amount of light reflected
+                Ray reflectionRay(ray.getEndPoint(), glm::normalize(reflect(ray.getDirection(), ray.getObjectNormal())), REFLECTION);
+                CastRay(reflectionRay, rayDepth + 1);
+                ray.setColor(reflectionRay.getColor() * kr);
+                break;
+            }
 
-        case LIGHT:{
-            break;
-        }
+            case LIGHT:{
+                break;
+            }
 
-        default:{
+            case LAMBERTIAN:{
 
+                //shadow ray
+                Direction shadowDir = glm::normalize(getLightPoint()-ray.getEndPoint());
+                Ray shadowRay = Ray(ray.getEndPoint(), shadowDir, SHADOW);
+                CastRay(shadowRay, 0);
+
+                if((glm::length(shadowRay.getEndPoint() - shadowRay.getStart()) - (glm::length(getLightPoint() - shadowRay.getStart())) < DBL_EPSILON)){
+                    intensity = 0;
+                }
+                ray.setColor(ray.getColor()*intensity);
+            }
+
+            default:{
+                break;
+            }
         }
     }
+
+
 
 
     //ray.setColor(ray.getColor()*glm::max(0.0, glm::dot(ray.getObjectNormal(), (getLightPoint() - ray.getEndPoint()))));

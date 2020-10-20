@@ -6,7 +6,7 @@
 #define UNTITLED_RAY_H
 #include "Definitions.h"
 #include <string>
-#include "Material.h"
+#include "Types.h"
 
 //forward declaration
 class Triangle;
@@ -18,18 +18,19 @@ class Triangle;
 //The ray color is a ColorDbl.
 class Ray {
 private:
-    Vertex startPoint{};
-    Vertex endPoint{};
-    Direction dir{};
-    ColorDbl color{};
-    Triangle *triangle{};
-    Direction objectNormal{}; //intersected point's objectNormal
+    Vertex startPoint;
+    Vertex endPoint;
+    Direction dir;
+    ColorDbl color;
+    Triangle *triangle;
+    Direction objectNormal; //intersected point's objectNormal
     Material material;
+    RayType rayType;
 
 public:
     Ray();
     ~Ray();
-    Ray(Vertex _startPoint, Direction _dir);
+    Ray(Vertex _startPoint, Direction _dir, RayType _rayType);
 
     void setEnd(Vertex _end);
     void setColor(ColorDbl _color);
@@ -49,6 +50,9 @@ public:
     void setMaterial(const Material &_material);
 
     Direction reflect();
+
+    RayType getRayType() const;
+
 
 };
 

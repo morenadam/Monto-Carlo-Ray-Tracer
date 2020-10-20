@@ -33,24 +33,14 @@ void Camera::render(Scene scene) {
             Vertex pixelPoint = Vertex(0.0, (401 - i + rand_y) * delta, (401 - j + rand_z) * delta);
 
             //create new ray
-            Ray ray(eyePoint, glm::normalize(pixelPoint - eyePoint));
+            Ray ray(eyePoint, glm::normalize(pixelPoint - eyePoint), DEFAULT);
 
             int rayDepth = 0;
             //find ray-triangle intersection point
-            scene.FindRayIntersection(ray, rayDepth);
+            scene.CastRay(ray, rayDepth);
 
-            if(ray.getMaterial() != MIRROR) {
-                Direction shadowDir = glm::normalize(scene.getLightPoint()-ray.getEndPoint());
-                // TODO: move shadowRay to the recursive function
-                Ray shadowRay = Ray(ray.getEndPoint(), shadowDir);
-                scene.FindRayIntersection(shadowRay, 0);
 
-                if((glm::length(shadowRay.getEndPoint() - shadowRay.getStart()) - (glm::length(scene.getLightPoint() - shadowRay.getStart())) < DBL_EPSILON)){
-                    image[i][j].setBrightness(0);
-                }
-            }
-
-            image[i][j].setColor(ray.getColor()*image[i][j].getBrightness());
+            image[i][j].setColor(ray.getColor());
 
             //Store the highest color value
             double newMax = glm::max(glm::max(ray.getColor().x, ray.getColor().y), ray.getColor().z);

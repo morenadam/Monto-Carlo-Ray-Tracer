@@ -30,7 +30,7 @@ public:
     Scene();
     ~Scene();
 
-    void FindRayIntersection(Ray &ray, int rayDepth);
+    void CastRay(Ray &ray, int rayDepth);
 
     const Vertex &getLightPoint() const;
 

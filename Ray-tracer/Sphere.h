@@ -7,7 +7,7 @@
 #include "Definitions.h"
 #include "Ray.h"
 #include <cmath>
-#include "Material.h"
+#include "Types.h"
 
 
 class Sphere {
