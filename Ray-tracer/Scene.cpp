@@ -107,39 +107,39 @@ Scene::Scene() {
     triangleList[14] = Triangle(Vertex(10, 6, -5),
                                 Vertex(10, 6, 5),
                                 Vertex(0, 6, -5),
-                                ColorDbl(0, 1, 0),
+                                ColorDbl(1, 0, 0),
                                 LAMBERTIAN);
 
     triangleList[15] = Triangle(Vertex(0, 6, -5),
                                 Vertex(10, 6, 5),
                                 Vertex(0, 6, 5),
-                                ColorDbl(0, 1, 0),
+                                ColorDbl(1, 0, 0),
                                 LAMBERTIAN);
 
     //__________________NORTH-EAST___________________
     triangleList[16] = Triangle(Vertex(13, 0, -5),
                                 Vertex(13, 0, 5),
                                 Vertex(10, 6, -5),
-                                ColorDbl(0.5, 0, 0),
+                                ColorDbl(0, 1, 0),
                                 LAMBERTIAN);
 
     triangleList[17] = Triangle(Vertex(10, 6, -5),
                                 Vertex(13, 0, 5),
                                 Vertex(10, 6, 5),
-                                ColorDbl(0.5, 0, 0),
+                                ColorDbl(0, 1, 0),
                                 LAMBERTIAN);
 
     //__________________SOUTH-EAST___________________
     triangleList[18] = Triangle(Vertex(10, -6, -5),
                                 Vertex(10, -6, 5),
                                 Vertex(13, 0, -5),
-                                ColorDbl(1, 1, 0),
+                                ColorDbl(1, 0, 0),
                                 MIRROR);
 
     triangleList[19] = Triangle(Vertex(13, 0, -5),
                                 Vertex(10, -6, 5),
                                 Vertex(13, 0, 5),
-                                ColorDbl(1, 1, 0),
+                                ColorDbl(1, 0, 0),
                                 MIRROR);
 
 
@@ -147,31 +147,31 @@ Scene::Scene() {
     triangleList[20] = Triangle(Vertex(-3, 0, -5),
                                 Vertex(-3, 0, 5),
                                 Vertex(0, -6, -5),
-                                ColorDbl(0.5, 0, 0.5),
+                                ColorDbl(0, 1, 0),
                                 LAMBERTIAN);
 
     triangleList[21] = Triangle(Vertex(0, -6, -5),
                                 Vertex(-3, 0, 5),
                                 Vertex(0, -6, 5),
-                                ColorDbl(0.5, 0, 0.5),
+                                ColorDbl(0, 1, 0),
                                 LAMBERTIAN);
 
     //__________________NORTH-WEST___________________
     triangleList[22] = Triangle(Vertex(0, 6, -5),
                                 Vertex(0, 6, 5),
                                 Vertex(-3, 0, -5),
-                                ColorDbl(1, 0, 1),
+                                ColorDbl(0, 1, 0),
                                 LAMBERTIAN);
 
     triangleList[23] = Triangle(Vertex(-3, 0, -5),
                                 Vertex(0, 6, 5),
                                 Vertex(-3, 0, 5),
-                                ColorDbl(1, 0, 1),
+                                ColorDbl(0, 1, 0),
                                 LAMBERTIAN);
 
-    tetrahedron = Tetrahedron(Vertex(-1,-1,1));
+    tetrahedron = Tetrahedron(Vertex(-2,-1,1));
 
-    sphere = Sphere(1, Vertex(5,0,-1), ColorDbl(0.8,0.8,0), MIRROR);
+    sphere = Sphere(1, Vertex(8,2,2), ColorDbl(0.8,0.8,0), MIRROR);
     //sphere2 = Sphere(1, Vertex(7,-1,0), ColorDbl(0.8,0.8,0));
 
 
@@ -198,11 +198,12 @@ void Scene::CastRay(Ray &ray, int rayDepth){
     sphere.rayIntersection(ray, minDistance);
     //sphere2.rayIntersection(ray, minDistance);
 
+    //if shadowRay we dont need more info
     if(ray.getRayType() != SHADOW){
         switch (ray.getMaterial()){
             case MIRROR:
             {
-                double kr = 0.9; //amount of light reflected
+                double kr = 0.95; //amount of light reflected
                 Ray reflectionRay(ray.getEndPoint(), glm::normalize(reflect(ray.getDirection(), ray.getObjectNormal())), REFLECTION);
                 CastRay(reflectionRay, rayDepth + 1);
                 ray.setColor(reflectionRay.getColor() * kr);
