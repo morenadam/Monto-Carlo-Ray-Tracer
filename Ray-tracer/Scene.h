@@ -34,6 +34,10 @@ public:
 
     const Vertex &getLightPoint() const;
 
+    void createLocalCoordinateSystem(const Direction &N, Direction &Nt, Direction &Nb);
+
+    Direction uniformSampleHemisphere(const double &r1, const double &r2);
+
 };
 
 #endif //UNTITLED_SCENE_H

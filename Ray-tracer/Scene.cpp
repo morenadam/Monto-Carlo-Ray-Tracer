@@ -8,6 +8,8 @@
 
 #include <iostream>
 #include <string>
+#include <random>
+
 Scene::Scene() {
 
     //__________________FLOOR____________________
@@ -134,13 +136,13 @@ Scene::Scene() {
                                 Vertex(10, -6, 5),
                                 Vertex(13, 0, -5),
                                 ColorDbl(1, 0, 0),
-                                MIRROR);
+                                LAMBERTIAN);
 
     triangleList[19] = Triangle(Vertex(13, 0, -5),
                                 Vertex(10, -6, 5),
                                 Vertex(13, 0, 5),
                                 ColorDbl(1, 0, 0),
-                                MIRROR);
+                                LAMBERTIAN);
 
 
     //__________________SOUTH-WEST___________________
@@ -181,7 +183,7 @@ Scene::~Scene() = default;
 
 void Scene::CastRay(Ray &ray, int rayDepth){
 
-    if(rayDepth > 5) return;
+    if(rayDepth > 2) return;
 
     double intensity = 1;
     double minDistance = 1000;
@@ -205,7 +207,7 @@ void Scene::CastRay(Ray &ray, int rayDepth){
             {
                 double kr = 0.95; //amount of light reflected
                 Ray reflectionRay(ray.getEndPoint(), glm::normalize(reflect(ray.getDirection(), ray.getObjectNormal())), REFLECTION);
-                CastRay(reflectionRay, rayDepth + 1);
+                CastRay(reflectionRay, rayDepth);
                 ray.setColor(reflectionRay.getColor() * kr);
                 break;
             }
@@ -224,7 +226,45 @@ void Scene::CastRay(Ray &ray, int rayDepth){
                 if((glm::length(shadowRay.getEndPoint() - shadowRay.getStart()) - (glm::length(getLightPoint() - shadowRay.getStart())) < DBL_EPSILON)){
                     intensity = 0;
                 }
-                ray.setColor(ray.getColor()*intensity);
+
+                //direct light
+                ColorDbl directLighting = ColorDbl(ray.getColor());
+
+
+                //indirect light:
+                ColorDbl indirectLighting = ColorDbl ();
+
+                // step1: compute shaded point coordinate system using normal N.
+                Direction Nt, Nb;
+                createLocalCoordinateSystem(ray.getObjectNormal(), Nt, Nb);
+
+                std::default_random_engine generator;
+                std::uniform_real_distribution<double> distribution(0, 1);
+                //loop
+                uint32_t N = 4; //number of sample rays
+                double pdf = 1 / (2 * M_PI);
+                for (uint32_t n = 0; n < N; ++n) {
+                    // step 2: create sample in world space
+                    double r1 = distribution(generator);
+                    double r2 = distribution(generator);
+                    Direction sample = uniformSampleHemisphere(r1, r2);
+
+                    // step 3: transform sample from world space to shaded point local coordinate system
+                    Direction sampleWorld(
+                            sample.x * Nb.x + sample.y * ray.getObjectNormal().x + sample.z * Nt.x,
+                            sample.x * Nb.y + sample.y * ray.getObjectNormal().y + sample.z * Nt.y,
+                            sample.x * Nb.z + sample.y * ray.getObjectNormal().z + sample.z * Nt.z);
+
+                    // step 4 & 5: cast a ray in this direction
+                    Ray sampleRay = Ray(ray.getEndPoint(), sampleWorld, DEFAULT);
+                    CastRay(sampleRay, rayDepth + 1);
+                    indirectLighting += (r1 * sampleRay.getColor() / pdf);
+                }
+                // step 7: divide the sum by the total number of samples N
+                indirectLighting /= (double)N;
+
+                ray.setColor((directLighting / M_PI) + (indirectLighting*=2))  ray.getColor());
+
             }
 
             default:{
@@ -242,7 +282,26 @@ void Scene::CastRay(Ray &ray, int rayDepth){
     //double diffuse = glm::max(0.0, glm::dot(ray.getObjectNormal(), (ray.getEndPoint()-getLightPoint())));
 }
 
-
 const Vertex &Scene::getLightPoint() const {
     return lightPoint;
+}
+
+void Scene::createLocalCoordinateSystem(const Direction &N, Direction &Nt, Direction &Nb)
+{
+    if (std::fabs(N.x) > std::fabs(N.y))
+        Nt = Direction(N.z, 0, -N.x) / sqrt(N.x * N.x + N.z * N.z);
+    else
+        Nt = Direction(0, -N.z, N.y) / sqrt(N.y * N.y + N.z * N.z);
+    Nb = glm::cross(N, Nt);
+}
+
+Direction Scene::uniformSampleHemisphere(const double &r1, const double &r2)
+{
+    // cos(theta) = r1 = y
+    // cos^2(theta) + sin^2(theta) = 1 -> sin(theta) = srtf(1 - cos^2(theta))
+    float sinTheta = sqrt(1 - r1 * r1);
+    float phi = 2 * M_PI * r2;
+    float x = sinTheta * cosf(phi);
+    float z = sinTheta * sinf(phi);
+    return Direction(x, r1, z);
 }
