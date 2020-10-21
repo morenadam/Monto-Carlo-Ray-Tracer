@@ -23,7 +23,7 @@ private:
     Triangle triangleList[24];
     Tetrahedron tetrahedron;
     Sphere sphere;
-    //Sphere sphere2;
+    Sphere sphere2;
     Vertex lightPoint = Vertex(5,0,4.9);
 
 public:

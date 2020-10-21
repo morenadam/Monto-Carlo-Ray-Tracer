@@ -173,17 +173,21 @@ Scene::Scene() {
 
     tetrahedron = Tetrahedron(Vertex(-2,-1,1));
 
-    sphere = Sphere(1, Vertex(8,2,2), ColorDbl(0.8,0.8,0), MIRROR);
-    //sphere2 = Sphere(1, Vertex(7,-1,0), ColorDbl(0.8,0.8,0));
+    sphere = Sphere(1, Vertex(8,2,2), ColorDbl(0.8,0.8,0), LAMBERTIAN);
+    sphere2 = Sphere(1, Vertex(5,3,-4), ColorDbl(0,0,0), MIRROR);
 
 
 }
+
+std::default_random_engine generator;
+std::uniform_real_distribution<double> distribution(0, 1);
 
 Scene::~Scene() = default;
 
 void Scene::CastRay(Ray &ray, int rayDepth){
 
-    if(rayDepth > 2) return;
+    ray.setColor(ColorDbl(0,0,0));
+    if(rayDepth > 3) return;
 
     double intensity = 1;
     double minDistance = 1000;
@@ -198,13 +202,14 @@ void Scene::CastRay(Ray &ray, int rayDepth){
 
     //Sphere
     sphere.rayIntersection(ray, minDistance);
-    //sphere2.rayIntersection(ray, minDistance);
+    sphere2.rayIntersection(ray, minDistance);
 
     //if shadowRay we dont need more info
     if(ray.getRayType() != SHADOW){
         switch (ray.getMaterial()){
             case MIRROR:
             {
+                if(ray.getRayType() == SECONDARY) break;
                 double kr = 0.95; //amount of light reflected
                 Ray reflectionRay(ray.getEndPoint(), glm::normalize(reflect(ray.getDirection(), ray.getObjectNormal())), REFLECTION);
                 CastRay(reflectionRay, rayDepth);
@@ -221,27 +226,25 @@ void Scene::CastRay(Ray &ray, int rayDepth){
                 //shadow ray
                 Direction shadowDir = glm::normalize(getLightPoint()-ray.getEndPoint());
                 Ray shadowRay = Ray(ray.getEndPoint(), shadowDir, SHADOW);
-                CastRay(shadowRay, 0);
+                CastRay(shadowRay, rayDepth);
 
                 if((glm::length(shadowRay.getEndPoint() - shadowRay.getStart()) - (glm::length(getLightPoint() - shadowRay.getStart())) < DBL_EPSILON)){
-                    intensity = 0;
+                    intensity = 0.0;
                 }
 
                 //direct light
-                ColorDbl directLighting = ColorDbl(ray.getColor());
-
+                ColorDbl directLighting= ColorDbl(1,1,1);
+                directLighting *= (glm::max(0.0, glm::dot(ray.getObjectNormal(),shadowRay.getDirection())) * intensity );
 
                 //indirect light:
-                ColorDbl indirectLighting = ColorDbl ();
+                ColorDbl indirectLighting = ColorDbl(0,0,0);
 
                 // step1: compute shaded point coordinate system using normal N.
                 Direction Nt, Nb;
                 createLocalCoordinateSystem(ray.getObjectNormal(), Nt, Nb);
 
-                std::default_random_engine generator;
-                std::uniform_real_distribution<double> distribution(0, 1);
                 //loop
-                uint32_t N = 4; //number of sample rays
+                uint32_t N = 10; //number of sample rays
                 double pdf = 1 / (2 * M_PI);
                 for (uint32_t n = 0; n < N; ++n) {
                     // step 2: create sample in world space
@@ -256,15 +259,15 @@ void Scene::CastRay(Ray &ray, int rayDepth){
                             sample.x * Nb.z + sample.y * ray.getObjectNormal().z + sample.z * Nt.z);
 
                     // step 4 & 5: cast a ray in this direction
-                    Ray sampleRay = Ray(ray.getEndPoint(), sampleWorld, DEFAULT);
+                    Ray sampleRay = Ray(ray.getEndPoint(), sampleWorld, SECONDARY);
                     CastRay(sampleRay, rayDepth + 1);
-                    indirectLighting += (r1 * sampleRay.getColor() / pdf);
+                    indirectLighting += r1 * (sampleRay.getColor()*pdf);
                 }
                 // step 7: divide the sum by the total number of samples N
                 indirectLighting /= (double)N;
 
-                ray.setColor((directLighting / M_PI) + (indirectLighting*=2))  ray.getColor());
-
+                ray.setColor((directLighting/M_PI + 2.0*indirectLighting)*ray.getColor());
+                break;
             }
 
             default:{
@@ -272,14 +275,6 @@ void Scene::CastRay(Ray &ray, int rayDepth){
             }
         }
     }
-
-
-
-
-    //ray.setColor(ray.getColor()*glm::max(0.0, glm::dot(ray.getObjectNormal(), (getLightPoint() - ray.getEndPoint()))));
-
-    //compute diffuse reflection
-    //double diffuse = glm::max(0.0, glm::dot(ray.getObjectNormal(), (ray.getEndPoint()-getLightPoint())));
 }
 
 const Vertex &Scene::getLightPoint() const {
