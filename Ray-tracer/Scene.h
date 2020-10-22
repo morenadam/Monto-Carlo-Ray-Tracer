@@ -11,6 +11,7 @@
 #include "Definitions.h"
 #include "Tetrahedron.h"
 #include "Sphere.h"
+#include <random>
 
 //Scene contains instances of Triangle.  We use one Scene object that consists of 24
 //instances of Triangle. Scene objects are closed. The triangles of the floor and the
@@ -20,11 +21,9 @@
 //to the triangle and the intersection point to theRay arg.
 class Scene {
 private:
-    Triangle triangleList[24];
+    Triangle triangleList[26];
     Tetrahedron tetrahedron;
-    Sphere sphere;
-    Sphere sphere2;
-    Vertex lightPoint = Vertex(5,0,4.9);
+    Sphere sphereList[4];
 
 public:
     Scene();
@@ -32,12 +31,14 @@ public:
 
     void CastRay(Ray &ray, int rayDepth);
 
-    const Vertex &getLightPoint() const;
+   // const Vertex &getLightCenter() const;
 
     void createLocalCoordinateSystem(const Direction &N, Direction &Nt, Direction &Nb);
 
     Direction uniformSampleHemisphere(const double &r1, const double &r2);
 
+    ColorDbl computeDirectLight(Ray &ray);
+    ColorDbl computeIndirectLight(Ray &ray, int rayDepth);
 };
 
 #endif //UNTITLED_SCENE_H

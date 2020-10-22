@@ -55,8 +55,8 @@ bool Sphere::rayIntersection(Ray &ray, double &minDistance){
         Direction normal = glm::normalize(tempIntersection - center);
         ray.setObjectNormal(normal);
         ray.setColor(getColor());
-        ray.setEnd(tempIntersection + normal*0.0001);
-        if (ray.getRayType() != SHADOW) ray.setMaterial(getMaterial());
+        ray.setEnd(tempIntersection + normal*0.001);
+        ray.setMaterial(getMaterial());
     }
 
 }

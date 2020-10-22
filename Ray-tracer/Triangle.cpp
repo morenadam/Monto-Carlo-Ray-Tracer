@@ -52,10 +52,10 @@ bool Triangle::rayIntersection(Ray &ray, double &minDistance){
 
     if(glm::length(Vertex(ray.getStart() + ray.getDirection()*t)) < minDistance){
         ray.setObjectNormal(this->getNormal());
-        ray.setEnd(ray.getStart() + ray.getDirection()*t + this->getNormal()*0.0001); //add bias
+        ray.setEnd(ray.getStart() + ray.getDirection()*t + this->getNormal()*0.001); //add bias
         ray.setColor(this->getColor());
         minDistance = glm::length(ray.getEndPoint()-ray.getStart());
-        if (ray.getRayType() != SHADOW) ray.setMaterial(getMaterial());
+        ray.setMaterial(getMaterial());
     }
 
     return true;
@@ -72,8 +72,3 @@ Material Triangle::getMaterial() const {
 void Triangle::setMaterial(Material material) {
     Triangle::material = material;
 }
-
-
-
-
-

@@ -40,7 +40,6 @@ void Camera::render(Scene scene) {
             //find ray-triangle intersection point
             scene.CastRay(ray, rayDepth);
 
-
             image[i][j].setColor(ray.getColor());
 
             //Store the highest color value
