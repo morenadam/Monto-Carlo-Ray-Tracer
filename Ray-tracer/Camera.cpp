@@ -22,16 +22,16 @@ void Camera::render(Scene scene) {
     if (isEyePointOne) eyePoint = eyePointOne;
     else eyePoint = eyePointTwo;
 
-    const double delta = 0.005; //side length of each pixel
+    const double delta = 0.0025; //side length of each pixel
 
     for (int i = 0; i < imageHeight; ++i) {
-        if (i % 10 == 0) std::cout << "\r" << i*100.0/400 << "%" << std::endl;
+        if (i % 10 == 0) std::cout << "\r" << i*100.0/800 << "%" << std::endl;
         for (int j = 0; j < imageWidth; ++j) {
             double rand_y = 0.5;
             double rand_z = 0.5;
 
             //Calculate ray-pixel intersection point for pixel (i,j)
-            Vertex pixelPoint = Vertex(0.0, (201 - i + rand_y) * delta, (201 - j + rand_z) * delta);
+            Vertex pixelPoint = Vertex(0.0, (401 - i + rand_y) * delta, (401 - j + rand_z) * delta);
 
             //create new ray
             Ray ray(eyePoint, glm::normalize(pixelPoint - eyePoint), PRIME);

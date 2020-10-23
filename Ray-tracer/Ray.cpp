@@ -18,7 +18,7 @@ void Ray::setColor(ColorDbl _color){
     color = _color;
 }
 
-ColorDbl Ray::getColor() {
+const ColorDbl &Ray::getColor() const{
     return color;
 }
 
@@ -26,7 +26,7 @@ Vertex Ray::getEndPoint() {
     return endPoint;
 }
 
-Vertex Ray::getStart(){
+const Vertex &Ray::getStart() const{
     return startPoint;
 }
 

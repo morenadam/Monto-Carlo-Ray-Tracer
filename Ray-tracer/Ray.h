@@ -38,9 +38,9 @@ public:
     const Direction &getObjectNormal() const;
     void setObjectNormal(const Direction &_objectNormal);
 
-    ColorDbl getColor();
+    const ColorDbl &getColor() const;
     Vertex getEndPoint();
-    Vertex getStart();
+    const Vertex &getStart() const;
     Direction getDirection();
 
     Triangle *getTriangle() const;
