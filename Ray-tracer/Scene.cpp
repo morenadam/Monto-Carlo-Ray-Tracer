@@ -331,7 +331,7 @@ ColorDbl Scene::computeIndirectLight(Ray &ray, int rayDepth){
     createLocalCoordinateSystem(ray.getObjectNormal(), Nt, Nb);
 
     //loop
-    uint32_t N = 16; //number of sample rays
+    uint32_t N = 4; //number of sample rays
     for (uint32_t n = 0; n < N; ++n) {
         // step 2: create sample in world space
         double r1 = distribution(generator);

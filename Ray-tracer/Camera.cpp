@@ -21,29 +21,58 @@ void Camera::render(Scene scene) {
     Vertex eyePoint;
     if (isEyePointOne) eyePoint = eyePointOne;
     else eyePoint = eyePointTwo;
+    int samplesPerPixel = 4;
 
-    const double delta = 0.0025; //side length of each pixel
+    const double delta = 0.005; //side length of each pixel
+
+    Vertex pixelCenter;
+    ColorDbl sampledPixelColor;
+    Vertex subPixelPoint;
 
     for (int i = 0; i < imageHeight; ++i) {
-        if (i % 10 == 0) std::cout << "\r" << i*100.0/800 << "%" << std::endl;
+        if (i % 10 == 0) std::cout << "\r" << i*100.0/400 << "%" << std::endl;
         for (int j = 0; j < imageWidth; ++j) {
-            double rand_y = 0.5;
-            double rand_z = 0.5;
 
-            //Calculate ray-pixel intersection point for pixel (i,j)
-            Vertex pixelPoint = Vertex(0.0, (401 - i + rand_y) * delta, (401 - j + rand_z) * delta);
+            //Calculate center of pixel (i,j)
+            pixelCenter = Vertex(0.0, (201.0 - (double)i + 0.5) * delta, (201.0 - (double)j + 0.5) * delta);
+            sampledPixelColor = ColorDbl (0,0,0);
+            // Supersampling
+            for (int k = 0; k < samplesPerPixel; k++)
+            {
+                double rand_y = ((double)rand() / RAND_MAX) / 2.0;
+                double rand_z = ((double)rand() / RAND_MAX) / 2.0;
 
-            //create new ray
-            Ray ray(eyePoint, glm::normalize(pixelPoint - eyePoint), PRIME);
+                switch(k) {
+                    case 0:
+                        subPixelPoint = pixelCenter + Vertex(0.0, - rand_y*delta, rand_z*delta);
+                        break;
+                    case 1:
+                        subPixelPoint = pixelCenter + Vertex(0, rand_y*delta, rand_z*delta);
+                        break;
+                    case 2:
+                        subPixelPoint = pixelCenter + Vertex(0, - rand_y*delta, - rand_z*delta);
+                        break;
+                    case 3:
+                        subPixelPoint = pixelCenter + Vertex(0, rand_y*delta, - rand_z*delta);
+                    default:
+                        break;
+                }
 
-            int rayDepth = 0;
-            //find ray-triangle intersection point
-            scene.CastRay(ray, rayDepth);
+                //create new ray
+                Ray ray(eyePoint, glm::normalize(subPixelPoint - eyePoint), PRIME);
+                int rayDepth = 0;
+                //find ray-triangle intersection point
+                scene.CastRay(ray, rayDepth);
+                sampledPixelColor += ray.getColor();
+            }
+            ColorDbl pixelColor = sampledPixelColor/(double)samplesPerPixel;
 
-            image[i][j].setColor(ray.getColor());
+            image[i][j].setColor(pixelColor);
 
             //Store the highest color value
-            double newMax = glm::max(glm::max(ray.getColor().x, ray.getColor().y), ray.getColor().z);
+            double newMax = glm::max(glm::max(pixelColor.x, pixelColor.y), pixelColor.z);
+
+
             if(newMax > iMax) {
                 iMax = newMax;
             }
