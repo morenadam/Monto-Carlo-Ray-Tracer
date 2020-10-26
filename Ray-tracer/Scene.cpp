@@ -54,42 +54,42 @@ Scene::Scene() {
                                Vertex(0.0f, 6.0f, 5.0f),
                                Vertex(10.0f, 6.0f, 5.0f),
 
-                               ColorDbl(0.0f, 0.0f, 0.0f),
+                               ColorDbl(1.0f, 1.0f, 1.0f),
                                LAMBERTIAN);
 
     triangleList[7] = Triangle(Vertex(5.0f, 0.0f, 5.0f),
                                Vertex(10.0f, 6.0f, 5.0f),
                                Vertex(13.0f, 0.0f, 5.0f),
 
-                               ColorDbl(0.0f, 0.0f, 0.0f),
+                               ColorDbl(1.0f, 1.0f, 1.0f),
                                LAMBERTIAN);
 
     triangleList[8] = Triangle(Vertex(5.0f, 0.0f, 5.0f),
                                Vertex(13.0f, 0.0f, 5.0f),
                                Vertex(10.0f, -6.0f, 5.0f),
 
-                               ColorDbl(0.0f, 0.0f, 0.0f),
+                               ColorDbl(1.0f, 1.0f, 1.0f),
                                LAMBERTIAN);
 
     triangleList[9] = Triangle(Vertex(5.0f, 0.0f, 5.0f),
                                Vertex(10.0f, -6.0f, 5.0f),
                                Vertex(0.0f, -6.0f, 5.0f),
 
-                               ColorDbl(0.0f, 0.0f, 0.0f),
+                               ColorDbl(1.0f, 1.0f, 1.0f),
                                LAMBERTIAN);
 
     triangleList[10] = Triangle(Vertex(5.0f, 0.0f, 5.0f),
                                 Vertex(0.0f, -6.0f, 5.0f),
                                Vertex(-3.0f, 0.0f, 5.0f),
 
-                                ColorDbl(0.0f, 0.0f, 0.0f),
+                                ColorDbl(1.0f, 1.0f, 1.0f),
                                 LAMBERTIAN);
 
     triangleList[11] = Triangle(Vertex(5.0f, 0.0f, 5.0f),
                                 Vertex(-3.0f, 0.0f, 5.0f),
                                Vertex(0.0f, 6.0f, 5.0f),
 
-                                ColorDbl(0.0f, 0.0f, 0.0f),
+                                ColorDbl(1.0f, 1.0f, 1.0f),
                                 LAMBERTIAN);
 
     //__________________SOUTH____________________
@@ -200,7 +200,7 @@ std::uniform_real_distribution<float> distribution(0.0f,1.0f);
 void Scene::CastRay(Ray &ray, int rayDepth){
 
     ray.setColor(ColorDbl(0.0f,0.0f,0.0f));
-    if(rayDepth > 1) return;
+    if(rayDepth > 5) return;
 
     float minDistance = 1000;
 
@@ -242,10 +242,10 @@ void Scene::CastRay(Ray &ray, int rayDepth){
                 ColorDbl directLighting = computeDirectLight(ray);
 
                 //indirect light:
-                //ColorDbl indirectLighting = computeIndirectLight(ray, rayDepth);
+                ColorDbl indirectLighting = computeIndirectLight(ray, rayDepth);
 
                 //hitColor = (directLighting / M_PI + 2 * indirectLigthing) * isect.hitObject->albedo;
-                ray.setColor(directLighting); // + indirectLighting);
+                ray.setColor(directLighting + indirectLighting);
                 break;
             }
 
@@ -269,7 +269,7 @@ ColorDbl Scene::computeDirectLight(Ray &ray){
 
     Direction lightNormal = Direction (0.0f,0.0f,-1.0f);
 
-    int numberOfShadowRays = 36;
+    int numberOfShadowRays = 1;
     for(int i = 0; i < numberOfShadowRays; i++){
         float vk;
         //parametrize point q on the area light
@@ -302,7 +302,7 @@ ColorDbl Scene::computeDirectLight(Ray &ray){
     //surface A of light source
     float A = glm::length(glm::cross(v1-v0, v3-v0));
 
-    return  (A*directLight*0.5f/(float)numberOfShadowRays);
+    return  (A*directLight/(float)numberOfShadowRays);
     //return directLight;
 }
 
@@ -313,32 +313,24 @@ ColorDbl Scene::computeIndirectLight(Ray &ray, int rayDepth){
     Direction Nt, Nb;
     createLocalCoordinateSystem(ray.getObjectNormal(), Nt, Nb);
 
-    //loop
-    uint32_t N = 4; //number of sample rays
-    float brdf = (0.8f/M_PI);
-    for (uint32_t n = 0; n < N; ++n) {
-        // step 2: create sample in world space
-        float r1 = distribution(generator);
-        float r2 = distribution(generator);
-        Direction sample = uniformSampleHemisphere(r1, r2);
+    float brdf = (0.8f/(float)M_PI);
 
-        // step 3: transform sample from world space to shaded point local coordinate system
-        Direction sampleWorld(
-                sample.x * Nb.x + sample.y * ray.getObjectNormal().x + sample.z * Nt.x,
-                sample.x * Nb.y + sample.y * ray.getObjectNormal().y + sample.z * Nt.y,
-                sample.x * Nb.z + sample.y * ray.getObjectNormal().z + sample.z * Nt.z);
+    // step 2: create sample in world space
+    float r1 = distribution(generator);
+    float r2 = distribution(generator);
+    Direction sample = uniformSampleHemisphere(r1, r2);
 
-        // step 4 & 5: cast a ray in this direction
-        Ray sampleRay = Ray(ray.getEndPoint(), sampleWorld, SECONDARY);
-        CastRay(sampleRay, rayDepth + 1);
-        //brdf * cos_angle / estimator * id.material.color_diffuse;
-        indirectLight += r1 * sampleRay.getColor() * (float)M_PI * brdf;
-        //step 6: repeat steps 2-5 N times
-    }
-    // step 7: divide the sum by the total number of samples N
-    //pdf = 1/2pi
-    indirectLight /= ((float)N *2.0f*3.1419f);
+    // step 3: transform sample from world space to shaded point local coordinate system
+    Direction sampleWorld(
+            sample.x * Nb.x + sample.y * ray.getObjectNormal().x + sample.z * Nt.x,
+            sample.x * Nb.y + sample.y * ray.getObjectNormal().y + sample.z * Nt.y,
+            sample.x * Nb.z + sample.y * ray.getObjectNormal().z + sample.z * Nt.z);
 
+    // step 4 & 5: cast a ray in this direction
+    Ray sampleRay = Ray(ray.getEndPoint(), glm::normalize(sampleWorld), SECONDARY);
+    CastRay(sampleRay, rayDepth + 1);
+
+    indirectLight = r1 * sampleRay.getColor() * brdf;
     return indirectLight;
 }
 

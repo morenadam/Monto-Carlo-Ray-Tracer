@@ -30,6 +30,8 @@ void Camera::render(Scene scene) {
     ColorDbl sampledPixelColor;
     Vertex subPixelPoint;
 
+    int subSamples = 8;
+
     for (int i = 0; i < imageHeight; ++i) {
         if (i % 10 == 0) std::cout << "\r" << (float)i*100.0f/400.0f << "%" << std::endl;
         for (int j = 0; j < imageWidth; ++j) {
@@ -59,21 +61,21 @@ void Camera::render(Scene scene) {
                         break;
                 }
 
-                //create new ray
-                Ray ray(eyePoint, glm::normalize(subPixelPoint - eyePoint), PRIME);
-                int rayDepth = 0;
-                //find ray-triangle intersection point
-                scene.CastRay(ray, rayDepth);
-                sampledPixelColor += ray.getColor();
+                for (int n = 0; n < subSamples; n++){
+                    //create new ray
+                    Ray ray(eyePoint, glm::normalize(subPixelPoint - eyePoint), PRIME);
+                    int rayDepth = 0;
+                    //find ray-triangle intersection point
+                    scene.CastRay(ray, rayDepth);
+                    sampledPixelColor += ray.getColor();
+                }
             }
-            ColorDbl pixelColor = sampledPixelColor/(float)samplesPerPixel;
+            ColorDbl pixelColor = sampledPixelColor/((float)samplesPerPixel * subSamples);
 
             image[i][j].setColor(pixelColor);
 
             //Store the highest color value
             float newMax = glm::max(glm::max(pixelColor.x, pixelColor.y), pixelColor.z);
-
-
             if(newMax > iMax) {
                 iMax = newMax;
             }
