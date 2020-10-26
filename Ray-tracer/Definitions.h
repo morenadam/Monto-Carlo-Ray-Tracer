@@ -8,9 +8,9 @@
 
 #include "glm/glm.hpp"
 
-using Vertex = glm::dvec3;
-using Direction = glm::dvec3;
-using ColorDbl = glm::dvec3;
+using Vertex = glm::vec3;
+using Direction = glm::vec3;
+using ColorDbl = glm::vec3;
 
 
 #endif //RAY_TRACER_DEFINITIONS_H

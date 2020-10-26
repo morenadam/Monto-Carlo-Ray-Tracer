@@ -5,6 +5,7 @@
 #include <fstream>
 #include "Camera.h"
 
+
 Camera::Camera() : image(imageHeight, std::vector<Pixel>(imageWidth)) {}
 
 Camera::~Camera() = default;
@@ -23,24 +24,24 @@ void Camera::render(Scene scene) {
     else eyePoint = eyePointTwo;
     int samplesPerPixel = 4;
 
-    const double delta = 0.005; //side length of each pixel
+    const float delta = 0.005; //side length of each pixel
 
     Vertex pixelCenter;
     ColorDbl sampledPixelColor;
     Vertex subPixelPoint;
 
     for (int i = 0; i < imageHeight; ++i) {
-        if (i % 10 == 0) std::cout << "\r" << i*100.0/400 << "%" << std::endl;
+        if (i % 10 == 0) std::cout << "\r" << (float)i*100.0f/400.0f << "%" << std::endl;
         for (int j = 0; j < imageWidth; ++j) {
 
             //Calculate center of pixel (i,j)
-            pixelCenter = Vertex(0.0, (201.0 - (double)i + 0.5) * delta, (201.0 - (double)j + 0.5) * delta);
+            pixelCenter = Vertex(0.0, (201.0 - (float)i + 0.5) * delta, (201.0 - (float)j + 0.5) * delta);
             sampledPixelColor = ColorDbl (0,0,0);
             // Supersampling
             for (int k = 0; k < samplesPerPixel; k++)
             {
-                double rand_y = ((double)rand() / RAND_MAX) / 2.0;
-                double rand_z = ((double)rand() / RAND_MAX) / 2.0;
+                float rand_y = ((float)rand() / RAND_MAX) / 2.0f;
+                float rand_z = ((float)rand() / RAND_MAX) / 2.0f;
 
                 switch(k) {
                     case 0:
@@ -65,12 +66,12 @@ void Camera::render(Scene scene) {
                 scene.CastRay(ray, rayDepth);
                 sampledPixelColor += ray.getColor();
             }
-            ColorDbl pixelColor = sampledPixelColor/(double)samplesPerPixel;
+            ColorDbl pixelColor = sampledPixelColor/(float)samplesPerPixel;
 
             image[i][j].setColor(pixelColor);
 
             //Store the highest color value
-            double newMax = glm::max(glm::max(pixelColor.x, pixelColor.y), pixelColor.z);
+            float newMax = glm::max(glm::max(pixelColor.x, pixelColor.y), pixelColor.z);
 
 
             if(newMax > iMax) {
@@ -85,9 +86,9 @@ void Camera::createImage() {
     ofs << "P6\n" << imageWidth << " " << imageHeight << "\n255\n";
     for (int j = 0; j < imageHeight; ++j) {
         for (int i = 0; i < imageWidth; ++i) {
-        ofs << (unsigned char)((image[i][j].getColor().x) * (double)255.99f /iMax) <<
-            (unsigned char)((image[i][j].getColor().y) * (double)255.99f /iMax) <<
-            (unsigned char)((image[i][j].getColor().z) * (double)255.99f /iMax);
+        ofs << (unsigned char)((image[i][j].getColor().x) * (float)255.99 /iMax) <<
+            (unsigned char)((image[i][j].getColor().y) * (float)255.99 /iMax) <<
+            (unsigned char)((image[i][j].getColor().z) * (float)255.99 /iMax);
     }}
     ofs.close();
     //delete[] image;

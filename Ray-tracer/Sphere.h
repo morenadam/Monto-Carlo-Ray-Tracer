@@ -12,7 +12,7 @@
 
 class Sphere {
 private:
-    double radius;
+    float radius;
     Vertex center;
     ColorDbl color;
     Material material;
@@ -21,9 +21,9 @@ public:
     Sphere();
     ~Sphere();
 
-    Sphere(double _radius, Vertex _center, ColorDbl _color, Material _material);
+    Sphere(float _radius, Vertex _center, ColorDbl _color, Material _material);
 
-    bool rayIntersection(Ray &ray, double &minDistance);
+    bool rayIntersection(Ray &ray, float &minDistance);
 
     const ColorDbl &getColor() const;
 

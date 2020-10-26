@@ -18,7 +18,7 @@ public:
     Tetrahedron(Vertex v0, Vertex v1, Vertex v2, Vertex v3);
     explicit Tetrahedron(Vertex v0);
 
-    void rayIntersection(Ray &ray, double &minDistance);
+    void rayIntersection(Ray &ray, float &minDistance);
 
 };
 

@@ -28,7 +28,7 @@ public:
 
     const Direction &getNormal() const;
 
-    bool rayIntersection(Ray &ray, double &minDistance);
+    bool rayIntersection(Ray &ray, float &minDistance);
     ColorDbl getColor();
 
     Material getMaterial() const;

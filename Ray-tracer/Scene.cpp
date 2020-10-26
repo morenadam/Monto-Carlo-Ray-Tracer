@@ -13,196 +13,196 @@
 Scene::Scene() {
 
     //__________________FLOOR____________________
-    triangleList[0] = Triangle(Vertex(5, 0, -5),
-                               Vertex(10, 6, -5),
-                               Vertex(0, 6, -5),
-                               ColorDbl(1, 1, 1),
+    triangleList[0] = Triangle(Vertex(5.0f, 0.0f, -5.0f),
+                               Vertex(10.0f, 6.0f, -5.0f),
+                               Vertex(0.0f, 6.0f, -5.0f),
+                               ColorDbl(1.0f, 1.0f, 1.0f),
                                LAMBERTIAN);
 
-    triangleList[1] = Triangle(Vertex(5, 0, -5),
-                               Vertex(13, 0, -5),
-                               Vertex(10, 6, -5),
-                               ColorDbl(1, 1, 1),
+    triangleList[1] = Triangle(Vertex(5.0f, 0.0f, -5.0f),
+                               Vertex(13.0f, 0.0f, -5.0f),
+                               Vertex(10.0f, 6.0f, -5.0f),
+                               ColorDbl(1.0f, 1.0f, 1.0f),
                                LAMBERTIAN);
 
-    triangleList[2] = Triangle(Vertex(5, 0, -5),
-                               Vertex(10, -6, -5),
-                               Vertex(13, 0, -5),
-                               ColorDbl(1, 1, 1),
+    triangleList[2] = Triangle(Vertex(5.0f, 0.0f, -5.0f),
+                               Vertex(10.0f, -6.0f, -5.0f),
+                               Vertex(13.0f, 0.0f, -5.0f),
+                               ColorDbl(1.0f, 1.0f, 1.0f),
                                LAMBERTIAN);
 
-    triangleList[3] = Triangle(Vertex(5, 0, -5),
-                               Vertex(0, -6, -5),
-                               Vertex(10, -6, -5),
-                               ColorDbl(1, 1, 1),
+    triangleList[3] = Triangle(Vertex(5.0f, 0.0f, -5.0f),
+                               Vertex(0.0f, -6.0f, -5.0f),
+                               Vertex(10.0f, -6.0f, -5.0f),
+                               ColorDbl(1.0f, 1.0f, 1.0f),
                                LAMBERTIAN);
 
-    triangleList[4] = Triangle(Vertex(5, 0, -5),
-                               Vertex(-3, 0, -5),
-                               Vertex(0, -6, -5),
-                               ColorDbl(1, 1, 1),
+    triangleList[4] = Triangle(Vertex(5.0f, 0.0f, -5.0f),
+                               Vertex(-3.0f, 0.0f, -5.0f),
+                               Vertex(0.0f, -6.0f, -5.0f),
+                               ColorDbl(1.0f, 1.0f, 1.0f),
                                LAMBERTIAN);
 
-    triangleList[5] = Triangle(Vertex(5, 0, -5),
-                               Vertex(0, 6, -5),
-                               Vertex(-3, 0, -5),
-                               ColorDbl(1, 1, 1),
+    triangleList[5] = Triangle(Vertex(5.0f, 0.0f, -5.0f),
+                               Vertex(0.0f, 6.0f, -5.0f),
+                               Vertex(-3.0f, 0.0f, -5.0f),
+                               ColorDbl(1.0f, 1.0f, 1.0f),
                                LAMBERTIAN);
 
     //__________________CEILING____________________
-    triangleList[6] = Triangle(Vertex(5, 0, 5),
-                               Vertex(0, 6, 5),
-                               Vertex(10, 6, 5),
+    triangleList[6] = Triangle(Vertex(5.0f, 0.0f, 5.0f),
+                               Vertex(0.0f, 6.0f, 5.0f),
+                               Vertex(10.0f, 6.0f, 5.0f),
 
-                               ColorDbl(0, 0, 0),
+                               ColorDbl(0.0f, 0.0f, 0.0f),
                                LAMBERTIAN);
 
-    triangleList[7] = Triangle(Vertex(5, 0, 5),
-                               Vertex(10, 6, 5),
-                               Vertex(13, 0, 5),
+    triangleList[7] = Triangle(Vertex(5.0f, 0.0f, 5.0f),
+                               Vertex(10.0f, 6.0f, 5.0f),
+                               Vertex(13.0f, 0.0f, 5.0f),
 
-                               ColorDbl(0, 0, 0),
+                               ColorDbl(0.0f, 0.0f, 0.0f),
                                LAMBERTIAN);
 
-    triangleList[8] = Triangle(Vertex(5, 0, 5),
-                               Vertex(13, 0, 5),
-                               Vertex(10, -6, 5),
+    triangleList[8] = Triangle(Vertex(5.0f, 0.0f, 5.0f),
+                               Vertex(13.0f, 0.0f, 5.0f),
+                               Vertex(10.0f, -6.0f, 5.0f),
 
-                               ColorDbl(0, 0, 0),
+                               ColorDbl(0.0f, 0.0f, 0.0f),
                                LAMBERTIAN);
 
-    triangleList[9] = Triangle(Vertex(5, 0, 5),
-                               Vertex(10, -6, 5),
-                               Vertex(0, -6, 5),
+    triangleList[9] = Triangle(Vertex(5.0f, 0.0f, 5.0f),
+                               Vertex(10.0f, -6.0f, 5.0f),
+                               Vertex(0.0f, -6.0f, 5.0f),
 
-                               ColorDbl(0, 0, 0),
+                               ColorDbl(0.0f, 0.0f, 0.0f),
                                LAMBERTIAN);
 
-    triangleList[10] = Triangle(Vertex(5, 0, 5),
-                                Vertex(0, -6, 5),
-                               Vertex(-3, 0, 5),
+    triangleList[10] = Triangle(Vertex(5.0f, 0.0f, 5.0f),
+                                Vertex(0.0f, -6.0f, 5.0f),
+                               Vertex(-3.0f, 0.0f, 5.0f),
 
-                                ColorDbl(0, 0, 0),
+                                ColorDbl(0.0f, 0.0f, 0.0f),
                                 LAMBERTIAN);
 
-    triangleList[11] = Triangle(Vertex(5, 0, 5),
-                                Vertex(-3, 0, 5),
-                               Vertex(0, 6, 5),
+    triangleList[11] = Triangle(Vertex(5.0f, 0.0f, 5.0f),
+                                Vertex(-3.0f, 0.0f, 5.0f),
+                               Vertex(0.0f, 6.0f, 5.0f),
 
-                                ColorDbl(0, 0, 0),
+                                ColorDbl(0.0f, 0.0f, 0.0f),
                                 LAMBERTIAN);
 
     //__________________SOUTH____________________
-    triangleList[12] = Triangle(Vertex(10, -6, -5),
-                                Vertex(0, -6, -5),
-                                Vertex(0, -6, 5),
-                                ColorDbl(0.5, 0, 0.5),
+    triangleList[12] = Triangle(Vertex(10.0f, -6.0f, -5.0f),
+                                Vertex(0.0f, -6.0f, -5.0f),
+                                Vertex(0.0f, -6.0f, 5.0f),
+                                ColorDbl(0.5f, 0.0f, 0.5f),
                                 LAMBERTIAN);
 
-    triangleList[13] = Triangle(Vertex(10, -6, -5),
-                                Vertex(0, -6, 5),
-                                Vertex(10, -6, 5),
-                                ColorDbl(0.5, 0, 0.5),
+    triangleList[13] = Triangle(Vertex(10.0f, -6.0f, -5.0f),
+                                Vertex(0.0f, -6.0f, 5.0f),
+                                Vertex(10.0f, -6.0f, 5.0f),
+                                ColorDbl(0.5f, 0.0f, 0.5f),
                                 LAMBERTIAN);
 
     //__________________NORTH____________________
-    triangleList[14] = Triangle(Vertex(10, 6, -5),
-                                Vertex(10, 6, 5),
-                                Vertex(0, 6, -5),
-                                ColorDbl(1, 0, 0),
+    triangleList[14] = Triangle(Vertex(10.0f, 6.0f, -5.0f),
+                                Vertex(10.0f, 6.0f, 5.0f),
+                                Vertex(0.0f, 6.0f, -5.0f),
+                                ColorDbl(1.0f, 0.0f, 0.0f),
                                 LAMBERTIAN);
 
-    triangleList[15] = Triangle(Vertex(0, 6, -5),
-                                Vertex(10, 6, 5),
-                                Vertex(0, 6, 5),
-                                ColorDbl(1, 0, 0),
+    triangleList[15] = Triangle(Vertex(0.0f, 6.0f, -5.0f),
+                                Vertex(10.0f, 6.0f, 5.0f),
+                                Vertex(0.0f, 6.0f, 5.0f),
+                                ColorDbl(1.0f, 0.0f, 0.0f),
                                 LAMBERTIAN);
 
     //__________________NORTH-EAST___________________
-    triangleList[16] = Triangle(Vertex(13, 0, -5),
-                                Vertex(13, 0, 5),
-                                Vertex(10, 6, -5),
-                                ColorDbl(0, 1, 0),
+    triangleList[16] = Triangle(Vertex(13.0f, 0.0f, -5.0f),
+                                Vertex(13.0f, 0.0f, 5.0f),
+                                Vertex(10.0f, 6.0f, -5.0f),
+                                ColorDbl(0.0f, 1.0f, 0.0f),
                                 LAMBERTIAN);
 
-    triangleList[17] = Triangle(Vertex(10, 6, -5),
-                                Vertex(13, 0, 5),
-                                Vertex(10, 6, 5),
-                                ColorDbl(0, 1, 0),
+    triangleList[17] = Triangle(Vertex(10.0f, 6.0f, -5.0f),
+                                Vertex(13.0f, 0.0f, 5.0f),
+                                Vertex(10.0f, 6.0f, 5.0f),
+                                ColorDbl(0.0f, 1.0f, 0.0f),
                                 LAMBERTIAN);
 
     //__________________SOUTH-EAST___________________
-    triangleList[18] = Triangle(Vertex(10, -6, -5),
-                                Vertex(10, -6, 5),
-                                Vertex(13, 0, -5),
-                                ColorDbl(1, 0, 0),
-                                MIRROR);
+    triangleList[18] = Triangle(Vertex(10.0f, -6.0f, -5.0f),
+                                Vertex(10.0f, -6.0f, 5.0f),
+                                Vertex(13.0f, 0.0f, -5.0f),
+                                ColorDbl(1.0f, 0.0f, 0.0f),
+                                LAMBERTIAN);
 
-    triangleList[19] = Triangle(Vertex(13, 0, -5),
-                                Vertex(10, -6, 5),
-                                Vertex(13, 0, 5),
-                                ColorDbl(1, 0, 0),
-                                MIRROR);
+    triangleList[19] = Triangle(Vertex(13.0f, 0.0f, -5.0f),
+                                Vertex(10.0f, -6.0f, 5.0f),
+                                Vertex(13.0f, 0.0f, 5.0f),
+                                ColorDbl(1.0f, 0.0f, 0.0f),
+                                LAMBERTIAN);
 
 
     //__________________SOUTH-WEST___________________
-    triangleList[20] = Triangle(Vertex(-3, 0, -5),
-                                Vertex(-3, 0, 5),
-                                Vertex(0, -6, -5),
-                                ColorDbl(0, 1, 0),
+    triangleList[20] = Triangle(Vertex(-3.0f, 0.0f, -5.0f),
+                                Vertex(-3.0f, 0.0f, 5.0f),
+                                Vertex(0.0f, -6.0f, -5.0f),
+                                ColorDbl(0.0f, 1.0f, 0.0f),
                                 LAMBERTIAN);
 
-    triangleList[21] = Triangle(Vertex(0, -6, -5),
-                                Vertex(-3, 0, 5),
-                                Vertex(0, -6, 5),
-                                ColorDbl(0, 1, 0),
+    triangleList[21] = Triangle(Vertex(0.0f, -6.0f, -5.0f),
+                                Vertex(-3.0f, 0.0f, 5.0f),
+                                Vertex(0.0f, -6.0f, 5.0f),
+                                ColorDbl(0.0f, 1.0f, 0.0f),
                                 LAMBERTIAN);
 
     //__________________NORTH-WEST___________________
-    triangleList[22] = Triangle(Vertex(0, 6, -5),
-                                Vertex(0, 6, 5),
-                                Vertex(-3, 0, -5),
-                                ColorDbl(1, 1, 0),
+    triangleList[22] = Triangle(Vertex(0.0f, 6.0f, -5.0f),
+                                Vertex(0.0f, 6.0f, 5.0f),
+                                Vertex(-3.0f, 0.0f, -5.0f),
+                                ColorDbl(1.0f, 1.0f, 0.0f),
                                 LAMBERTIAN);
 
-    triangleList[23] = Triangle(Vertex(-3, 0, -5),
-                                Vertex(0, 6, 5),
-                                Vertex(-3, 0, 5),
-                                ColorDbl(1, 1, 0),
+    triangleList[23] = Triangle(Vertex(-3.0f, 0.0f, -5.0f),
+                                Vertex(0.0f, 6.0f, 5.0f),
+                                Vertex(-3.0f, 0.0f, 5.0f),
+                                ColorDbl(1.0f, 1.0f, 0.0f),
                                 LAMBERTIAN);
 
     //AREA LIGHT
-    triangleList[24] = Triangle(Vertex(5.5, 0.5, 4.9),
-                                Vertex(5.5, -0.5, 4.9),
-                                Vertex(4.5, -0.5, 4.9),
-                                ColorDbl(1, 1, 1),
+    triangleList[24] = Triangle(Vertex(5.5f, 0.5f, 4.9f),
+                                Vertex(5.5f, -0.5f, 4.9f),
+                                Vertex(4.5f, -0.5f, 4.9f),
+                                ColorDbl(1.0f, 1.0f, 1.0f),
                                 LIGHT);
 
-    triangleList[25] = Triangle(Vertex(4.5, -0.5, 4.9),
-                                Vertex(4.5, 0.5, 4.9),
-                                Vertex(5.5, 0.5, 4.9),
-                                ColorDbl(1, 1, 1),
+    triangleList[25] = Triangle(Vertex(4.5f, -0.5f, 4.9f),
+                                Vertex(4.5f, 0.5f, 4.9f),
+                                Vertex(5.5f, 0.5f, 4.9f),
+                                ColorDbl(1.0f, 1.0f, 1.0f),
                                 LIGHT);
 
-    tetrahedron = Tetrahedron(Vertex(8,-1,0));
+    tetrahedron = Tetrahedron(Vertex(8.0f,-1.0f,0.0f));
 
-    sphereList[0] = Sphere(1, Vertex(8,2,2), ColorDbl(0.8,0,0), LAMBERTIAN);
-    sphereList[1] = Sphere(1, Vertex(5,1,-3), ColorDbl(0,0,0), MIRROR);
-    sphereList[2] = Sphere(1, Vertex(6,-3,-4), ColorDbl(0,0.8,0), LAMBERTIAN);
+    sphereList[0] = Sphere(1.0f, Vertex(8.0f,2.0f,2.0f), ColorDbl(0.8f,0.0f,0.0f), LAMBERTIAN);
+    sphereList[1] = Sphere(1.0f, Vertex(5.0f,1.0f,-3.0f), ColorDbl(0.0f,0.0f,0.0f), MIRROR);
+    //sphereList[2] = Sphere(1, Vertex(6,-3,-4), ColorDbl(0,0.8,0), LAMBERTIAN);
+    sphereList[2] = Sphere(1.0f, Vertex(8.0f,1.0f,-2.0f), ColorDbl(0.0f,0.8f,0.0f), LAMBERTIAN);
 }
 
 Scene::~Scene() = default;
 
 std::default_random_engine generator;
-std::uniform_real_distribution<double> distribution(0,1);
+std::uniform_real_distribution<float> distribution(0.0f,1.0f);
 
 void Scene::CastRay(Ray &ray, int rayDepth){
 
-    ray.setColor(ColorDbl(0,0,0));
+    ray.setColor(ColorDbl(0.0f,0.0f,0.0f));
     if(rayDepth > 1) return;
 
-    double intensity = 1;
-    double minDistance = 1000;
+    float minDistance = 1000;
 
     //Borders
     for(Triangle triangle : triangleList) {
@@ -222,8 +222,11 @@ void Scene::CastRay(Ray &ray, int rayDepth){
         switch (ray.getMaterial()){
             case MIRROR:
             {
-                if(ray.getRayType() == SECONDARY) break;
-                double kr = 0.95; //amount of light reflected
+                if(ray.getRayType() == SECONDARY){
+                    ray.setColor(ColorDbl(0.0f,0.0f,0.0f));
+                    break;
+                }
+                float kr = 0.95; //amount of light reflected
                 Ray reflectionRay(ray.getEndPoint(), glm::normalize(reflect(ray.getDirection(), ray.getObjectNormal())), REFLECTION);
                 CastRay(reflectionRay, rayDepth);
                 ray.setColor(reflectionRay.getColor() * kr);
@@ -239,10 +242,10 @@ void Scene::CastRay(Ray &ray, int rayDepth){
                 ColorDbl directLighting = computeDirectLight(ray);
 
                 //indirect light:
-                ColorDbl indirectLighting = computeIndirectLight(ray, rayDepth);
+                //ColorDbl indirectLighting = computeIndirectLight(ray, rayDepth);
 
                 //hitColor = (directLighting / M_PI + 2 * indirectLigthing) * isect.hitObject->albedo;
-                ray.setColor(directLighting + indirectLighting);
+                ray.setColor(directLighting); // + indirectLighting);
                 break;
             }
 
@@ -254,72 +257,52 @@ void Scene::CastRay(Ray &ray, int rayDepth){
 }
 
 
-void Scene::createLocalCoordinateSystem(const Direction &N, Direction &Nt, Direction &Nb)
-{
-    if (std::fabs(N.x) > std::fabs(N.y))
-        Nt = Direction(N.z, 0, -N.x) / sqrt(N.x * N.x + N.z * N.z);
-    else
-        Nt = Direction(0, -N.z, N.y) / sqrt(N.y * N.y + N.z * N.z);
-    Nb = glm::cross(N, Nt);
-}
-
-Direction Scene::uniformSampleHemisphere(const double &r1, const double &r2)
-{
-    // cos(theta) = r1 = y
-    // cos^2(theta) + sin^2(theta) = 1 -> sin(theta) = sqrt(1 - cos^2(theta))
-    float sinTheta = sqrt(1 - r1 * r1);
-    float phi = 2 * M_PI * r2;
-    float x = sinTheta * cosf(phi);
-    float z = sinTheta * sinf(phi);
-    return Direction(x, r1, z);
-}
-
 ColorDbl Scene::computeDirectLight(Ray &ray){
 
-    ColorDbl directLight = ColorDbl(0,0,0);
+    ColorDbl directLight = ColorDbl(0.0f,0.0f,0.0f);
 
     //define corners of area light
-    Vertex v0 = Vertex(0, 0, 0);
-    Vertex v1 = Vertex(0, 1, 0);
-    Vertex v2 = Vertex(1, 0, 0);
-    Vertex v3 = Vertex(1, 1, 0);
+    Vertex v0 = Vertex(0.0f, 0.0f, 0.0f);
+    Vertex v1 = Vertex(0.0f, 1.0f, 0.0f);
+    Vertex v2 = Vertex(1.0f, 0.0f, 0.0f);
+    Vertex v3 = Vertex(1.0f, 1.0f, 0.0f);
 
-    Direction lightNormal = Direction (0,0,-1);
+    Direction lightNormal = Direction (0.0f,0.0f,-1.0f);
 
-    int numberOfShadowRays = 5;
+    int numberOfShadowRays = 36;
     for(int i = 0; i < numberOfShadowRays; i++){
-        double vk;
+        float vk;
         //parametrize point q on the area light
-        double u = distribution(generator);
-        double v = distribution(generator);
+        float u = distribution(generator);
+        float v = distribution(generator);
 
         //random point on light surface
         Vertex qi = Vertex(u*(v1-v0) + v*(v2-v0));
         //move to global coordinates
-        qi += Vertex(4.5,-0.5,4.89);
+        qi += Vertex(4.5f,-0.5f,4.8f);
 
         Direction s_i = qi - ray.getEndPoint();
-        double d_i = glm::length(s_i);
-        double cos_alpha = glm::max(0.0, glm::dot(-s_i,lightNormal));
-        double cos_beta = glm::max(0.0,glm::dot(s_i,ray.getObjectNormal()));
+        float d_i = glm::length(s_i);
+        float cos_alpha = glm::max(0.0f, glm::dot(-s_i,lightNormal));
+        float cos_beta = glm::max(0.0f,glm::dot(s_i,ray.getObjectNormal()));
 
         //shadow ray
         Direction rayDir = glm::normalize(s_i);
         Ray shadowRay = Ray(ray.getEndPoint(), rayDir, SHADOW);
         CastRay(shadowRay, 0);
-        double shadowRayLength = glm::length(shadowRay.getEndPoint() - shadowRay.getStart());
+        float shadowRayLength = glm::length(shadowRay.getEndPoint() - shadowRay.getStart());
 
         if(shadowRayLength < d_i ){
-            vk = 0.0;
+            vk = 0.0f;
         }
-        else vk = 1.0;
+        else vk = 1.0f;
 
         directLight += ray.getColor()*vk*(cos_alpha*cos_beta/(d_i*d_i));
     }
     //surface A of light source
-    double A = glm::length(glm::cross(v1-v0, v3-v0));
+    float A = glm::length(glm::cross(v1-v0, v3-v0));
 
-    return  (A*directLight/(double)numberOfShadowRays);
+    return  (A*directLight*0.5f/(float)numberOfShadowRays);
     //return directLight;
 }
 
@@ -332,10 +315,11 @@ ColorDbl Scene::computeIndirectLight(Ray &ray, int rayDepth){
 
     //loop
     uint32_t N = 4; //number of sample rays
+    float brdf = (0.8f/M_PI);
     for (uint32_t n = 0; n < N; ++n) {
         // step 2: create sample in world space
-        double r1 = distribution(generator);
-        double r2 = distribution(generator);
+        float r1 = distribution(generator);
+        float r2 = distribution(generator);
         Direction sample = uniformSampleHemisphere(r1, r2);
 
         // step 3: transform sample from world space to shaded point local coordinate system
@@ -347,13 +331,34 @@ ColorDbl Scene::computeIndirectLight(Ray &ray, int rayDepth){
         // step 4 & 5: cast a ray in this direction
         Ray sampleRay = Ray(ray.getEndPoint(), sampleWorld, SECONDARY);
         CastRay(sampleRay, rayDepth + 1);
-        indirectLight += r1 * (sampleRay.getColor());
+        //brdf * cos_angle / estimator * id.material.color_diffuse;
+        indirectLight += r1 * sampleRay.getColor() * (float)M_PI * brdf;
         //step 6: repeat steps 2-5 N times
     }
     // step 7: divide the sum by the total number of samples N
     //pdf = 1/2pi
-    indirectLight /= (((double)N)*2*M_PI);
+    indirectLight /= ((float)N *2.0f*3.1419f);
 
     return indirectLight;
+}
+
+void Scene::createLocalCoordinateSystem(const Direction &N, Direction &Nt, Direction &Nb)
+{
+    if (std::fabs(N.x) > std::fabs(N.y))
+        Nt = Direction(N.z, 0.0f, -N.x) / (float)sqrt(N.x * N.x + N.z * N.z);
+    else
+        Nt = Direction(0.0f, -N.z, N.y) / (float)sqrt(N.y * N.y + N.z * N.z);
+    Nb = glm::cross(N, Nt);
+}
+
+Direction Scene::uniformSampleHemisphere(const float &r1, const float &r2)
+{
+    // cos(theta) = r1 = y
+    // cos^2(theta) + sin^2(theta) = 1 -> sin(theta) = sqrt(1 - cos^2(theta))
+    float sinTheta = sqrt(1.0f - r1 * r1);
+    float phi = 2.0f * M_PI * r2;
+    float x = sinTheta * cosf(phi);
+    float z = sinTheta * sinf(phi);
+    return Direction(x, r1, z);
 }
 

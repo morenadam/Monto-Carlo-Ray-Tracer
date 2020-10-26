@@ -3,8 +3,6 @@ project(Ray_tracer)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(.)
-
 add_executable(Ray_tracer
         main.cpp
         Ray.cpp
@@ -22,4 +20,7 @@ add_executable(Ray_tracer
         Sphere.h
         Tetrahedron.cpp
         Tetrahedron.h Types.h)
+
+include_directories(.)
+
 

@@ -35,7 +35,7 @@ public:
 
     void createLocalCoordinateSystem(const Direction &N, Direction &Nt, Direction &Nb);
 
-    Direction uniformSampleHemisphere(const double &r1, const double &r2);
+    Direction uniformSampleHemisphere(const float &r1, const float &r2);
 
     ColorDbl computeDirectLight(Ray &ray);
     ColorDbl computeIndirectLight(Ray &ray, int rayDepth);
