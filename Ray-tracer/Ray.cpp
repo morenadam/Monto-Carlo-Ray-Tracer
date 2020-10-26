@@ -18,7 +18,7 @@ void Ray::setColor(ColorDbl _color){
     color = _color;
 }
 
-const ColorDbl &Ray::getColor() const{
+ColorDbl &Ray::getColor(){
     return color;
 }
 
@@ -32,11 +32,6 @@ const Vertex &Ray::getStart() const{
 
 Direction Ray::getDirection(){
     return dir;
-}
-
-
-Triangle *Ray::getTriangle() const {
-    return triangle;
 }
 
 void Ray::setObjectNormal(const Direction &_objectNormal) {

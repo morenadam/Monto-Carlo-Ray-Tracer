@@ -26,7 +26,7 @@ Tetrahedron::Tetrahedron(Vertex _v0) {
     triangles[3] = Triangle(v1, v3, v2,ColorDbl(0.5, 0, 0.5), LAMBERTIAN);
 }
 
-void Tetrahedron::rayIntersection(Ray &ray, double &minDistance){
+void Tetrahedron::rayIntersection(Ray &ray, float &minDistance){
     for (Triangle triangle : triangles){
         if(triangle.rayIntersection(ray, minDistance)){
             ray.setMaterial(LAMBERTIAN);

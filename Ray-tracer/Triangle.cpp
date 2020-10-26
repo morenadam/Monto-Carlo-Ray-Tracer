@@ -20,18 +20,18 @@ ColorDbl Triangle::getColor(){
     return color;
 }
 
-bool Triangle::rayIntersection(Ray &ray, double &minDistance){
+bool Triangle::rayIntersection(Ray &ray, float &minDistance){
     //https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/moller-trumbore-ray-triangle-intersection
 
-    glm::dvec3 edge1  = v1 - v0;
-    glm::dvec3 edge2 = v2 - v0;
-    glm::dvec3 pvec = glm::cross(ray.getDirection(), edge2);
-    glm::dvec3 qvec = glm::cross(ray.getStart()-v0, edge1);
-    glm::dvec3 tvec = ray.getStart()-v0;
+    glm::vec3 edge1  = v1 - v0;
+    glm::vec3 edge2 = v2 - v0;
+    glm::vec3 pvec = glm::cross(ray.getDirection(), edge2);
+    glm::vec3 qvec = glm::cross(ray.getStart()-v0, edge1);
+    glm::vec3 tvec = ray.getStart()-v0;
 
-    const double kEpsilon = 0.00001;
+    const float kEpsilon = 0.00001;
 
-    double det = glm::dot(edge1, pvec);
+    float det = glm::dot(edge1, pvec);
 
     // if the determinant is negative the triangle is back-facing
     // if the determinant is close to 0, the ray misses the triangle
@@ -40,20 +40,20 @@ bool Triangle::rayIntersection(Ray &ray, double &minDistance){
     // ray and triangle are parallel if det is close to 0
     if (fabs(det) < kEpsilon) return false;
 
-    float invDet = 1 / det;
+    float invDet = 1.0f / det;
 
-    double u = glm::dot(tvec, pvec) * invDet;
+    float u = glm::dot(tvec, pvec) * invDet;
     if (u < 0 || u > 1) return false;
 
-    double v = glm::dot(ray.getDirection(), qvec) * invDet;
+    float v = glm::dot(ray.getDirection(), qvec) * invDet;
     if (v < 0 || u + v > 1) return false;
 
-    double t = glm::dot(edge2, qvec) * invDet;
+    float t = glm::dot(edge2, qvec) * invDet;
 
     if(glm::length(Vertex(ray.getStart() + ray.getDirection()*t)) < minDistance){
         ray.setObjectNormal(this->getNormal());
-        ray.setEnd(ray.getStart() + ray.getDirection()*t + this->getNormal()*0.001); //add bias
-        ray.setColor(this->getColor());
+        ray.setEnd(ray.getStart() + ray.getDirection()*t + this->getNormal()*0.001f); //add bias
+        ray.setColor(getColor());
         minDistance = glm::length(ray.getEndPoint()-ray.getStart());
         ray.setMaterial(getMaterial());
     }

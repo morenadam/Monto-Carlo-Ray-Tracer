@@ -16,10 +16,10 @@ void Pixel::setColor(const ColorDbl _color) {
     Pixel::color = _color;
 }
 
-double Pixel::getBrightness() const {
+float Pixel::getBrightness() const {
     return brightness;
 }
 
-void Pixel::setBrightness(double _brightness) {
+void Pixel::setBrightness(float _brightness) {
     Pixel::brightness = _brightness;
 }

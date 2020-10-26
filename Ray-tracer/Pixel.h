@@ -12,9 +12,9 @@
 //Pixel has references to the rays that go through it.  We use for now one.
 class Pixel {
 private:
-    ColorDbl color = ColorDbl(0,0,0);
+    ColorDbl color = ColorDbl(0.0f,0.0f,0.0f);
     Ray ray;
-    double brightness = 1.0;
+    float brightness = 1.0;
 
 public:
     Pixel();
@@ -23,9 +23,9 @@ public:
     ColorDbl getColor();
     void setColor(ColorDbl _color);
 
-    double getBrightness() const;
+    float getBrightness() const;
 
-    void setBrightness(double _brightness);
+    void setBrightness(float _brightness);
 
 };
 

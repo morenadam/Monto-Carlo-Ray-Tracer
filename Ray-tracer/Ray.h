@@ -22,7 +22,6 @@ private:
     Vertex endPoint;
     Direction dir;
     ColorDbl color;
-    Triangle *triangle;
     Direction objectNormal; //intersected point's objectNormal
     Material material;
     RayType rayType;
@@ -38,7 +37,7 @@ public:
     const Direction &getObjectNormal() const;
     void setObjectNormal(const Direction &_objectNormal);
 
-    const ColorDbl &getColor() const;
+    ColorDbl &getColor();
     Vertex getEndPoint();
     const Vertex &getStart() const;
     Direction getDirection();

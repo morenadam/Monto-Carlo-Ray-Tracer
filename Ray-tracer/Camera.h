@@ -22,13 +22,13 @@
 class Camera {
 
 private:
-    const int imageHeight = 800;
-    const int imageWidth = 800;
-    Vertex eyePointOne = Vertex(-2,0,0);
-    Vertex eyePointTwo = Vertex(-1,0,0);
+    const int imageHeight = 400;
+    const int imageWidth = 400;
+    Vertex eyePointOne = Vertex(-2.0f,0.0f,0.0f);
+    Vertex eyePointTwo = Vertex(-1.0f,0.0f,0.0f);
     bool isEyePointOne = false;
-    std::vector<std::vector<Pixel>> image;
-    double iMax = 0;
+    std::vector<std::vector<Pixel> > image;
+    float iMax = 0;
 
 public:
     Camera();
