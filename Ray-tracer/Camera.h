@@ -37,7 +37,6 @@ public:
     void render(Scene scene);
     void createImage();
     void switchEyePoint();
-    
 };
 
 

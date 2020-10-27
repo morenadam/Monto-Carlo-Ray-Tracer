@@ -259,7 +259,10 @@ void Scene::CastRay(Ray &ray, int rayDepth){
 
 ColorDbl Scene::computeDirectLight(Ray &ray){
 
+    float brdf = (0.8f/(float)M_PI);
+
     ColorDbl directLight = ColorDbl(0.0f,0.0f,0.0f);
+
 
     //define corners of area light
     Vertex v0 = Vertex(0.0f, 0.0f, 0.0f);
@@ -313,7 +316,7 @@ ColorDbl Scene::computeIndirectLight(Ray &ray, int rayDepth){
     Direction Nt, Nb;
     createLocalCoordinateSystem(ray.getObjectNormal(), Nt, Nb);
 
-    float brdf = (0.8f/(float)M_PI);
+    float brdf = (1.0f/(float)M_PI);
 
     // step 2: create sample in world space
     float r1 = distribution(generator);
@@ -329,8 +332,7 @@ ColorDbl Scene::computeIndirectLight(Ray &ray, int rayDepth){
     // step 4 & 5: cast a ray in this direction
     Ray sampleRay = Ray(ray.getEndPoint(), glm::normalize(sampleWorld), SECONDARY);
     CastRay(sampleRay, rayDepth + 1);
-
-    indirectLight = r1 * sampleRay.getColor() * brdf;
+    indirectLight = (float)M_PI*r1 * sampleRay.getColor() * brdf;
     return indirectLight;
 }
 
@@ -352,5 +354,9 @@ Direction Scene::uniformSampleHemisphere(const float &r1, const float &r2)
     float x = sinTheta * cosf(phi);
     float z = sinTheta * sinf(phi);
     return Direction(x, r1, z);
+}
+
+Direction Scene::randomRay(Ray ray){
+
 }
 

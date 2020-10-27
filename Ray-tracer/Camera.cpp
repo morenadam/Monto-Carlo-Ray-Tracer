@@ -22,55 +22,36 @@ void Camera::render(Scene scene) {
     Vertex eyePoint;
     if (isEyePointOne) eyePoint = eyePointOne;
     else eyePoint = eyePointTwo;
-    int samplesPerPixel = 4;
-
     const float delta = 0.005; //side length of each pixel
 
+    int samplesPerPixel = 128;
     Vertex pixelCenter;
     ColorDbl sampledPixelColor;
     Vertex subPixelPoint;
 
-    int subSamples = 8;
 
     for (int i = 0; i < imageHeight; ++i) {
         if (i % 10 == 0) std::cout << "\r" << (float)i*100.0f/400.0f << "%" << std::endl;
         for (int j = 0; j < imageWidth; ++j) {
 
             //Calculate center of pixel (i,j)
-            pixelCenter = Vertex(0.0, (201.0 - (float)i + 0.5) * delta, (201.0 - (float)j + 0.5) * delta);
+            pixelCenter = Vertex(0.0f, (201.0f - (float)i + 0.5f) * delta, (201.0f - (float)j + 0.5f) * delta);
             sampledPixelColor = ColorDbl (0,0,0);
             // Supersampling
             for (int k = 0; k < samplesPerPixel; k++)
             {
-                float rand_y = ((float)rand() / RAND_MAX) / 2.0f;
-                float rand_z = ((float)rand() / RAND_MAX) / 2.0f;
+                float rand_y = ((float)rand() / RAND_MAX) -0.5f; //[-0.5, 0.5]
+                float rand_z = ((float)rand() / RAND_MAX) -0.5f; //[-0.5, 0.5]
+                subPixelPoint = pixelCenter + Vertex(0, rand_y*delta, rand_z*delta);
 
-                switch(k) {
-                    case 0:
-                        subPixelPoint = pixelCenter + Vertex(0.0, - rand_y*delta, rand_z*delta);
-                        break;
-                    case 1:
-                        subPixelPoint = pixelCenter + Vertex(0, rand_y*delta, rand_z*delta);
-                        break;
-                    case 2:
-                        subPixelPoint = pixelCenter + Vertex(0, - rand_y*delta, - rand_z*delta);
-                        break;
-                    case 3:
-                        subPixelPoint = pixelCenter + Vertex(0, rand_y*delta, - rand_z*delta);
-                    default:
-                        break;
-                }
-
-                for (int n = 0; n < subSamples; n++){
-                    //create new ray
-                    Ray ray(eyePoint, glm::normalize(subPixelPoint - eyePoint), PRIME);
-                    int rayDepth = 0;
-                    //find ray-triangle intersection point
-                    scene.CastRay(ray, rayDepth);
-                    sampledPixelColor += ray.getColor();
-                }
+                //create new ray
+                Ray ray(eyePoint, glm::normalize(subPixelPoint - eyePoint), PRIME);
+                int rayDepth = 0;
+                //find ray-triangle intersection point
+                scene.CastRay(ray, rayDepth);
+                sampledPixelColor += ray.getColor();
             }
-            ColorDbl pixelColor = sampledPixelColor/((float)samplesPerPixel * subSamples);
+            ColorDbl pixelColor = sampledPixelColor/(float)samplesPerPixel;
 
             image[i][j].setColor(pixelColor);
 
@@ -88,9 +69,9 @@ void Camera::createImage() {
     ofs << "P6\n" << imageWidth << " " << imageHeight << "\n255\n";
     for (int j = 0; j < imageHeight; ++j) {
         for (int i = 0; i < imageWidth; ++i) {
-        ofs << (unsigned char)((image[i][j].getColor().x) * (float)255.99 /iMax) <<
-            (unsigned char)((image[i][j].getColor().y) * (float)255.99 /iMax) <<
-            (unsigned char)((image[i][j].getColor().z) * (float)255.99 /iMax);
+        ofs << (unsigned char)((image[i][j].getColor().x) * (float)255 /iMax) <<
+            (unsigned char)((image[i][j].getColor().y) * (float)255 /iMax) <<
+            (unsigned char)((image[i][j].getColor().z) * (float)255 /iMax);
     }}
     ofs.close();
     //delete[] image;

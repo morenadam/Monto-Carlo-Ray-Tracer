@@ -39,6 +39,8 @@ public:
 
     ColorDbl computeDirectLight(Ray &ray);
     ColorDbl computeIndirectLight(Ray &ray, int rayDepth);
+
+    Direction randomRay(Ray ray);
 };
 
 #endif //UNTITLED_SCENE_H
