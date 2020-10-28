@@ -22,8 +22,8 @@
 class Camera {
 
 private:
-    const int imageHeight = 400;
-    const int imageWidth = 400;
+    const int imageHeight = 800;
+    const int imageWidth = 800;
     Vertex eyePointOne = Vertex(-2,0,0);
     Vertex eyePointTwo = Vertex(-1,0,0);
     bool isEyePointOne = false;

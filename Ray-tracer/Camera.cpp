@@ -22,25 +22,25 @@ void Camera::render(Scene scene) {
     Vertex eyePoint;
     if (isEyePointOne) eyePoint = eyePointOne;
     else eyePoint = eyePointTwo;
-    const float delta = 0.005; //side length of each pixel
+    const float delta = 0.0025; //side length of each pixel
 
-    int samplesPerPixel = 128;
+    int samplesPerPixel = 100;
     Vertex pixelCenter;
     ColorDbl sampledPixelColor;
     Vertex subPixelPoint;
 
-
     for (int i = 0; i < imageHeight; ++i) {
-        if (i % 10 == 0) std::cout << "\r" << (float)i*100.0f/400.0f << "%" << std::endl;
+        if (i % 10 == 0) std::cout << "\r" << (float)i*100.0f/float(imageHeight) << "%" << std::endl;
         for (int j = 0; j < imageWidth; ++j) {
 
             //Calculate center of pixel (i,j)
-            pixelCenter = Vertex(0.0f, (201.0f - (float)i + 0.5f) * delta, (201.0f - (float)j + 0.5f) * delta);
+            pixelCenter = Vertex(0.0f, (401.0f - (float)i + 0.5f) * delta, (401.0f - (float)j + 0.5f) * delta);
             sampledPixelColor = ColorDbl (0,0,0);
+
             // Supersampling
             for (int k = 0; k < samplesPerPixel; k++)
             {
-                float rand_y = ((float)rand() / RAND_MAX) -0.5f; //[-0.5, 0.5]
+                float rand_y = ((float)std::rand() / RAND_MAX) -0.5f; //[-0.5, 0.5]
                 float rand_z = ((float)rand() / RAND_MAX) -0.5f; //[-0.5, 0.5]
                 subPixelPoint = pixelCenter + Vertex(0, rand_y*delta, rand_z*delta);
 

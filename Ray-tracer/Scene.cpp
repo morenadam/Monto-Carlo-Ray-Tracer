@@ -135,13 +135,13 @@ Scene::Scene() {
     triangleList[18] = Triangle(Vertex(10.0f, -6.0f, -5.0f),
                                 Vertex(10.0f, -6.0f, 5.0f),
                                 Vertex(13.0f, 0.0f, -5.0f),
-                                ColorDbl(1.0f, 0.0f, 0.0f),
+                                ColorDbl(0.0f, 0.0f, 1.0f),
                                 LAMBERTIAN);
 
     triangleList[19] = Triangle(Vertex(13.0f, 0.0f, -5.0f),
                                 Vertex(10.0f, -6.0f, 5.0f),
                                 Vertex(13.0f, 0.0f, 5.0f),
-                                ColorDbl(1.0f, 0.0f, 0.0f),
+                                ColorDbl(0.0f, 0.0f, 1.0f),
                                 LAMBERTIAN);
 
 
@@ -186,8 +186,8 @@ Scene::Scene() {
 
     tetrahedron = Tetrahedron(Vertex(8.0f,-1.0f,0.0f));
 
-    sphereList[0] = Sphere(1.0f, Vertex(8.0f,2.0f,2.0f), ColorDbl(0.8f,0.0f,0.0f), LAMBERTIAN);
-    sphereList[1] = Sphere(1.0f, Vertex(5.0f,1.0f,-3.0f), ColorDbl(0.0f,0.0f,0.0f), MIRROR);
+    sphereList[0] = Sphere(1.0f, Vertex(8.0f,2.0f,2.0f), ColorDbl(0.0f,0.0f,0.0f), MIRROR);
+    sphereList[1] = Sphere(1.0f, Vertex(7.0f,-3.0f,-4.0f), ColorDbl(0.8f,0.0f,0.0f), LAMBERTIAN);
     //sphereList[2] = Sphere(1, Vertex(6,-3,-4), ColorDbl(0,0.8,0), LAMBERTIAN);
     sphereList[2] = Sphere(1.0f, Vertex(8.0f,1.0f,-2.0f), ColorDbl(0.0f,0.8f,0.0f), LAMBERTIAN);
 }
@@ -226,7 +226,7 @@ void Scene::CastRay(Ray &ray, int rayDepth){
                     ray.setColor(ColorDbl(0.0f,0.0f,0.0f));
                     break;
                 }
-                float kr = 0.95; //amount of light reflected
+                float kr = 1; //amount of light reflected
                 Ray reflectionRay(ray.getEndPoint(), glm::normalize(reflect(ray.getDirection(), ray.getObjectNormal())), REFLECTION);
                 CastRay(reflectionRay, rayDepth);
                 ray.setColor(reflectionRay.getColor() * kr);
@@ -258,6 +258,8 @@ void Scene::CastRay(Ray &ray, int rayDepth){
 
 
 ColorDbl Scene::computeDirectLight(Ray &ray){
+
+    float L0 = 1000.0f / ((float)M_PI);
 
     float brdf = (0.8f/(float)M_PI);
 
@@ -305,7 +307,7 @@ ColorDbl Scene::computeDirectLight(Ray &ray){
     //surface A of light source
     float A = glm::length(glm::cross(v1-v0, v3-v0));
 
-    return  (A*directLight/(float)numberOfShadowRays);
+    return  ((0.9f*A*directLight/(float)numberOfShadowRays));
     //return directLight;
 }
 
@@ -332,7 +334,7 @@ ColorDbl Scene::computeIndirectLight(Ray &ray, int rayDepth){
     // step 4 & 5: cast a ray in this direction
     Ray sampleRay = Ray(ray.getEndPoint(), glm::normalize(sampleWorld), SECONDARY);
     CastRay(sampleRay, rayDepth + 1);
-    indirectLight = (float)M_PI*r1 * sampleRay.getColor() * brdf;
+    indirectLight = (0.9f*ray.getColor()) * r1 * sampleRay.getColor();
     return indirectLight;
 }
 
