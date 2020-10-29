@@ -23,22 +23,20 @@ class Scene {
 private:
     Triangle triangleList[26];
     Tetrahedron tetrahedron;
-    Sphere sphereList[4];
+    Sphere sphereList[10];
 
 public:
     Scene();
     ~Scene();
 
     void CastRay(Ray &ray, int rayDepth);
-
-   // const Vertex &getLightCenter() const;
-
     void createLocalCoordinateSystem(const Direction &N, Direction &Nt, Direction &Nb);
-
     Direction uniformSampleHemisphere(const float &r1, const float &r2);
 
     ColorDbl computeDirectLight(Ray &ray);
     ColorDbl computeIndirectLight(Ray &ray, int rayDepth);
+
+    void russianRoulette(Ray &ray);
 
     Direction randomRay(Ray ray);
 };

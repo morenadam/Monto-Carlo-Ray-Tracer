@@ -189,7 +189,7 @@ Scene::Scene() {
     sphereList[0] = Sphere(1.0f, Vertex(8.0f,2.0f,2.0f), ColorDbl(0.0f,0.0f,0.0f), MIRROR);
     sphereList[1] = Sphere(1.0f, Vertex(7.0f,-3.0f,-4.0f), ColorDbl(0.8f,0.0f,0.0f), LAMBERTIAN);
     //sphereList[2] = Sphere(1, Vertex(6,-3,-4), ColorDbl(0,0.8,0), LAMBERTIAN);
-    sphereList[2] = Sphere(1.0f, Vertex(8.0f,1.0f,-2.0f), ColorDbl(0.0f,0.8f,0.0f), LAMBERTIAN);
+    sphereList[2] = Sphere(1.0f, Vertex(8.0f,1.0f,-2.0f), ColorDbl(0.5f,0.5f,0.5f), LAMBERTIAN);
 }
 
 Scene::~Scene() = default;
@@ -200,7 +200,7 @@ std::uniform_real_distribution<float> distribution(0.0f,1.0f);
 void Scene::CastRay(Ray &ray, int rayDepth){
 
     ray.setColor(ColorDbl(0.0f,0.0f,0.0f));
-    if(rayDepth > 5) return;
+    if(rayDepth > 10) return;
 
     float minDistance = 1000;
 
@@ -238,6 +238,7 @@ void Scene::CastRay(Ray &ray, int rayDepth){
             }
 
             case LAMBERTIAN:{
+
                 //direct light
                 ColorDbl directLighting = computeDirectLight(ray);
 
@@ -245,7 +246,7 @@ void Scene::CastRay(Ray &ray, int rayDepth){
                 ColorDbl indirectLighting = computeIndirectLight(ray, rayDepth);
 
                 //hitColor = (directLighting / M_PI + 2 * indirectLigthing) * isect.hitObject->albedo;
-                ray.setColor(directLighting + indirectLighting);
+                ray.setColor((directLighting + indirectLighting));
                 break;
             }
 
@@ -256,15 +257,8 @@ void Scene::CastRay(Ray &ray, int rayDepth){
     }
 }
 
-
 ColorDbl Scene::computeDirectLight(Ray &ray){
-
-    float L0 = 1000.0f / ((float)M_PI);
-
-    float brdf = (0.8f/(float)M_PI);
-
     ColorDbl directLight = ColorDbl(0.0f,0.0f,0.0f);
-
 
     //define corners of area light
     Vertex v0 = Vertex(0.0f, 0.0f, 0.0f);
@@ -307,18 +301,25 @@ ColorDbl Scene::computeDirectLight(Ray &ray){
     //surface A of light source
     float A = glm::length(glm::cross(v1-v0, v3-v0));
 
-    return  ((0.9f*A*directLight/(float)numberOfShadowRays));
+    return  (0.9f*A*directLight/(float)numberOfShadowRays);
     //return directLight;
 }
 
 ColorDbl Scene::computeIndirectLight(Ray &ray, int rayDepth){
 
-    ColorDbl indirectLight;
+    ColorDbl indirectLight = ColorDbl(0,0,0);
+
+    //russian roulette
+    float P = 0.25;
+    float random = (float)rand()/RAND_MAX;
+
+    if(random < P){       //terminate 25% of the rays
+        return (indirectLight);
+    }
+
     // step1: compute shaded point coordinate system using normal N.
     Direction Nt, Nb;
     createLocalCoordinateSystem(ray.getObjectNormal(), Nt, Nb);
-
-    float brdf = (1.0f/(float)M_PI);
 
     // step 2: create sample in world space
     float r1 = distribution(generator);
@@ -331,11 +332,12 @@ ColorDbl Scene::computeIndirectLight(Ray &ray, int rayDepth){
             sample.x * Nb.y + sample.y * ray.getObjectNormal().y + sample.z * Nt.y,
             sample.x * Nb.z + sample.y * ray.getObjectNormal().z + sample.z * Nt.z);
 
+
     // step 4 & 5: cast a ray in this direction
     Ray sampleRay = Ray(ray.getEndPoint(), glm::normalize(sampleWorld), SECONDARY);
     CastRay(sampleRay, rayDepth + 1);
     indirectLight = (0.9f*ray.getColor()) * r1 * sampleRay.getColor();
-    return indirectLight;
+    return indirectLight/(1.0f-P); //divide by (1-P), P = 0.25
 }
 
 void Scene::createLocalCoordinateSystem(const Direction &N, Direction &Nt, Direction &Nb)
@@ -357,8 +359,3 @@ Direction Scene::uniformSampleHemisphere(const float &r1, const float &r2)
     float z = sinTheta * sinf(phi);
     return Direction(x, r1, z);
 }
-
-Direction Scene::randomRay(Ray ray){
-
-}
-
