@@ -5,8 +5,6 @@
 #include "Scene.h"
 #include "Definitions.h"
 #include "Triangle.h"
-
-#include <iostream>
 #include <string>
 #include <random>
 
@@ -243,10 +241,7 @@ void Scene::CastRay(Ray &ray, int rayDepth){
                 ColorDbl directLighting = computeDirectLight(ray);
 
                 //indirect light:
-                //ColorDbl indirectLighting = computeIndirectLight(ray, rayDepth);
-
-                //testing
-                ColorDbl indirectLighting = ColorDbl(0,0,0);
+                ColorDbl indirectLighting = computeIndirectLight(ray, rayDepth);
 
                 //hitColor = (directLighting / M_PI + 2 * indirectLigthing) * isect.hitObject->albedo;
                 ray.setColor((directLighting + indirectLighting));
@@ -324,6 +319,10 @@ void Scene::CastRay(Ray &ray, int rayDepth){
                 }
 
             }
+            case OREN_NAYAR:{
+
+            }
+
             default:{
                 break;
             }
@@ -387,7 +386,7 @@ ColorDbl Scene::computeIndirectLight(Ray &ray, int rayDepth){
     float P = 0.25;
     float random = (float)rand()/RAND_MAX;
 
-    if(random < P){       //terminate 25% of the rays
+    if(random < P){//terminate 25% of the rays
         return (indirectLight);
     }
 

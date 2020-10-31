@@ -23,36 +23,40 @@ void Camera::render(Scene scene) {
     if (isEyePointOne) eyePoint = eyePointOne;
     else eyePoint = eyePointTwo;
     const float delta = 0.0025; //side length of each pixel
+    float subPixelLength = delta/float(subPixel); //side length of each sub pixel
 
-    int samplesPerPixel = 10;
     Vertex pixelCenter;
-    ColorDbl sampledPixelColor;
     Vertex subPixelPoint;
+
+    //random number generator
+    std::random_device rd;
+    std::mt19937 generator(rd());
+    std::uniform_real_distribution<float> distribution(-0.5, 0.5);
 
     for (int i = 0; i < imageHeight; ++i) {
         if (i % 10 == 0) std::cout << "\r" << (float)i*100.0f/float(imageHeight) << "%" << std::endl;
         for (int j = 0; j < imageWidth; ++j) {
 
             //Calculate center of pixel (i,j)
-            pixelCenter = Vertex(0.0f, (401.0f - (float)i + 0.5f) * delta, (401.0f - (float)j + 0.5f) * delta);
-            sampledPixelColor = ColorDbl (0,0,0);
+            pixelCenter = Vertex(0.0f, ((float)imageHeight/2.0f - (float)i + 0.5f) * delta, ((float)imageHeight/2.0f - (float)j + 0.5f) * delta);
+            ColorDbl sampledPixelColor = ColorDbl (0,0,0);
 
             // Supersampling
-            for (int k = 0; k < samplesPerPixel; k++)
-            {
-                float rand_y = ((float)std::rand() / RAND_MAX) -0.5f; //[-0.5, 0.5]
-                float rand_z = ((float)rand() / RAND_MAX) -0.5f; //[-0.5, 0.5]
-                subPixelPoint = pixelCenter + Vertex(0, rand_y*delta, rand_z*delta);
+            for (int n = 0; n < subPixel; n++){
+                for (int m = 0; m < subPixel; m++){
+                    subPixelPoint = pixelCenter + Vertex(0, ((float)subPixel/2.0f - n + distribution(generator))*subPixelLength, ((float)subPixel/2.0f - m + distribution(generator))*subPixelLength);
 
-                //create new ray
-                Ray ray(eyePoint, glm::normalize(subPixelPoint - eyePoint), PRIME);
-                int rayDepth = 0;
-                //find ray-triangle intersection point
-                scene.CastRay(ray, rayDepth);
-                sampledPixelColor += ray.getColor();
+                    //create new ray
+                    Ray ray(eyePoint, glm::normalize(subPixelPoint - eyePoint), PRIME);
+                    int rayDepth = 0;
+
+                    //find ray-triangle intersection point
+                    scene.CastRay(ray, rayDepth);
+                    sampledPixelColor += ray.getColor();
+                }
             }
-            ColorDbl pixelColor = sampledPixelColor/(float)samplesPerPixel;
 
+            ColorDbl pixelColor = sampledPixelColor/((float)subPixel*(float)subPixel);
             image[i][j].setColor(pixelColor);
 
             //Store the highest color value

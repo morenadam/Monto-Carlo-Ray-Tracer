@@ -24,6 +24,7 @@ class Camera {
 private:
     const int imageHeight = 800;
     const int imageWidth = 800;
+    const int subPixel = 2; //total # of subpixels = subPixel*subPixel
     Vertex eyePointOne = Vertex(-2,0,0);
     Vertex eyePointTwo = Vertex(-1,0,0);
     bool isEyePointOne = false;
