@@ -4,6 +4,7 @@
 
 #ifndef UNTITLED_SCENE_H
 #define UNTITLED_SCENE_H
+#define _USE_MATH_DEFINES
 
 #include <list>
 #include "Triangle.h"
@@ -12,6 +13,7 @@
 #include "Tetrahedron.h"
 #include "Sphere.h"
 #include <random>
+#include <cmath>
 
 //Scene contains instances of Triangle.  We use one Scene object that consists of 24
 //instances of Triangle. Scene objects are closed. The triangles of the floor and the

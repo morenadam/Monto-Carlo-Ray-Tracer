@@ -189,7 +189,7 @@ Scene::Scene() {
     sphereList[0] = Sphere(1.0f, Vertex(8.0f,2.0f,2.0f), ColorDbl(0.0f,0.0f,0.0f), MIRROR);
     sphereList[1] = Sphere(1.0f, Vertex(7.0f,-3.0f,-4.0f), ColorDbl(0.8f,0.0f,0.0f), LAMBERTIAN);
     //sphereList[2] = Sphere(1, Vertex(6,-3,-4), ColorDbl(0,0.8,0), LAMBERTIAN);
-    sphereList[2] = Sphere(1.0f, Vertex(8.0f,1.0f,-2.0f), ColorDbl(0.5f,0.5f,0.5f), LAMBERTIAN);
+    sphereList[2] = Sphere(1.0f, Vertex(8.0f,0.0f,-2.0f), ColorDbl(0.5f,0.5f,0.5f), TRANSPARENT);
 }
 
 Scene::~Scene() = default;
@@ -228,7 +228,7 @@ void Scene::CastRay(Ray &ray, int rayDepth){
                 }
                 float kr = 1; //amount of light reflected
                 Ray reflectionRay(ray.getEndPoint(), glm::normalize(reflect(ray.getDirection(), ray.getObjectNormal())), REFLECTION);
-                CastRay(reflectionRay, rayDepth);
+                CastRay(reflectionRay, rayDepth + 1);
                 ray.setColor(reflectionRay.getColor() * kr);
                 break;
             }
@@ -243,13 +243,87 @@ void Scene::CastRay(Ray &ray, int rayDepth){
                 ColorDbl directLighting = computeDirectLight(ray);
 
                 //indirect light:
-                ColorDbl indirectLighting = computeIndirectLight(ray, rayDepth);
+                //ColorDbl indirectLighting = computeIndirectLight(ray, rayDepth);
+
+                //testing
+                ColorDbl indirectLighting = ColorDbl(0,0,0);
 
                 //hitColor = (directLighting / M_PI + 2 * indirectLigthing) * isect.hitObject->albedo;
                 ray.setColor((directLighting + indirectLighting));
                 break;
             }
 
+            case TRANSPARENT: {
+
+                float n1 = 1.0f; // air
+                float n2 = 1.5f; // glass
+                Direction N = ray.getObjectNormal();
+                Direction I = ray.getDirection();
+
+                if(ray.getRayType() == INSIDE_TRANSPARENT) {
+
+                    N = - N;
+                    float brewsterAngle  = asin(n1 / n2);
+                    float alpha = acos(glm::dot(I, N));
+
+                    //Direction R = glm::normalize(reflect(I, N));
+                    //Ray reflectionRay(ray.getEndPoint(), R, INSIDE_TRANSPARENT);
+
+                    // We need to test if the value of alpha gives a new transmitted ray
+                    if (alpha < brewsterAngle) {
+                        // Totally reflected and no T exists
+                        //CastRay(reflectionRay, rayDepth + 1);
+                        //ray.setColor(reflectionRay.getColor()); // Kr (reflection coeff) = 1
+                        ray.setColor(ColorDbl (0,0,0));
+                    }
+                    else {
+                        // Both R and T
+                        // hitColor = reflectionColor * kr + refractionColor * (1 - kr);
+
+                        //Schlicks law
+                        float R0 = pow((n2 - n1) / (n2 + n1), 2.0f);
+                        float cosTheta = glm::dot(I, N);
+                        float reflectCof = R0 + (1 - R0) * pow((1.0f - cosTheta), 5.0f);
+                        float transmittedRadiance = 1.0f - reflectCof;
+
+                        Direction T = glm::normalize((n2/n1) * I + N * (-(n2/n1) *glm::dot(N, I) - sqrt(1.0f - pow((n2/n1), 2.0f)*(1.0f - pow(glm::dot(N, I), 2.0f)))));
+                        Ray refractionRay(ray.getEndPoint() - N * 0.002f, T, SECONDARY);
+
+                        // cast both R and T
+                        //CastRay(reflectionRay, rayDepth + 1);
+                        CastRay(refractionRay, rayDepth + 1);
+
+                        // Set color based on Schlicks law
+                        //ray.setColor((reflectionRay.getColor() * reflectCof + refractionRay.getColor() * transmittedRadiance));
+                        ray.setColor((refractionRay.getColor()));
+
+                    }
+                }
+                else {
+
+                    //Schlicks law
+                    float R0 = pow((n1 - n2) / (n1 + n2), 2.0f);
+                    float cosTheta = glm::dot(I, N);
+                    float reflectCof = R0 + (1 - R0) * pow((1.0f - cosTheta), 5.0f);
+                    float transmittedRadiance = 1.0f - reflectCof;
+
+                    //Direction R = glm::normalize(reflect(I, N));
+                    //Ray reflectionRay(ray.getEndPoint(), R, REFLECTION);
+
+                    Direction T = glm::normalize((n1/n2) * I + N * (-(n1/n2) *glm::dot(N, I) - sqrt(1.0f - pow((n1/n2), 2.0f)*(1.0f - pow(glm::dot(N, I), 2.0f)))));
+                    Ray refractionRay(ray.getEndPoint() - N * 0.002f, T, INSIDE_TRANSPARENT);
+
+                    // cast both R and T
+                    //CastRay(reflectionRay, rayDepth + 1);
+                    CastRay(refractionRay, rayDepth + 1);
+
+                    // Set color based on Schlicks law
+                    //ray.setColor((reflectionRay.getColor() * reflectCof + refractionRay.getColor() * transmittedRadiance));
+                    ray.setColor((refractionRay.getColor()));
+
+                }
+
+            }
             default:{
                 break;
             }

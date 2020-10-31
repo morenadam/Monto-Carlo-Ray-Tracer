@@ -24,7 +24,7 @@ void Camera::render(Scene scene) {
     else eyePoint = eyePointTwo;
     const float delta = 0.0025; //side length of each pixel
 
-    int samplesPerPixel = 100;
+    int samplesPerPixel = 10;
     Vertex pixelCenter;
     ColorDbl sampledPixelColor;
     Vertex subPixelPoint;
