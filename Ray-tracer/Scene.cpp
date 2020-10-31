@@ -250,6 +250,24 @@ void Scene::CastRay(Ray &ray, int rayDepth){
 
             case OREN_NAYAR:{
 
+                //BRDF
+
+                float sigma = 0.5f; //roughness variable of surface
+                float A = 1.0f - 0.5f * (sigma * sigma) / (sigma * sigma + 0.33f);
+                float B = 0.45f * (sigma * sigma) / (sigma * sigma + 0.09f);
+
+
+
+                //direct light
+                ColorDbl directLighting = computeDirectLight(ray);
+
+                //indirect light:
+                ColorDbl indirectLighting = computeIndirectLight(ray, rayDepth);
+
+                //hitColor = (directLighting / M_PI + 2 * indirectLigthing) * isect.hitObject->albedo;
+                ray.setColor((directLighting + indirectLighting));
+                break;
+
             }
 
             default:{
