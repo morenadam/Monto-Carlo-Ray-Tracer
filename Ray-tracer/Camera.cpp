@@ -23,7 +23,7 @@ void Camera::render(Scene scene) {
     if (isEyePointOne) eyePoint = eyePointOne;
     else eyePoint = eyePointTwo;
 
-    const int subPixel = 4; //total # of subpixels = subPixel*subPixel
+    const int subPixel = 2; //total # of subpixels = subPixel*subPixel
     const float delta = 0.0025; //side length of each pixel
     float subPixelLength = delta/float(subPixel); //side length of each sub pixel
 
@@ -68,6 +68,7 @@ void Camera::render(Scene scene) {
             }
         }
     }
+
 }
 
 void Camera::createImage() {
@@ -81,6 +82,7 @@ void Camera::createImage() {
     }}
     ofs.close();
     //delete[] image;
+    std::cout << iMax << std::endl;
 
     std::cout << "Finished" << std::endl;
 

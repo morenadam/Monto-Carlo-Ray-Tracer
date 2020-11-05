@@ -5,7 +5,7 @@
 #include "Scene.h"
 #include "Definitions.h"
 #include "Triangle.h"
-#include <string>
+//#include <string>
 #include <random>
 
 Scene::Scene() {
@@ -120,13 +120,13 @@ Scene::Scene() {
     triangleList[16] = Triangle(Vertex(13.0f, 0.0f, -5.0f),
                                 Vertex(13.0f, 0.0f, 5.0f),
                                 Vertex(10.0f, 6.0f, -5.0f),
-                                ColorDbl(1.0f, 0.2f, 0.2f),
+                                ColorDbl(0.2f, 0.2f, 1.0f),
                                 LAMBERTIAN);
 
     triangleList[17] = Triangle(Vertex(10.0f, 6.0f, -5.0f),
                                 Vertex(13.0f, 0.0f, 5.0f),
                                 Vertex(10.0f, 6.0f, 5.0f),
-                                ColorDbl(1.0f, 0.2f, 0.2f),
+                                ColorDbl(0.2f, 0.2f, 1.0f),
                                 LAMBERTIAN);
 
     //__________________SOUTH-EAST___________________
@@ -134,13 +134,13 @@ Scene::Scene() {
                                 Vertex(10.0f, -6.0f, 5.0f),
                                 Vertex(13.0f, 0.0f, -5.0f),
                                 ColorDbl(0.2f, 1.0f, 0.2f),
-                                LAMBERTIAN);
+                                MIRROR);
 
     triangleList[19] = Triangle(Vertex(13.0f, 0.0f, -5.0f),
                                 Vertex(10.0f, -6.0f, 5.0f),
                                 Vertex(13.0f, 0.0f, 5.0f),
                                 ColorDbl(0.2f, 1.0f, 0.2f),
-                                LAMBERTIAN);
+                                MIRROR);
 
 
     //__________________SOUTH-WEST___________________
@@ -182,12 +182,17 @@ Scene::Scene() {
                                 ColorDbl(1.0f, 1.0f, 1.0f),
                                 LIGHT);
 
-    tetrahedron = Tetrahedron(Vertex(8.0f,-1.0f,0.0f));
+    tetrahedron = Tetrahedron(Vertex(10.0f,1.0f,0.0f));
 
     //sphereList[0] = Sphere(1.0f, Vertex(8.0f,2.0f,2.0f), ColorDbl(0.0f,0.0f,0.0f), MIRROR);
     //sphereList[1] = Sphere(1.0f, Vertex(7.0f,-3.0f,-4.0f), ColorDbl(0.8f,0.0f,0.0f), LAMBERTIAN);
     //sphereList[2] = Sphere(1, Vertex(6,-3,-4), ColorDbl(0,0.8,0), LAMBERTIAN);
-    sphereList[2] = Sphere(1.0f, Vertex(6.0f,3.0f,2.0f), ColorDbl(0.5f,0.5f,0.5f), TRANSPARENT);
+    sphereList[1] = Sphere(1.0f, Vertex(4.0f,3.0f,-2.0f), ColorDbl(0.5f,0.5f,0.5f), TRANSPARENT);
+    sphereList[2] = Sphere(0.5f, Vertex(5.0f,-3.0f,0.0f), ColorDbl(0.5f,0.5f,0.5f), TRANSPARENT);
+    sphereList[3] = Sphere(0.5f, Vertex(8.0f,1.0f,-2.0f), ColorDbl(0.5f,0.5f,0.5f), TRANSPARENT);
+    sphereList[4] = Sphere(1.0f, Vertex(7.0f,-1.0f,-4.0f), ColorDbl(0.5f,0.5f,0.5f), MIRROR);
+    sphereList[5] = Sphere(1.0f, Vertex(10.0f,3.0f,-4.0f), ColorDbl(0.5f,0.5f,0.5f), MIRROR);
+
 }
 
 Scene::~Scene() = default;
@@ -198,7 +203,7 @@ std::uniform_real_distribution<float> distribution(0.0f,1.0f);
 void Scene::CastRay(Ray &ray, int rayDepth){
 
     ray.setColor(ColorDbl(0.0f,0.0f,0.0f));
-    if(rayDepth > 2) return;
+    if(rayDepth > 10) return;
 
     float minDistance = 1000;
 
@@ -283,7 +288,7 @@ void Scene::CastRay(Ray &ray, int rayDepth){
                         // hitColor = reflectionColor * kr + refractionColor * (1 - kr);
 
                         Direction T = glm::normalize((n2/n1) * I + N * (float)(-(n2/n1) *glm::dot(N, I) - sqrt(1.0f - pow((n2/n1), 2.0f)*(1.0f - pow(glm::dot(N, I), 2.0f)))));
-                        Ray refractionRay(ray.getEndPoint() - N * 0.002f, T, SECONDARY);
+                        Ray refractionRay(ray.getEndPoint() - N * 0.002f, T, REFLECTION);
 
                         // cast both R and T
                         CastRay(reflectionRay, rayDepth + 1);
