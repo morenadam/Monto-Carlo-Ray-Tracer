@@ -185,9 +185,9 @@ Scene::Scene() {
     tetrahedron = Tetrahedron(Vertex(8.0f,-1.0f,0.0f));
 
     sphereList[0] = Sphere(1.0f, Vertex(8.0f,2.0f,2.0f), ColorDbl(0.0f,0.0f,0.0f), MIRROR);
-    sphereList[1] = Sphere(1.5f, Vertex(5.0f,2.0f,-2.0f), ColorDbl(1.0f,1.0f,1.0f), LAMBERTIAN);
+    sphereList[1] = Sphere(1.5f, Vertex(7.0f,2.0f,-2.0f), ColorDbl(1.0f,1.0f,1.0f), LAMBERTIAN);
     //sphereList[2] = Sphere(1, Vertex(6,-3,-4), ColorDbl(0,0.8,0), LAMBERTIAN);
-    sphereList[2] = Sphere(1.5f, Vertex(5.0f,-2.0f,-2.0f), ColorDbl(1.0f,1.0f,1.0f), OREN_NAYAR);
+    sphereList[2] = Sphere(1.5f, Vertex(7.0f,-2.0f,-2.0f), ColorDbl(1.0f,1.0f,1.0f), OREN_NAYAR);
 }
 
 Scene::~Scene() = default;
@@ -383,26 +383,19 @@ ColorDbl Scene::computeDirectLight(Ray &ray, bool orenNayar){
 
         if(orenNayar){
 
-            std::random_device dev;
-            std::mt19937 gen(dev());
+            float roughness = 0.4f;
+            float sigma2 = roughness * roughness;
+            float A = 1 - 0.5 * sigma2 / (sigma2 + 0.57);
+            float B = 0.45 * sigma2 / (sigma2 + 0.09);
+            float cos_theta_d1 = glm::dot(-ray.getDirection(), ray.getObjectNormal());
+            float cos_theta_d2 = glm::dot(shadowRay.getDirection(), ray.getObjectNormal());
+            float theta = glm::acos(cos_theta_d2);
+            float theta_d1 = glm::acos(cos_theta_d1);
+            float alpha = glm::max(theta, theta_d1);
+            float beta = glm::min(theta, theta_d1);
+            float cos_d1_d2 = glm::dot(-ray.getDirection(), shadowRay.getDirection());
 
-            float roughness = 0.5f;
-
-            float in_angle = acos(dot(rayDir, ray.getObjectNormal()));
-
-            std::normal_distribution<float> distNormal(0.0f, roughness);
-
-            float phi_out = distNormal(gen) * float(M_PI); //random azimuth angle for outgoing ray
-            float theta_out = asin(sqrt(distNormal(gen))); //"random" inclination, optimized for near normal's direction
-
-            float A = 1.0f - 0.5f * (roughness * roughness) / (roughness * roughness + 0.33f);
-            float B = 0.45f * (roughness * roughness) / (roughness * roughness + 0.09f);
-
-            float alpha = std::max(in_angle, theta_out); //max of in_angle and theta_out
-            float beta = std::min(in_angle, theta_out); //min of in_angle and theta_out
-            float maxPhi = std::max(cos(-phi_out), 0.0f); //max of cos(-phi_out) and 0
-
-            float BRDF = A + (B * maxPhi) * sin(alpha) * tan(beta);
+            float BRDF = (A + (B * glm::max(0.0f, cos_d1_d2)) * glm::sin(alpha) * glm::tan(beta));
 
             directLight += 0.9f*BRDF*ray.getColor()*vk*(cos_alpha*cos_beta/(d_i*d_i));
         }
@@ -414,7 +407,6 @@ ColorDbl Scene::computeDirectLight(Ray &ray, bool orenNayar){
     float A = glm::length(glm::cross(v1-v0, v3-v0));
 
     return  (A*directLight/(float)numberOfShadowRays);
-    //return directLight;
 }
 
 ColorDbl Scene::computeIndirectLight(Ray &ray, int rayDepth){
