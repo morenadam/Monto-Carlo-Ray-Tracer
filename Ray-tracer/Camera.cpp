@@ -22,6 +22,8 @@ void Camera::render(Scene scene) {
     Vertex eyePoint;
     if (isEyePointOne) eyePoint = eyePointOne;
     else eyePoint = eyePointTwo;
+
+    const int subPixel = 4; //total # of subpixels = subPixel*subPixel
     const float delta = 0.0025; //side length of each pixel
     float subPixelLength = delta/float(subPixel); //side length of each sub pixel
 
@@ -56,7 +58,7 @@ void Camera::render(Scene scene) {
                 }
             }
 
-            ColorDbl pixelColor = sampledPixelColor/((float)subPixel*(float)subPixel);
+            ColorDbl pixelColor = sampledPixelColor/(((float)subPixel*(float)subPixel)*(1.0f/0.75f));
             image[i][j].setColor(pixelColor);
 
             //Store the highest color value

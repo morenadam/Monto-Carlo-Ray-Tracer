@@ -94,52 +94,52 @@ Scene::Scene() {
     triangleList[12] = Triangle(Vertex(10.0f, -6.0f, -5.0f),
                                 Vertex(0.0f, -6.0f, -5.0f),
                                 Vertex(0.0f, -6.0f, 5.0f),
-                                ColorDbl(0.5f, 0.0f, 0.5f),
+                                ColorDbl(0.2f, 1.0f, 0.2f),
                                 LAMBERTIAN);
 
     triangleList[13] = Triangle(Vertex(10.0f, -6.0f, -5.0f),
                                 Vertex(0.0f, -6.0f, 5.0f),
                                 Vertex(10.0f, -6.0f, 5.0f),
-                                ColorDbl(0.5f, 0.0f, 0.5f),
+                                ColorDbl(0.2f, 1.0f, 0.2f),
                                 LAMBERTIAN);
 
     //__________________NORTH____________________
     triangleList[14] = Triangle(Vertex(10.0f, 6.0f, -5.0f),
                                 Vertex(10.0f, 6.0f, 5.0f),
                                 Vertex(0.0f, 6.0f, -5.0f),
-                                ColorDbl(1.0f, 0.0f, 0.0f),
+                                ColorDbl(1.0f, 0.2f, 0.2f),
                                 LAMBERTIAN);
 
     triangleList[15] = Triangle(Vertex(0.0f, 6.0f, -5.0f),
                                 Vertex(10.0f, 6.0f, 5.0f),
                                 Vertex(0.0f, 6.0f, 5.0f),
-                                ColorDbl(1.0f, 0.0f, 0.0f),
+                                ColorDbl(1.0f, 0.2f, 0.2f),
                                 LAMBERTIAN);
 
     //__________________NORTH-EAST___________________
     triangleList[16] = Triangle(Vertex(13.0f, 0.0f, -5.0f),
                                 Vertex(13.0f, 0.0f, 5.0f),
                                 Vertex(10.0f, 6.0f, -5.0f),
-                                ColorDbl(0.0f, 1.0f, 0.0f),
+                                ColorDbl(1.0f, 0.2f, 0.2f),
                                 LAMBERTIAN);
 
     triangleList[17] = Triangle(Vertex(10.0f, 6.0f, -5.0f),
                                 Vertex(13.0f, 0.0f, 5.0f),
                                 Vertex(10.0f, 6.0f, 5.0f),
-                                ColorDbl(0.0f, 1.0f, 0.0f),
+                                ColorDbl(1.0f, 0.2f, 0.2f),
                                 LAMBERTIAN);
 
     //__________________SOUTH-EAST___________________
     triangleList[18] = Triangle(Vertex(10.0f, -6.0f, -5.0f),
                                 Vertex(10.0f, -6.0f, 5.0f),
                                 Vertex(13.0f, 0.0f, -5.0f),
-                                ColorDbl(0.0f, 0.0f, 1.0f),
+                                ColorDbl(0.2f, 1.0f, 0.2f),
                                 LAMBERTIAN);
 
     triangleList[19] = Triangle(Vertex(13.0f, 0.0f, -5.0f),
                                 Vertex(10.0f, -6.0f, 5.0f),
                                 Vertex(13.0f, 0.0f, 5.0f),
-                                ColorDbl(0.0f, 0.0f, 1.0f),
+                                ColorDbl(0.2f, 1.0f, 0.2f),
                                 LAMBERTIAN);
 
 
@@ -185,15 +185,16 @@ Scene::Scene() {
     tetrahedron = Tetrahedron(Vertex(8.0f,-1.0f,0.0f));
 
     sphereList[0] = Sphere(1.0f, Vertex(8.0f,2.0f,2.0f), ColorDbl(0.0f,0.0f,0.0f), MIRROR);
-    sphereList[1] = Sphere(1.0f, Vertex(7.0f,-3.0f,-4.0f), ColorDbl(0.8f,0.0f,0.0f), LAMBERTIAN);
+    sphereList[1] = Sphere(1.5f, Vertex(5.0f,2.0f,-2.0f), ColorDbl(1.0f,1.0f,1.0f), LAMBERTIAN);
     //sphereList[2] = Sphere(1, Vertex(6,-3,-4), ColorDbl(0,0.8,0), LAMBERTIAN);
-    sphereList[2] = Sphere(1.0f, Vertex(8.0f,0.0f,-2.0f), ColorDbl(0.5f,0.5f,0.5f), TRANSPARENT);
+    sphereList[2] = Sphere(1.5f, Vertex(5.0f,-2.0f,-2.0f), ColorDbl(1.0f,1.0f,1.0f), OREN_NAYAR);
 }
 
 Scene::~Scene() = default;
 
 std::default_random_engine generator;
 std::uniform_real_distribution<float> distribution(0.0f,1.0f);
+
 
 void Scene::CastRay(Ray &ray, int rayDepth){
 
@@ -238,7 +239,7 @@ void Scene::CastRay(Ray &ray, int rayDepth){
             case LAMBERTIAN:{
 
                 //direct light
-                ColorDbl directLighting = computeDirectLight(ray);
+                ColorDbl directLighting = computeDirectLight(ray, false);
 
                 //indirect light:
                 ColorDbl indirectLighting = computeIndirectLight(ray, rayDepth);
@@ -321,16 +322,8 @@ void Scene::CastRay(Ray &ray, int rayDepth){
             }
             case OREN_NAYAR:{
 
-                //BRDF
-
-                float sigma = 0.5f; //roughness variable of surface
-                float A = 1.0f - 0.5f * (sigma * sigma) / (sigma * sigma + 0.33f);
-                float B = 0.45f * (sigma * sigma) / (sigma * sigma + 0.09f);
-
-
-
                 //direct light
-                ColorDbl directLighting = computeDirectLight(ray);
+                ColorDbl directLighting = computeDirectLight(ray, true);
 
                 //indirect light:
                 ColorDbl indirectLighting = computeIndirectLight(ray, rayDepth);
@@ -348,7 +341,8 @@ void Scene::CastRay(Ray &ray, int rayDepth){
     }
 }
 
-ColorDbl Scene::computeDirectLight(Ray &ray){
+ColorDbl Scene::computeDirectLight(Ray &ray, bool orenNayar){
+
     ColorDbl directLight = ColorDbl(0.0f,0.0f,0.0f);
 
     //define corners of area light
@@ -387,12 +381,39 @@ ColorDbl Scene::computeDirectLight(Ray &ray){
         }
         else vk = 1.0f;
 
-        directLight += ray.getColor()*vk*(cos_alpha*cos_beta/(d_i*d_i));
+        if(orenNayar){
+
+            std::random_device dev;
+            std::mt19937 gen(dev());
+
+            float roughness = 0.5f;
+
+            float in_angle = acos(dot(rayDir, ray.getObjectNormal()));
+
+            std::normal_distribution<float> distNormal(0.0f, roughness);
+
+            float phi_out = distNormal(gen) * float(M_PI); //random azimuth angle for outgoing ray
+            float theta_out = asin(sqrt(distNormal(gen))); //"random" inclination, optimized for near normal's direction
+
+            float A = 1.0f - 0.5f * (roughness * roughness) / (roughness * roughness + 0.33f);
+            float B = 0.45f * (roughness * roughness) / (roughness * roughness + 0.09f);
+
+            float alpha = std::max(in_angle, theta_out); //max of in_angle and theta_out
+            float beta = std::min(in_angle, theta_out); //min of in_angle and theta_out
+            float maxPhi = std::max(cos(-phi_out), 0.0f); //max of cos(-phi_out) and 0
+
+            float BRDF = A + (B * maxPhi) * sin(alpha) * tan(beta);
+
+            directLight += 0.9f*BRDF*ray.getColor()*vk*(cos_alpha*cos_beta/(d_i*d_i));
+        }
+        else directLight += 0.9f*ray.getColor()*vk*(cos_alpha*cos_beta/(d_i*d_i));
+
+
     }
     //surface A of light source
     float A = glm::length(glm::cross(v1-v0, v3-v0));
 
-    return  (0.9f*A*directLight/(float)numberOfShadowRays);
+    return  (A*directLight/(float)numberOfShadowRays);
     //return directLight;
 }
 
@@ -428,7 +449,7 @@ ColorDbl Scene::computeIndirectLight(Ray &ray, int rayDepth){
     Ray sampleRay = Ray(ray.getEndPoint(), glm::normalize(sampleWorld), SECONDARY);
     CastRay(sampleRay, rayDepth + 1);
     indirectLight = (0.9f*ray.getColor()) * r1 * sampleRay.getColor();
-    return indirectLight/(1.0f-P); //divide by (1-P), P = 0.25
+    return indirectLight; //divide by (1-P), P = 0.25
 }
 
 void Scene::createLocalCoordinateSystem(const Direction &N, Direction &Nt, Direction &Nb)
