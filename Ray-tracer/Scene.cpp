@@ -383,19 +383,27 @@ ColorDbl Scene::computeDirectLight(Ray &ray, bool orenNayar){
 
         if(orenNayar){
 
-            float roughness = 0.4f;
-            float sigma2 = roughness * roughness;
-            float A = 1 - 0.5 * sigma2 / (sigma2 + 0.57);
-            float B = 0.45 * sigma2 / (sigma2 + 0.09);
-            float cos_theta_d1 = glm::dot(-ray.getDirection(), ray.getObjectNormal());
-            float cos_theta_d2 = glm::dot(shadowRay.getDirection(), ray.getObjectNormal());
-            float theta = glm::acos(cos_theta_d2);
-            float theta_d1 = glm::acos(cos_theta_d1);
-            float alpha = glm::max(theta, theta_d1);
-            float beta = glm::min(theta, theta_d1);
-            float cos_d1_d2 = glm::dot(-ray.getDirection(), shadowRay.getDirection());
+            std::random_device dev;
+            std::mt19937 gen(dev());
 
-            float BRDF = (A + (B * glm::max(0.0f, cos_d1_d2)) * glm::sin(alpha) * glm::tan(beta));
+            float roughness = 0.9f;
+            float sigma2 = roughness * roughness;
+
+            float in_angle = acos(dot(rayDir, ray.getObjectNormal()));
+
+            std::normal_distribution<float> distNormal(0.0f, sigma2);
+
+            float phi_out = distNormal(gen) * float(M_PI); //random azimuth angle for outgoing ray
+            float theta_out = asin(sqrt(distNormal(gen))); //"random" inclination, optimized for near normal's direction
+
+            float A = 1.0f - 0.5f * (sigma2) / (sigma2 + 0.33f);
+            float B = 0.45f * (sigma2) / (sigma2 + 0.09f);
+
+            float alpha = std::max(in_angle, theta_out); //max of in_angle and theta_out
+            float beta = std::min(in_angle, theta_out); //min of in_angle and theta_out
+            float maxPhi = std::max(cos(-phi_out), 0.0f); //max of cos(-phi_out) and 0
+
+            float BRDF = A + (B * maxPhi) * sin(alpha) * tan(beta);
 
             directLight += 0.9f*BRDF*ray.getColor()*vk*(cos_alpha*cos_beta/(d_i*d_i));
         }
