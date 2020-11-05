@@ -35,7 +35,7 @@ public:
     void createLocalCoordinateSystem(const Direction &N, Direction &Nt, Direction &Nb);
     Direction uniformSampleHemisphere(const float &r1, const float &r2);
 
-    ColorDbl computeDirectLight(Ray &ray);
+    ColorDbl computeDirectLight(Ray &ray, bool orenNayar);
     ColorDbl computeIndirectLight(Ray &ray, int rayDepth);
 
     void russianRoulette(Ray &ray);
