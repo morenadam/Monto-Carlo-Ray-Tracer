@@ -418,9 +418,9 @@ ColorDbl Scene::computeDirectLight(Ray &ray, bool orenNayar){
 
             float BRDF = A + (B * maxPhi) * sin(alpha) * tan(beta);
 
-            directLight += 0.9f*BRDF*ray.getColor()*vk*(cos_alpha*cos_beta/(d_i*d_i));
+            directLight += 0.8f*BRDF*ray.getColor()*vk*(cos_alpha*cos_beta/(d_i*d_i));
         }
-        else directLight += 0.9f*ray.getColor()*vk*(cos_alpha*cos_beta/(d_i*d_i));
+        else directLight += 0.8f*ray.getColor()*vk*(cos_alpha*cos_beta/(d_i*d_i));
 
 
     }
@@ -461,7 +461,7 @@ ColorDbl Scene::computeIndirectLight(Ray &ray, int rayDepth){
     // step 4 & 5: cast a ray in this direction
     Ray sampleRay = Ray(ray.getEndPoint(), glm::normalize(sampleWorld), SECONDARY);
     CastRay(sampleRay, rayDepth + 1);
-    indirectLight = (0.5f*ray.getColor())  * sampleRay.getColor();
+    indirectLight = (0.6f*ray.getColor())  * sampleRay.getColor();
     return indirectLight; //divide by (1-P), P = 0.25
 }
 
