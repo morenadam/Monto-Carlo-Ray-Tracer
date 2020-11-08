@@ -54,7 +54,6 @@ bool Triangle::rayIntersection(Ray &ray, float &minDistance){
         ray.setObjectNormal(this->getNormal());
         ray.setEnd(ray.getStart() + ray.getDirection()*t + this->getNormal()*0.001f); //add bias
         ray.setColor(getColor());
-        //minDistance = glm::length(ray.getEndPoint()-ray.getStart());
         minDistance = glm::length(ray.getDirection()*t);
         ray.setMaterial(getMaterial());
     }

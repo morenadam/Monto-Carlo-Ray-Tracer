@@ -94,79 +94,79 @@ Scene::Scene() {
     triangleList[12] = Triangle(Vertex(10.0f, -6.0f, -5.0f),
                                 Vertex(0.0f, -6.0f, -5.0f),
                                 Vertex(0.0f, -6.0f, 5.0f),
-                                ColorDbl(0.2f, 1.0f, 0.2f),
+                                ColorDbl(0.4f, 1.0f, 1.0f),
                                 LAMBERTIAN);
 
     triangleList[13] = Triangle(Vertex(10.0f, -6.0f, -5.0f),
                                 Vertex(0.0f, -6.0f, 5.0f),
                                 Vertex(10.0f, -6.0f, 5.0f),
-                                ColorDbl(0.2f, 1.0f, 0.2f),
+                                ColorDbl(0.4f, 1.0f, 1.0f),
                                 LAMBERTIAN);
 
     //__________________NORTH____________________
     triangleList[14] = Triangle(Vertex(10.0f, 6.0f, -5.0f),
                                 Vertex(10.0f, 6.0f, 5.0f),
                                 Vertex(0.0f, 6.0f, -5.0f),
-                                ColorDbl(1.0f, 0.2f, 0.2f),
+                                ColorDbl(1.0f, 0.4f, 0.4f),
                                 LAMBERTIAN);
 
     triangleList[15] = Triangle(Vertex(0.0f, 6.0f, -5.0f),
                                 Vertex(10.0f, 6.0f, 5.0f),
                                 Vertex(0.0f, 6.0f, 5.0f),
-                                ColorDbl(1.0f, 0.2f, 0.2f),
+                                ColorDbl(1.0f, 0.4f, 0.4f),
                                 LAMBERTIAN);
 
     //__________________NORTH-EAST___________________
     triangleList[16] = Triangle(Vertex(13.0f, 0.0f, -5.0f),
                                 Vertex(13.0f, 0.0f, 5.0f),
                                 Vertex(10.0f, 6.0f, -5.0f),
-                                ColorDbl(0.2f, 0.2f, 1.0f),
+                                ColorDbl(0.4f, 0.4f, 1.0f),
                                 LAMBERTIAN);
 
     triangleList[17] = Triangle(Vertex(10.0f, 6.0f, -5.0f),
                                 Vertex(13.0f, 0.0f, 5.0f),
                                 Vertex(10.0f, 6.0f, 5.0f),
-                                ColorDbl(0.2f, 0.2f, 1.0f),
+                                ColorDbl(0.4f, 0.4f, 1.0f),
                                 LAMBERTIAN);
 
     //__________________SOUTH-EAST___________________
     triangleList[18] = Triangle(Vertex(10.0f, -6.0f, -5.0f),
                                 Vertex(10.0f, -6.0f, 5.0f),
                                 Vertex(13.0f, 0.0f, -5.0f),
-                                ColorDbl(0.2f, 1.0f, 0.2f),
-                                MIRROR);
+                                ColorDbl(0.4f, 0.7f, 0.4f),
+                                LAMBERTIAN);
 
     triangleList[19] = Triangle(Vertex(13.0f, 0.0f, -5.0f),
                                 Vertex(10.0f, -6.0f, 5.0f),
                                 Vertex(13.0f, 0.0f, 5.0f),
-                                ColorDbl(0.2f, 1.0f, 0.2f),
-                                MIRROR);
+                                ColorDbl(0.4f, 0.7f, 0.4f),
+                                LAMBERTIAN);
 
 
     //__________________SOUTH-WEST___________________
     triangleList[20] = Triangle(Vertex(-3.0f, 0.0f, -5.0f),
                                 Vertex(-3.0f, 0.0f, 5.0f),
                                 Vertex(0.0f, -6.0f, -5.0f),
-                                ColorDbl(0.0f, 1.0f, 0.0f),
+                                ColorDbl(0.4f, 1.0f, 0.4f),
                                 LAMBERTIAN);
 
     triangleList[21] = Triangle(Vertex(0.0f, -6.0f, -5.0f),
                                 Vertex(-3.0f, 0.0f, 5.0f),
                                 Vertex(0.0f, -6.0f, 5.0f),
-                                ColorDbl(0.0f, 1.0f, 0.0f),
+                                ColorDbl(0.4f, 1.0f, 0.4f),
                                 LAMBERTIAN);
 
     //__________________NORTH-WEST___________________
     triangleList[22] = Triangle(Vertex(0.0f, 6.0f, -5.0f),
                                 Vertex(0.0f, 6.0f, 5.0f),
                                 Vertex(-3.0f, 0.0f, -5.0f),
-                                ColorDbl(1.0f, 1.0f, 0.0f),
+                                ColorDbl(1.0f, 0.7f, 0.4f),
                                 LAMBERTIAN);
 
     triangleList[23] = Triangle(Vertex(-3.0f, 0.0f, -5.0f),
                                 Vertex(0.0f, 6.0f, 5.0f),
                                 Vertex(-3.0f, 0.0f, 5.0f),
-                                ColorDbl(1.0f, 1.0f, 0.0f),
+                                ColorDbl(1.0f, 0.7f, 0.4f),
                                 LAMBERTIAN);
 
     //AREA LIGHT
@@ -182,17 +182,13 @@ Scene::Scene() {
                                 ColorDbl(1.0f, 1.0f, 1.0f),
                                 LIGHT);
 
-    tetrahedron = Tetrahedron(Vertex(10.0f,1.0f,0.0f));
+    tetrahedron = Tetrahedron(Vertex(8.0f,2.0f,-1.0f));
 
-    //sphereList[0] = Sphere(1.0f, Vertex(8.0f,2.0f,2.0f), ColorDbl(0.0f,0.0f,0.0f), MIRROR);
-    //sphereList[1] = Sphere(1.0f, Vertex(7.0f,-3.0f,-4.0f), ColorDbl(0.8f,0.0f,0.0f), LAMBERTIAN);
-    //sphereList[2] = Sphere(1, Vertex(6,-3,-4), ColorDbl(0,0.8,0), LAMBERTIAN);
-    sphereList[1] = Sphere(1.0f, Vertex(4.0f,3.0f,-2.0f), ColorDbl(0.5f,0.5f,0.5f), TRANSPARENT);
-    sphereList[2] = Sphere(0.5f, Vertex(5.0f,-3.0f,0.0f), ColorDbl(0.5f,0.5f,0.5f), TRANSPARENT);
-    sphereList[3] = Sphere(0.5f, Vertex(8.0f,1.0f,-2.0f), ColorDbl(0.5f,0.5f,0.5f), TRANSPARENT);
-    sphereList[4] = Sphere(1.0f, Vertex(7.0f,-1.0f,-4.0f), ColorDbl(0.5f,0.5f,0.5f), MIRROR);
-    sphereList[5] = Sphere(1.0f, Vertex(10.0f,3.0f,-4.0f), ColorDbl(0.5f,0.5f,0.5f), MIRROR);
-
+    sphereList[1] = Sphere(1.0f, Vertex(4.0f,3.0f,-3.0f), ColorDbl(0.5f,0.5f,0.5f), MIRROR);
+    sphereList[2] = Sphere(1.0f, Vertex(6.0f,-3.0f,-2.0f), ColorDbl(0.5f,0.5f,0.5f), TRANSPARENT);
+    sphereList[3] = Sphere(1.0f, Vertex(5.0f,-2.0f,-4.0f), ColorDbl(1.0f,1.0f,1.0f), OREN_NAYAR);
+    sphereList[4] = Sphere(1.0f, Vertex(10.0f,0.2f,-1.0f), ColorDbl(0.5f,0.5f,0.5f), TRANSPARENT);
+    sphereList[5] = Sphere(1.2f, Vertex(6.0f,3.0f,1.0f), ColorDbl(0.8f,0.2f,0.2f), LAMBERTIAN);
 }
 
 Scene::~Scene() = default;
@@ -229,7 +225,7 @@ void Scene::CastRay(Ray &ray, int rayDepth){
                     ray.setColor(ColorDbl(0.0f,0.0f,0.0f));
                     break;
                 }
-                float kr = 1; //amount of light reflected
+                float kr = 0.95; //amount of light reflected
                 Ray reflectionRay(ray.getEndPoint(), glm::normalize(reflect(ray.getDirection(), ray.getObjectNormal())), REFLECTION);
                 CastRay(reflectionRay, rayDepth + 1);
                 ray.setColor(reflectionRay.getColor() * kr);
@@ -254,6 +250,11 @@ void Scene::CastRay(Ray &ray, int rayDepth){
             }
 
             case TRANSPARENT: {
+
+                if(ray.getRayType() == SECONDARY){
+                    ray.setColor(ColorDbl(0.0f,0.0f,0.0f));
+                    break;
+                }
 
                 float n1 = 1.0f; // air
                 float n2 = 1.5f; // glass
@@ -311,21 +312,39 @@ void Scene::CastRay(Ray &ray, int rayDepth){
                     Direction R = glm::normalize(reflect(I, N));
                     Ray reflectionRay(ray.getEndPoint(), R, REFLECTION);
 
+
+
                     Direction T = glm::normalize((n1/n2) * I + N * (float)(-(n1/n2) *glm::dot(N, I) - sqrt(1.0f - pow((n1/n2), 2.0f)*(1.0f - pow(glm::dot(N, I), 2.0f)))));
                     Ray refractionRay(ray.getEndPoint() - N * 0.002f, T, INSIDE_TRANSPARENT);
 
-                    // cast both R and T
+                    // cast rays
                     CastRay(reflectionRay, rayDepth + 1);
+
+                    //if reflection hits light source, only use reflection ray to simulate specular reflection of light source.
+                    if(reflectionRay.getMaterial() == LIGHT && rayDepth == 0){
+                        ray.setColor(reflectionRay.getColor());
+                        break;
+                    }
+
                     CastRay(refractionRay, rayDepth + 1);
 
                     // Set color based on Schlicks law
                     ray.setColor((reflectionRay.getColor() * reflectCof + refractionRay.getColor() * transmission));
                     //ray.setColor((reflectionRay.getColor() * reflectCof));
                 }
+                break;
 
             }
             case OREN_NAYAR:{
+                //direct light
+                ColorDbl directLighting = computeDirectLight(ray, true);
 
+                //indirect light:
+                ColorDbl indirectLighting = computeIndirectLight(ray, rayDepth);
+
+                //hitColor = (directLighting / M_PI + 2 * indirectLigthing) * isect.hitObject->albedo;
+                ray.setColor(directLighting + indirectLighting);
+                break;
             }
 
             default:{
@@ -442,7 +461,7 @@ ColorDbl Scene::computeIndirectLight(Ray &ray, int rayDepth){
     // step 4 & 5: cast a ray in this direction
     Ray sampleRay = Ray(ray.getEndPoint(), glm::normalize(sampleWorld), SECONDARY);
     CastRay(sampleRay, rayDepth + 1);
-    indirectLight = (0.9f*ray.getColor()) * r1 * sampleRay.getColor();
+    indirectLight = (0.5f*ray.getColor())  * sampleRay.getColor();
     return indirectLight; //divide by (1-P), P = 0.25
 }
 
