@@ -184,7 +184,7 @@ Scene::Scene() {
 
     tetrahedron = Tetrahedron(Vertex(8.0f,2.0f,-1.0f));
 
-    sphereList[1] = Sphere(1.0f, Vertex(5.5f,3.0f,-3.0f), ColorDbl(0.5f,0.5f,0.5f), MIRROR);
+    sphereList[1] = Sphere(1.0f, Vertex(4.5f,3.0f,-3.0f), ColorDbl(0.5f,0.5f,0.5f), MIRROR);
     sphereList[2] = Sphere(1.0f, Vertex(6.0f,-3.0f,-2.0f), ColorDbl(0.5f,0.5f,0.5f), TRANSPARENT);
     sphereList[3] = Sphere(1.0f, Vertex(5.0f,-2.0f,-4.0f), ColorDbl(1.0f,1.0f,1.0f), OREN_NAYAR);
     sphereList[4] = Sphere(1.0f, Vertex(10.0f,0.2f,-1.0f), ColorDbl(0.5f,0.5f,0.5f), TRANSPARENT);

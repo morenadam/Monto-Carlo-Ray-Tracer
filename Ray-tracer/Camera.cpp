@@ -23,7 +23,7 @@ void Camera::render(Scene scene) {
     if (isEyePointOne) eyePoint = eyePointOne;
     else eyePoint = eyePointTwo;
 
-    const int subPixel = 1; //total # of subpixels = subPixel*subPixel
+    const int subPixel = 16; //total # of subpixels = subPixel*subPixel
     const float delta = 0.0025; //side length of each pixel
     float subPixelLength = delta/float(subPixel); //side length of each sub pixel
 
